@@ -8,7 +8,7 @@ const routes: Routes = [
   //  /login y /recovery  --> authroutingmodule
   //  /admin/* /children/* /tutor/*        --> pagesroutingmodule
 
-  { path: '**', redirectTo: 'blank'}
+  { path: '**', redirectTo: 'blank'},
 ];
 
 @NgModule({

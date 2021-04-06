@@ -1,11 +1,26 @@
-ion-content {
-    --ion-background-color: #ffffff;
+ion-img {
+    margin: auto;
 }
 
 .texto-egypt-blue {
+    text-align: center;
     color: #004DFF;
 }
 
 .registro {
     background-color: #00FF7F;
+}
+
+.boton1 {
+    color: black;
+    --border-radius: 1rem;
+    --background: #00FF7F;
+}
+
+.boton2 {
+    color: black;
+    --background: white;
+    --border-radius: 1rem;
+    border: 0.1rem solid black;
+    border-radius: 1rem;
 }

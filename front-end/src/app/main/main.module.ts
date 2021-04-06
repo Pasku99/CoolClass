@@ -7,15 +7,18 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { InicioComponent } from './inicio/inicio.component';
 import { BlankLayoutComponent } from '../layouts/blank-layout/blank-layout.component';
+import { InicioSesionPage } from './inicio-sesion/inicio-sesion.page';
 
 @NgModule({
   declarations: [
     BlankLayoutComponent,
-    InicioComponent
+    InicioComponent,
+    InicioSesionPage
   ],
   exports: [
     BlankLayoutComponent,
-    InicioComponent
+    InicioComponent,
+    InicioSesionPage
   ],
   imports: [
     IonicModule,

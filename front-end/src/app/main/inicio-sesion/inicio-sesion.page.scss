@@ -1,0 +1,44 @@
+ion-img {
+    margin: auto;
+}
+
+.texto-egypt-blue {
+    text-align: center;
+    color: #004DFF;
+}
+
+.registro {
+    background-color: #00FF7F;
+}
+
+.boton1 {
+    color: black;
+    --background: #00FF7F;
+    --border-radius: 1rem;
+    border: 0.1rem solid black;
+    border-radius: 1rem;
+}
+
+.input1 {
+    margin-bottom: 2rem;
+    color: black;
+    --border: 0.1rem solid black;
+    --background: #b4b4b4;
+    --border-radius: 1rem;
+    // border: 0.1rem solid black;
+    // border-radius: 1rem;
+}
+
+.input2 {
+    margin-bottom: 2.5rem;
+    color: black;
+    --border: 0.1rem solid black;
+    --background: #b4b4b4;
+    --border-radius: 1rem;
+    // border: 0.1rem solid black;
+    // border-radius: 1rem;
+}
+
+form {
+    padding-bottom: 5rem;
+}

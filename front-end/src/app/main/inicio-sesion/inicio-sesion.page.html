@@ -1,0 +1,17 @@
+<ion-header class="ion-no-border" lines="none">
+    <ion-col size="12" align-self-center>
+        <ion-img src="../../../assets/coolclassLogo.png" style="width: 10rem; height: 10rem;"></ion-img>
+        <h3 class="texto-egypt-blue">¡Bienvenido a CoolClass!</h3>
+    </ion-col>
+</ion-header>
+<form [formGroup]="loginForm">
+    <ion-item class="input1">
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="text" formControlName="email" required></ion-input>
+    </ion-item>
+    <ion-item class="input2">
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input type="password" formControlName="password" required></ion-input>
+    </ion-item>
+    <ion-button class="boton1" type="submit" size="large" expand="block">Iniciar sesión</ion-button>
+</form>
