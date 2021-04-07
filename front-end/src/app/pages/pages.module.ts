@@ -5,21 +5,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { HttpClientModule } from '@angular/common/http';
-import { InicioComponent } from './inicio/inicio.component';
-import { BlankLayoutComponent } from '../layouts/blank-layout/blank-layout.component';
-import { InicioSesionPage } from './inicio-sesion/inicio-sesion.page';
-import { RegistroPage } from './registro/registro.page';
+import { RegistroCentroEducativoPage } from './centro-educativo/registro-centro-educativo/registro-centro-educativo.page';
+import { RegistroProfesorPage } from './profesor/registro-profesor/registro-profesor.page';
+import { RegistroAlumnoPage } from './alumno/registro-alumno/registro-alumno.page';
 
 @NgModule({
   declarations: [
-    InicioComponent,
-    InicioSesionPage,
-    RegistroPage
+    RegistroCentroEducativoPage,
+    RegistroProfesorPage,
+    RegistroAlumnoPage
   ],
   exports: [
-    InicioComponent,
-    InicioSesionPage,
-    RegistroPage
+    RegistroCentroEducativoPage,
+    RegistroProfesorPage,
+    RegistroAlumnoPage
   ],
   imports: [
     IonicModule,
@@ -31,4 +30,4 @@ import { RegistroPage } from './registro/registro.page';
   ]
 })
 
-export class MainModule { }
+export class PagesModule { }

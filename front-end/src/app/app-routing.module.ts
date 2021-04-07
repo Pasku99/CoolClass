@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainRoutingModule } from './main/main.routing';
+import { PagesRoutingModule } from './pages/pages.routing';
 
 
 const routes: Routes = [
-
-  //  /login y /recovery  --> authroutingmodule
-  //  /admin/* /children/* /tutor/*        --> pagesroutingmodule
-
-  { path: '**', redirectTo: 'blank'},
+  {
+    path: '**',
+    redirectTo: 'inicio',
+  },
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),
-    MainRoutingModule
+    MainRoutingModule,
+    PagesRoutingModule
   ],
   exports: [RouterModule]
 })

@@ -2,6 +2,10 @@ ion-img {
     margin: auto;
 }
 
+ion-footer {
+    padding-bottom: 5rem;
+}
+
 .texto-egypt-blue {
     text-align: center;
     color: #004DFF;
@@ -15,6 +19,9 @@ ion-img {
     color: black;
     --border-radius: 1rem;
     --background: #00FF7F;
+    margin-right: 6rem;
+    margin-left: 6rem;
+    margin-bottom: 1.5rem;
 }
 
 .boton2 {
@@ -23,4 +30,6 @@ ion-img {
     --border-radius: 1rem;
     border: 0.1rem solid black;
     border-radius: 1rem;
+    margin-right: 6rem;
+    margin-left: 6rem;
 }

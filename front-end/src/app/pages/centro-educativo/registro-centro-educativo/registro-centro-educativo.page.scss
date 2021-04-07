@@ -2,6 +2,19 @@ ion-img {
     margin: auto;
 }
 
+ion-content {
+    --ion-background-color: white;
+}
+
+@media (min-height: 641px) {
+    ion-img {
+        margin-top: 1.5rem;
+    }
+    form {
+        margin-top: 2.5rem;
+    }
+}
+
 .texto-egypt-blue {
     text-align: center;
     color: #004DFF;
@@ -21,6 +34,18 @@ ion-img {
     margin-left: 6rem;
 }
 
+.input0 {
+    border-bottom: none;
+    box-shadow: none;
+    margin-bottom: 2rem;
+    color: black;
+    border: 0.1rem solid black;
+    --background: #b4b4b4;
+    border-radius: 1rem;
+    margin-right: 5rem;
+    margin-left: 5rem;
+}
+
 .input1 {
     border-bottom: none;
     box-shadow: none;
@@ -31,8 +56,6 @@ ion-img {
     border-radius: 1rem;
     margin-right: 5rem;
     margin-left: 5rem;
-    // border: 0.1rem solid black;
-    // border-radius: 1rem;
 }
 
 .input2 {
@@ -43,8 +66,6 @@ ion-img {
     border-radius: 1rem;
     margin-right: 5rem;
     margin-left: 5rem;
-    // border: 0.1rem solid black;
-    // border-radius: 1rem;
 }
 
 form {
