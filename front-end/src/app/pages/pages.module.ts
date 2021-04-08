@@ -8,17 +8,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { RegistroCentroEducativoPage } from './centro-educativo/registro-centro-educativo/registro-centro-educativo.page';
 import { RegistroProfesorPage } from './profesor/registro-profesor/registro-profesor.page';
 import { RegistroAlumnoPage } from './alumno/registro-alumno/registro-alumno.page';
+import { PantallaPrincipalCentroEducativoPage } from './centro-educativo/pantalla-principal-centro-educativo/pantalla-principal-centro-educativo.page';
 
 @NgModule({
   declarations: [
     RegistroCentroEducativoPage,
     RegistroProfesorPage,
-    RegistroAlumnoPage
+    RegistroAlumnoPage,
+    PantallaPrincipalCentroEducativoPage
   ],
   exports: [
     RegistroCentroEducativoPage,
     RegistroProfesorPage,
-    RegistroAlumnoPage
+    RegistroAlumnoPage,
+    PantallaPrincipalCentroEducativoPage
   ],
   imports: [
     IonicModule,

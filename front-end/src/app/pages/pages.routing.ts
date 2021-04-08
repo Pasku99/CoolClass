@@ -5,6 +5,7 @@ import { RegistroCentroEducativoPage } from './centro-educativo/registro-centro-
 import { RegistroProfesorPage } from './profesor/registro-profesor/registro-profesor.page';
 import { RegistroAlumnoPage } from './alumno/registro-alumno/registro-alumno.page';
 import { TabsCentroEducativoComponent } from '../layouts/tabs-centro-educativo/tabs-centro-educativo.component';
+import { PantallaPrincipalCentroEducativoPage } from './centro-educativo/pantalla-principal-centro-educativo/pantalla-principal-centro-educativo.page';
 
 const routes: Routes = [
   { path: 'registro', component: BlankLayoutComponent,
@@ -16,7 +17,7 @@ const routes: Routes = [
   },
   { path: 'tabs-centro-educativo', component: TabsCentroEducativoComponent,
     children: [
-      { path: 'principal', component: RegistroCentroEducativoPage},
+      { path: 'principal', component: PantallaPrincipalCentroEducativoPage},
       { path: 'clases', component: RegistroProfesorPage},
       { path: 'alumnos', component: RegistroAlumnoPage},
       { path: 'perfil', component: RegistroAlumnoPage},
