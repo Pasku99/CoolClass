@@ -1,13 +1,16 @@
+<ion-header class="ion-no-border" lines="none">
+    <ion-img class="back" src="../../../../assets/ionicons/arrow-back-outline.svg" style="width: 3rem; height: 3rem; margin-left: 1.5rem; margin-top: 0.5rem;" routerLink="/escoger-registro"></ion-img>
+</ion-header>
 <ion-content>
     <ion-grid>
-        <ion-row>
+        <ion-row class="filaLogo">
             <ion-col size="12" align-self-center>
                 <ion-img src="../../../assets/coolclassLogo.png" style="width: 10rem; height: 10rem;"></ion-img>
                 <h3 class="texto-egypt-blue">¡Bienvenido a CoolClass!</h3>
                 <h4 style="color: black; text-align: center;">¡Cuenta con nosotros!</h4>
             </ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row class="filaForm">
             <ion-col size="12" align-self-center>
                 <form [formGroup]="registerForm">
                     <ion-item class="input0">

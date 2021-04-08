@@ -1,46 +1,33 @@
-<!-- <ion-header class="ion-no-border" lines="none">
-    <ion-col size="12" align-self-center>
-        <ion-img src="../../../../assets/ionicons/arrow-back-outline.svg" style="width: 32px; height: 32px; margin-left: 1.5rem; margin-top: 0rem;"></ion-img>
-        <ion-img src="../../../assets/coolclassLogo.png" style="width: 10rem; height: 10rem;"></ion-img>
-        <h3 class="texto-egypt-blue">¡Bienvenido a CoolClass!</h3>
-        <h4 style="color: black; text-align: center;">¿Listo para aprender?</h4>
-    </ion-col>
+<ion-header class="ion-no-border" lines="none">
+    <ion-img class="back" src="../../../../assets/ionicons/arrow-back-outline.svg" style="width: 3rem; height: 3rem; margin-left: 1.5rem; margin-top: 0.5rem;" routerLink="/escoger-registro"></ion-img>
 </ion-header>
-<form [formGroup]="registerForm">
-    <ion-item class="input0">
-        <ion-input type="text" placeholder="Nombre del centro" formControlName="nombre" lines="none" required></ion-input>
-    </ion-item>
-    <ion-item class="input1">
-        <ion-input type="text" placeholder="Email" formControlName="email" lines="none" required></ion-input>
-    </ion-item>
-    <ion-item class="input2">
-        <ion-input type="password" placeholder="Contraseña" formControlName="password" lines="none" required></ion-input>
-    </ion-item>
-    <ion-item class="input3">
-        <ion-input type="text" placeholder="Código de profesor" formControlName="codigo" lines="none" required></ion-input>
-    </ion-item>
-    <ion-button class="boton1" type="submit" size="large" expand="block">Iniciar sesión</ion-button>
-</form> -->
 <ion-content>
-    <ion-col size="12" align-self-center>
-        <ion-img src="../../../assets/coolclassLogo.png" style="width: 10rem; height: 10rem;"></ion-img>
-        <h3 class="texto-egypt-blue">¡Bienvenido a CoolClass!</h3>
-        <h4 style="color: black; text-align: center;">¿Listo para aprender?</h4>
-    </ion-col>
-    <form [formGroup]="registerForm">
-        <ion-item class="input0">
-            <ion-input type="text" placeholder="Nombre del centro" formControlName="nombre" lines="none" required></ion-input>
-        </ion-item>
-        <ion-item class="input1">
-            <ion-input type="text" placeholder="Email" formControlName="email" lines="none" required></ion-input>
-        </ion-item>
-        <ion-item class="input2">
-            <ion-input type="password" placeholder="Contraseña" formControlName="password" lines="none" required></ion-input>
-        </ion-item>
-        <ion-item class="input3">
-            <ion-input type="text" placeholder="Código de profesor" formControlName="codigo" lines="none" required></ion-input>
-        </ion-item>
-        <ion-button class="boton1" type="submit" size="large" expand="block">Iniciar sesión</ion-button>
-    </form>
-
+    <ion-grid>
+        <ion-row class="filaLogo">
+            <ion-col size="12" align-self-center>
+                <ion-img src="../../../assets/coolclassLogo.png" style="width: 10rem; height: 10rem;"></ion-img>
+                <h3 class="texto-egypt-blue">¡Bienvenido a CoolClass!</h3>
+                <h4 style="color: black; text-align: center;">¿Listo para aprender?</h4>
+            </ion-col>
+        </ion-row>
+        <ion-row class="filaForm">
+            <ion-col size="12" align-self-center>
+                <form [formGroup]="registerForm">
+                    <ion-item class="input0">
+                        <ion-input type="text" placeholder="Nombre del centro" formControlName="nombre" lines="none" required></ion-input>
+                    </ion-item>
+                    <ion-item class="input1">
+                        <ion-input type="text" placeholder="Email" formControlName="email" lines="none" required></ion-input>
+                    </ion-item>
+                    <ion-item class="input2">
+                        <ion-input type="password" placeholder="Contraseña" formControlName="password" lines="none" required></ion-input>
+                    </ion-item>
+                    <ion-item class="input3">
+                        <ion-input type="text" placeholder="Código de profesor" formControlName="codigo" lines="none" required></ion-input>
+                    </ion-item>
+                    <ion-button class="boton1" type="submit" size="large" expand="block">Iniciar sesión</ion-button>
+                </form>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>

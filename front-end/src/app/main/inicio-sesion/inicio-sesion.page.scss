@@ -2,6 +2,26 @@ ion-img {
     margin: auto;
 }
 
+.back:hover {
+    cursor: pointer;
+}
+
+ion-content {
+    --ion-background-color: white;
+}
+
+ion-grid {
+    height: 100%;
+}
+
+ion-row {
+    height: 50%;
+}
+
+.filaLogo {
+    margin-top: 2rem;
+}
+
 .texto-egypt-blue {
     text-align: center;
     color: #004DFF;
@@ -31,8 +51,6 @@ ion-img {
     border-radius: 1rem;
     margin-right: 5rem;
     margin-left: 5rem;
-    // border: 0.1rem solid black;
-    // border-radius: 1rem;
 }
 
 .input2 {
@@ -43,10 +61,14 @@ ion-img {
     border-radius: 1rem;
     margin-right: 5rem;
     margin-left: 5rem;
-    // border: 0.1rem solid black;
-    // border-radius: 1rem;
 }
 
 form {
     padding-bottom: 5rem;
+}
+
+@media (max-height: 450px) {
+    .filaForm {
+        margin-top: 3rem;
+    }
 }

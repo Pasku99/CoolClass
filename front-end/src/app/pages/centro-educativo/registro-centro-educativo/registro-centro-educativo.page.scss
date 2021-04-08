@@ -2,17 +2,20 @@ ion-img {
     margin: auto;
 }
 
+.back:hover {
+    cursor: pointer;
+}
+
 ion-content {
     --ion-background-color: white;
 }
 
-@media (min-height: 641px) {
-    ion-img {
-        margin-top: 1.5rem;
-    }
-    form {
-        margin-top: 2.5rem;
-    }
+ion-grid {
+    height: 100%;
+}
+
+ion-row {
+    height: 50%;
 }
 
 .texto-egypt-blue {
@@ -37,7 +40,7 @@ ion-content {
 .input0 {
     border-bottom: none;
     box-shadow: none;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     color: black;
     border: 0.1rem solid black;
     --background: #b4b4b4;
@@ -49,7 +52,7 @@ ion-content {
 .input1 {
     border-bottom: none;
     box-shadow: none;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     color: black;
     border: 0.1rem solid black;
     --background: #b4b4b4;
@@ -70,4 +73,10 @@ ion-content {
 
 form {
     padding-bottom: 5rem;
+}
+
+@media (max-height: 450px) {
+    .filaForm {
+        margin-top: 7rem;
+    }
 }
