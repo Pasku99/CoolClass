@@ -10,6 +10,20 @@ ion-content {
     --ion-background-color: white;
 }
 
+.anyadirClase {
+    position: fixed;
+    z-index: 10;
+    right: 0.2rem;
+    bottom: 1.5rem;
+}
+
+.anyadirClase2 {
+    position: fixed;
+    z-index: 10;
+    right: 0.5rem;
+    bottom: 5.5rem;
+}
+
 ion-select {
     width: 100%;
     height: 100%;

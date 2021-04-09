@@ -13,6 +13,8 @@
             </ion-select>
         </ion-item>
     </ion-list>
+    <b class="anyadirClase2" style="color: black;">Añadir clase</b>>
+    <ion-icon class="anyadirClase" name="add-circle" style="width: 4rem; height: 4rem; color: #00ff7f; margin-right: 1rem;"></ion-icon>
     <ion-card (click)="expandItem(item)" *ngFor="let item of items">
         <ion-row>
             <ion-col size="3">
@@ -35,7 +37,7 @@
                         <h2 style="color: black">Profesores</h2>
                     </ion-col>
                     <ion-col size="4.5">
-                        <ion-icon name="people" style="width: 2rem; height: 2rem; margin-top: -0.3rem; color: black;"></ion-icon>
+                        <ion-icon name="people" style="width: 2rem; height: 2rem; margin-top: -0.3rem;  color: #004DFF;"></ion-icon>
                     </ion-col>
                 </ion-row>
                 <ion-row>
@@ -46,10 +48,19 @@
                         <h2 style="color: black ">Alumnos</h2>
                     </ion-col>
                     <ion-col size="4.5 ">
-                        <ion-icon name="accessibility" style="width: 2rem; height: 2rem; margin-top: -0.3rem; color: black;"></ion-icon>
+                        <ion-icon name="accessibility" style="width: 2rem; height: 2rem; margin-top: -0.3rem;  color: #004DFF;"></ion-icon>
                     </ion-col>
                 </ion-row>
             </app-accordion-list>
         </ion-card-content>
     </ion-card>
 </ion-content>
+
+<!-- <ion-footer>
+    <div style="text-align: right;">
+        <b style="color: black;">Añadir clase</b>>
+    </div>
+    <div style="text-align: right;">
+        <ion-icon name="add-circle" style="width: 4rem; height: 4rem; color: #00ff7f; margin-right: 1rem;"></ion-icon>
+    </div>
+</ion-footer> -->
