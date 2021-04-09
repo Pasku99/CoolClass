@@ -1,0 +1,55 @@
+<ion-header class="ion-no-border" lines="none" style="background-color: white;">
+    <ion-title style="background-color: white; color: #004DFF; margin-top: 1rem; text-align: center;">
+        <b style="font-size: 26px">CLASES</b>
+    </ion-title>
+</ion-header>
+
+<ion-content>
+    <ion-list style="background-color: white;">
+        <ion-item style="background-color: white;">
+            <ion-select placeholder="Filtrar clase">
+                <ion-select-option value="2esoa" style="color: black;">2ESOA</ion-select-option>
+                <ion-select-option value="2esob" style="color: black;">2ESOB</ion-select-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
+    <ion-card (click)="expandItem(item)" *ngFor="let item of items">
+        <ion-row>
+            <ion-col size="3">
+                <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;"></ion-icon>
+            </ion-col>
+            <ion-col size="9">
+                <ion-card-header>
+                    <ion-card-title style="color: black;">2ESO A</ion-card-title>
+                </ion-card-header>
+            </ion-col>
+        </ion-row>
+
+        <ion-card-content>
+            <app-accordion-list expandHeight="100px" [expanded]="item.expanded">
+                <ion-row>
+                    <ion-col size="3">
+
+                    </ion-col>
+                    <ion-col size="4.5">
+                        <h2 style="color: black">Profesores</h2>
+                    </ion-col>
+                    <ion-col size="4.5">
+                        <ion-icon name="people" style="width: 2rem; height: 2rem; margin-top: -0.3rem; color: black;"></ion-icon>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="3 ">
+
+                    </ion-col>
+                    <ion-col size="4.5 ">
+                        <h2 style="color: black ">Alumnos</h2>
+                    </ion-col>
+                    <ion-col size="4.5 ">
+                        <ion-icon name="accessibility" style="width: 2rem; height: 2rem; margin-top: -0.3rem; color: black;"></ion-icon>
+                    </ion-col>
+                </ion-row>
+            </app-accordion-list>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

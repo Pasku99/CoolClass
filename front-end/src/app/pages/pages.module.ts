@@ -9,19 +9,25 @@ import { RegistroCentroEducativoPage } from './centro-educativo/registro-centro-
 import { RegistroProfesorPage } from './profesor/registro-profesor/registro-profesor.page';
 import { RegistroAlumnoPage } from './alumno/registro-alumno/registro-alumno.page';
 import { PantallaPrincipalCentroEducativoPage } from './centro-educativo/pantalla-principal-centro-educativo/pantalla-principal-centro-educativo.page';
+import { ClasesCentroEducativoPage } from './centro-educativo/clases-centro-educativo/clases-centro-educativo.page';
+import { AccordionListComponent } from '../components/accordion-list/accordion-list.component';
 
 @NgModule({
   declarations: [
     RegistroCentroEducativoPage,
     RegistroProfesorPage,
     RegistroAlumnoPage,
-    PantallaPrincipalCentroEducativoPage
+    PantallaPrincipalCentroEducativoPage,
+    ClasesCentroEducativoPage,
+    AccordionListComponent
   ],
   exports: [
     RegistroCentroEducativoPage,
     RegistroProfesorPage,
     RegistroAlumnoPage,
-    PantallaPrincipalCentroEducativoPage
+    PantallaPrincipalCentroEducativoPage,
+    ClasesCentroEducativoPage,
+    AccordionListComponent
   ],
   imports: [
     IonicModule,
