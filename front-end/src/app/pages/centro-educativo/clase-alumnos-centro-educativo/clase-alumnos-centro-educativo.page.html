@@ -1,0 +1,65 @@
+<ion-header class="ion-no-border" lines="none" style="background-color: white; margin-top: 0.5rem;">
+    <ion-toolbar>
+        <ion-row>
+            <ion-col size="12">
+                <ion-title style="background-color: white; color: #004DFF; text-align: center; font-size: 1.4rem; padding-right: 3rem; padding-left: 3rem;">
+                    CLASE: 2 ESO A
+                </ion-title>
+            </ion-col>
+        </ion-row>
+    </ion-toolbar>
+    <ion-img class="back" src="../../../../assets/ionicons/arrow-back-outline.svg" style="width: 2.5rem; height: 2.5rem; margin-left: 1.5rem; margin-top: 0.5rem;" routerLink="/tabs-centro-educativo/clases"></ion-img>
+</ion-header>
+
+<ion-content>
+    <ion-row>
+        <ion-col size="12">
+            <ion-list class="ion-no-border" lines="none" style="background-color: white;">
+                <ion-item style="background-color: white;">
+                    <ion-select placeholder="Filtrar alumno">
+                        <ion-select-option value="2esoa" style="color: black;">2ESOA</ion-select-option>
+                        <ion-select-option value="2esob" style="color: black;">2ESOB</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-list>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col size="12">
+            <ion-card (click)="expandItem(item)" *ngFor="let item of items">
+                <ion-row>
+                    <ion-col size="3">
+                        <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;"></ion-icon>
+                    </ion-col>
+                    <ion-col size="4.5">
+                        <!-- <ion-card-header>
+                          <ion-card-title style="color: black; font-size: 16px;"><b>Profesor</b></ion-card-title>
+                      </ion-card-header> -->
+                        <p style="color: black; font-size: 16px;"><b>Nombre</b></p>
+
+                    </ion-col>
+                    <ion-col size="4.5">
+                        <p style="color: black; font-size: 16px;">Vanessa Amorós</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12">
+                        <app-accordion-list expandHeight="100px" [expanded]="item.expanded">
+                            <ion-row>
+                                <ion-col size="3">
+
+                                </ion-col>
+                                <ion-col size="4.5">
+                                    <b style="color: black; font-size: 16px; ">Notas</b>
+                                </ion-col>
+                                <ion-col size="4.5">
+                                    <ion-icon name="bookmark" style="width: 2rem; height: 2rem; color: #004DFF;" routerLink="/tabs-centro-educativo/clases/alumnos/notas"></ion-icon>
+                                </ion-col>
+                            </ion-row>
+                        </app-accordion-list>
+                    </ion-col>
+                </ion-row>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+</ion-content>

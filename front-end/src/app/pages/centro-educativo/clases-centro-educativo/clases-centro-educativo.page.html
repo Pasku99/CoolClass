@@ -1,66 +1,74 @@
 <ion-header class="ion-no-border" lines="none" style="background-color: white;">
-    <ion-title style="background-color: white; color: #004DFF; margin-top: 1rem; text-align: center;">
-        <b style="font-size: 26px">CLASES</b>
-    </ion-title>
+    <ion-toolbar>
+        <ion-title style="background-color: white; color: #004DFF; margin-top: 0rem; text-align: center;">
+            <b style="font-size: 26px">CLASES</b>
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-list style="background-color: white;">
-        <ion-item style="background-color: white;">
-            <ion-select placeholder="Filtrar clase">
-                <ion-select-option value="2esoa" style="color: black;">2ESOA</ion-select-option>
-                <ion-select-option value="2esob" style="color: black;">2ESOB</ion-select-option>
-            </ion-select>
-        </ion-item>
-    </ion-list>
-    <b class="anyadirClase2" style="color: black;">Añadir clase</b>>
-    <ion-icon class="anyadirClase" name="add-circle" style="width: 4rem; height: 4rem; color: #00ff7f; margin-right: 1rem;"></ion-icon>
-    <ion-card (click)="expandItem(item)" *ngFor="let item of items">
-        <ion-row>
-            <ion-col size="3">
-                <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;"></ion-icon>
-            </ion-col>
-            <ion-col size="9">
-                <ion-card-header>
-                    <ion-card-title style="color: black;">2ESO A</ion-card-title>
-                </ion-card-header>
-            </ion-col>
-        </ion-row>
-
-        <ion-card-content>
-            <app-accordion-list expandHeight="100px" [expanded]="item.expanded">
+    <ion-row>
+        <ion-col size="12">
+            <ion-list class="ion-no-border" lines="none" style="background-color: white;">
+                <ion-item style="background-color: white;">
+                    <ion-select placeholder="Filtrar clase">
+                        <ion-select-option value="2esoa" style="color: black;">2ESOA</ion-select-option>
+                        <ion-select-option value="2esob" style="color: black;">2ESOB</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-list>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col size="12">
+            <ion-card (click)="expandItem(item)" *ngFor="let item of items">
                 <ion-row>
                     <ion-col size="3">
-
+                        <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;"></ion-icon>
                     </ion-col>
-                    <ion-col size="4.5">
-                        <h2 style="color: black">Profesores</h2>
-                    </ion-col>
-                    <ion-col size="4.5">
-                        <ion-icon name="people" style="width: 2rem; height: 2rem; margin-top: -0.3rem;  color: #004DFF;"></ion-icon>
+                    <ion-col size="9">
+                        <ion-card-header>
+                            <ion-card-title style="color: black; font-size: 24px;">2ESO A</ion-card-title>
+                        </ion-card-header>
                     </ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="3 ">
+                    <ion-col size="12">
+                        <ion-card-content>
+                            <app-accordion-list expandHeight="100px" [expanded]="item.expanded">
+                                <ion-row>
+                                    <ion-col size="3">
 
-                    </ion-col>
-                    <ion-col size="4.5 ">
-                        <h2 style="color: black ">Alumnos</h2>
-                    </ion-col>
-                    <ion-col size="4.5 ">
-                        <ion-icon name="accessibility" style="width: 2rem; height: 2rem; margin-top: -0.3rem;  color: #004DFF;"></ion-icon>
+                                    </ion-col>
+                                    <ion-col size="4.5">
+                                        <h2 style="color: black">Profesores</h2>
+                                    </ion-col>
+                                    <ion-col size="4.5">
+                                        <ion-icon name="people" style="width: 2rem; height: 2rem; margin-top: -0.3rem;  color: #004DFF;" routerLink="/tabs-centro-educativo/clases/profesores"></ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col size="3 ">
+
+                                    </ion-col>
+                                    <ion-col size="4.5 ">
+                                        <h2 style="color: black ">Alumnos</h2>
+                                    </ion-col>
+                                    <ion-col size="4.5 ">
+                                        <ion-icon name="accessibility" style="width: 2rem; height: 2rem; margin-top: -0.3rem;  color: #004DFF;" routerLink="/tabs-centro-educativo/clases/alumnos"></ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                            </app-accordion-list>
+                        </ion-card-content>
                     </ion-col>
                 </ion-row>
-            </app-accordion-list>
-        </ion-card-content>
-    </ion-card>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col size="12">
+            <b class="anyadirClase2" style="color: black;">Añadir clase</b>
+            <ion-icon class="anyadirClase" name="add-circle" style="width: 4rem; height: 4rem; color: #00ff7f; margin-right: 1rem;"></ion-icon>
+        </ion-col>
+    </ion-row>
 </ion-content>
-
-<!-- <ion-footer>
-    <div style="text-align: right;">
-        <b style="color: black;">Añadir clase</b>>
-    </div>
-    <div style="text-align: right;">
-        <ion-icon name="add-circle" style="width: 4rem; height: 4rem; color: #00ff7f; margin-right: 1rem;"></ion-icon>
-    </div>
-</ion-footer> -->
