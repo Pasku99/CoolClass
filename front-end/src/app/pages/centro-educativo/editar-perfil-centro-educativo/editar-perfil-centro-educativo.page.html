@@ -1,0 +1,30 @@
+<ion-header class="ion-no-border" lines="none" style="background-color: #004dff; padding-bottom: 4rem;">
+    <ion-col size="12" align-self-center>
+        <ion-img src="../../../assets/imagotipo2coolclass.png" style="width: 70%; height: 70%; margin-left: auto; margin-right: auto; margin-top: 2rem;"></ion-img>
+    </ion-col>
+</ion-header>
+<ion-content>
+    <div style="background-color: white; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
+        <ion-row>
+            <ion-col size="12">
+                <ion-icon class="fotoPerfil" text-center name="person-circle" style="width: 7rem; height: 7rem; text-align: center; width:100%; display:flex; align-items:center; justify-content:center;"></ion-icon>
+            </ion-col>
+        </ion-row>
+        <ion-row class="filaForm" style="z-index: 0;">
+            <ion-col>
+                <form [formGroup]="editarPerfil">
+                    <ion-item class="input1" style="margin-top: 2rem;">
+                        <ion-input type="text" placeholder="Nombre" formControlName="email" style="border-bottom: 0.1rem solid #004dff;"></ion-input>
+                    </ion-item>
+                    <ion-item class="input1" style="margin-top: 2rem;">
+                        <ion-input type="text" placeholder="Correo electrónico" formControlName="email" style="border-bottom: 0.1rem solid #004dff;"></ion-input>
+                    </ion-item>
+                    <ion-item class="input2" style="margin-top: 2rem;">
+                        <ion-input type="password" placeholder="Contraseña" formControlName="password" style="border-bottom: 0.1rem solid #004dff;"></ion-input>
+                    </ion-item>
+                    <ion-button class="boton1" type="submit" size="large" expand="block" style="margin-left: 5rem; margin-right: 5rem; margin-top: 2rem;">Guardar cambios</ion-button>
+                </form>
+            </ion-col>
+        </ion-row>
+    </div>
+</ion-content>

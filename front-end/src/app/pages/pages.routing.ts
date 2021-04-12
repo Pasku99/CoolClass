@@ -10,6 +10,9 @@ import { ClasesCentroEducativoPage } from './centro-educativo/clases-centro-educ
 import { ProfesoresClaseCentroEducativoPage } from './centro-educativo/profesores-clase-centro-educativo/profesores-clase-centro-educativo.page';
 import { ClaseAlumnosCentroEducativoPage } from './centro-educativo/clase-alumnos-centro-educativo/clase-alumnos-centro-educativo.page';
 import { ClaseAlumnosNotasCentroEducativoPage } from './centro-educativo/clase-alumnos-notas-centro-educativo/clase-alumnos-notas-centro-educativo.page';
+import { ProfesoresCentroEducativoPage } from './centro-educativo/profesores-centro-educativo/profesores-centro-educativo.page';
+import { PerfilCentroEducativoPage } from './centro-educativo/perfil-centro-educativo/perfil-centro-educativo.page';
+import { EditarPerfilCentroEducativoPage } from './centro-educativo/editar-perfil-centro-educativo/editar-perfil-centro-educativo.page';
 
 const routes: Routes = [
   { path: 'registro', component: BlankLayoutComponent,
@@ -22,12 +25,13 @@ const routes: Routes = [
   { path: 'tabs-centro-educativo', component: TabsCentroEducativoComponent,
     children: [
       { path: 'principal', component: PantallaPrincipalCentroEducativoPage},
-      { path: 'alumnos', component: RegistroAlumnoPage},
+      { path: 'profesores', component: ProfesoresCentroEducativoPage},
       { path: 'clases', component: ClasesCentroEducativoPage},
       { path: 'clases/profesores', component: ProfesoresClaseCentroEducativoPage},
       { path: 'clases/alumnos', component: ClaseAlumnosCentroEducativoPage},
       { path: 'clases/alumnos/notas', component: ClaseAlumnosNotasCentroEducativoPage},
-      { path: 'perfil', component: RegistroAlumnoPage},
+      { path: 'perfil', component: PerfilCentroEducativoPage},
+      { path: 'perfil/editar-perfil', component: EditarPerfilCentroEducativoPage},
     ]
   }
 ];

@@ -14,6 +14,9 @@ import { AccordionListComponent } from '../components/accordion-list/accordion-l
 import { ProfesoresClaseCentroEducativoPage } from './centro-educativo/profesores-clase-centro-educativo/profesores-clase-centro-educativo.page';
 import { ClaseAlumnosCentroEducativoPage } from './centro-educativo/clase-alumnos-centro-educativo/clase-alumnos-centro-educativo.page';
 import { ClaseAlumnosNotasCentroEducativoPage } from './centro-educativo/clase-alumnos-notas-centro-educativo/clase-alumnos-notas-centro-educativo.page';
+import { ProfesoresCentroEducativoPage } from './centro-educativo/profesores-centro-educativo/profesores-centro-educativo.page';
+import { PerfilCentroEducativoPage } from './centro-educativo/perfil-centro-educativo/perfil-centro-educativo.page';
+import { EditarPerfilCentroEducativoPage } from './centro-educativo/editar-perfil-centro-educativo/editar-perfil-centro-educativo.page';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { ClaseAlumnosNotasCentroEducativoPage } from './centro-educativo/clase-a
     AccordionListComponent,
     ProfesoresClaseCentroEducativoPage,
     ClaseAlumnosCentroEducativoPage,
-    ClaseAlumnosNotasCentroEducativoPage
+    ClaseAlumnosNotasCentroEducativoPage,
+    ProfesoresCentroEducativoPage,
+    PerfilCentroEducativoPage,
+    EditarPerfilCentroEducativoPage
   ],
   exports: [
     RegistroCentroEducativoPage,
@@ -36,7 +42,10 @@ import { ClaseAlumnosNotasCentroEducativoPage } from './centro-educativo/clase-a
     AccordionListComponent,
     ProfesoresClaseCentroEducativoPage,
     ClaseAlumnosCentroEducativoPage,
-    ClaseAlumnosNotasCentroEducativoPage
+    ClaseAlumnosNotasCentroEducativoPage,
+    ProfesoresCentroEducativoPage,
+    PerfilCentroEducativoPage,
+    EditarPerfilCentroEducativoPage
   ],
   imports: [
     IonicModule,
