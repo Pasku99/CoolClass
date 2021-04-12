@@ -17,6 +17,8 @@ import { ClaseAlumnosNotasCentroEducativoPage } from './centro-educativo/clase-a
 import { ProfesoresCentroEducativoPage } from './centro-educativo/profesores-centro-educativo/profesores-centro-educativo.page';
 import { PerfilCentroEducativoPage } from './centro-educativo/perfil-centro-educativo/perfil-centro-educativo.page';
 import { EditarPerfilCentroEducativoPage } from './centro-educativo/editar-perfil-centro-educativo/editar-perfil-centro-educativo.page';
+import { CodigosCentroEducativoPage } from './centro-educativo/codigos-centro-educativo/codigos-centro-educativo.page';
+import { AjustesCentroEducativoPage } from './centro-educativo/ajustes-centro-educativo/ajustes-centro-educativo.page';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { EditarPerfilCentroEducativoPage } from './centro-educativo/editar-perfi
     ClaseAlumnosNotasCentroEducativoPage,
     ProfesoresCentroEducativoPage,
     PerfilCentroEducativoPage,
-    EditarPerfilCentroEducativoPage
+    EditarPerfilCentroEducativoPage,
+    CodigosCentroEducativoPage,
+    AjustesCentroEducativoPage
   ],
   exports: [
     RegistroCentroEducativoPage,
@@ -45,7 +49,9 @@ import { EditarPerfilCentroEducativoPage } from './centro-educativo/editar-perfi
     ClaseAlumnosNotasCentroEducativoPage,
     ProfesoresCentroEducativoPage,
     PerfilCentroEducativoPage,
-    EditarPerfilCentroEducativoPage
+    EditarPerfilCentroEducativoPage,
+    CodigosCentroEducativoPage,
+    AjustesCentroEducativoPage
   ],
   imports: [
     IonicModule,

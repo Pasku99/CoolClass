@@ -13,6 +13,8 @@ import { ClaseAlumnosNotasCentroEducativoPage } from './centro-educativo/clase-a
 import { ProfesoresCentroEducativoPage } from './centro-educativo/profesores-centro-educativo/profesores-centro-educativo.page';
 import { PerfilCentroEducativoPage } from './centro-educativo/perfil-centro-educativo/perfil-centro-educativo.page';
 import { EditarPerfilCentroEducativoPage } from './centro-educativo/editar-perfil-centro-educativo/editar-perfil-centro-educativo.page';
+import { CodigosCentroEducativoPage } from './centro-educativo/codigos-centro-educativo/codigos-centro-educativo.page';
+import { AjustesCentroEducativoPage } from './centro-educativo/ajustes-centro-educativo/ajustes-centro-educativo.page';
 
 const routes: Routes = [
   { path: 'registro', component: BlankLayoutComponent,
@@ -32,6 +34,8 @@ const routes: Routes = [
       { path: 'clases/alumnos/notas', component: ClaseAlumnosNotasCentroEducativoPage},
       { path: 'perfil', component: PerfilCentroEducativoPage},
       { path: 'perfil/editar-perfil', component: EditarPerfilCentroEducativoPage},
+      { path: 'perfil/codigos', component: CodigosCentroEducativoPage},
+      { path: 'perfil/ajustes', component: AjustesCentroEducativoPage},
     ]
   }
 ];

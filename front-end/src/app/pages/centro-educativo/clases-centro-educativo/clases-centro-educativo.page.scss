@@ -36,6 +36,10 @@ ion-select {
     --placeholder-opacity: 1;
 }
 
+.swal2-styled.swal2-confirm {
+    color: black;
+}
+
 // ion-select::part(placeholder),
 // ion-select::part(text) {
 //     flex: 0 0 auto;
