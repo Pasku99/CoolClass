@@ -22,6 +22,7 @@ import { TabsProfesorComponent } from '../layouts/tabs-profesor/tabs-profesor.co
 import { MisClasesProfesorPage } from './profesor/mis-clases-profesor/mis-clases-profesor.page';
 import { MisAlumnosProfesorPage } from './profesor/mis-alumnos-profesor/mis-alumnos-profesor.page';
 import { NotasAlumnosProfesorPage } from './profesor/notas-alumnos-profesor/notas-alumnos-profesor.page';
+import { ComprobarExamenProfesorPage } from './profesor/comprobar-examen-profesor/comprobar-examen-profesor.page';
 
 const routes: Routes = [
   { path: 'registro', component: BlankLayoutComponent,
@@ -53,6 +54,7 @@ const routes: Routes = [
       { path: 'clases', component: MisClasesProfesorPage},
       { path: 'clases/alumnos', component: MisAlumnosProfesorPage},
       { path: 'clases/alumnos/notas', component: NotasAlumnosProfesorPage},
+      { path: 'clases/alumnos/notas/comprobar-examen', component: ComprobarExamenProfesorPage},
     ]
   }
 ];

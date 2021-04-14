@@ -1,0 +1,18 @@
+ion-header {
+    --ion-background-color: white;
+}
+
+ion-toolbar {
+    --ion-background-color: white;
+}
+
+ion-content {
+    --ion-background-color: white;
+}
+
+.back {
+    position: fixed;
+    z-index: 10;
+    left: -1rem;
+    top: 0.5rem;
+}

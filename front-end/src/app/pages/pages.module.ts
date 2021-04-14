@@ -25,6 +25,7 @@ import { PantallaPrincipalProfesorPage } from './profesor/pantalla-principal-pro
 import { MisClasesProfesorPage } from './profesor/mis-clases-profesor/mis-clases-profesor.page';
 import { MisAlumnosProfesorPage } from './profesor/mis-alumnos-profesor/mis-alumnos-profesor.page';
 import { NotasAlumnosProfesorPage } from './profesor/notas-alumnos-profesor/notas-alumnos-profesor.page';
+import { ComprobarExamenProfesorPage } from './profesor/comprobar-examen-profesor/comprobar-examen-profesor.page';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { NotasAlumnosProfesorPage } from './profesor/notas-alumnos-profesor/nota
     PantallaPrincipalProfesorPage,
     MisClasesProfesorPage,
     MisAlumnosProfesorPage,
-    NotasAlumnosProfesorPage
+    NotasAlumnosProfesorPage,
+    ComprobarExamenProfesorPage,
   ],
   exports: [
     RegistroCentroEducativoPage,
@@ -69,7 +71,8 @@ import { NotasAlumnosProfesorPage } from './profesor/notas-alumnos-profesor/nota
     PantallaPrincipalProfesorPage,
     MisClasesProfesorPage,
     MisAlumnosProfesorPage,
-    NotasAlumnosProfesorPage
+    NotasAlumnosProfesorPage,
+    ComprobarExamenProfesorPage
   ],
   imports: [
     IonicModule,
