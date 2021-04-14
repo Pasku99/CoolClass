@@ -20,6 +20,11 @@ import { EditarPerfilCentroEducativoPage } from './centro-educativo/editar-perfi
 import { CodigosCentroEducativoPage } from './centro-educativo/codigos-centro-educativo/codigos-centro-educativo.page';
 import { AjustesCentroEducativoPage } from './centro-educativo/ajustes-centro-educativo/ajustes-centro-educativo.page';
 import { EscogerClasesProfesorPage } from './profesor/escoger-clases-profesor/escoger-clases-profesor.page';
+import { EscogerAsignaturasProfesorPage } from './profesor/escoger-asignaturas-profesor/escoger-asignaturas-profesor.page';
+import { PantallaPrincipalProfesorPage } from './profesor/pantalla-principal-profesor/pantalla-principal-profesor.page';
+import { MisClasesProfesorPage } from './profesor/mis-clases-profesor/mis-clases-profesor.page';
+import { MisAlumnosProfesorPage } from './profesor/mis-alumnos-profesor/mis-alumnos-profesor.page';
+import { NotasAlumnosProfesorPage } from './profesor/notas-alumnos-profesor/notas-alumnos-profesor.page';
 
 @NgModule({
   declarations: [
@@ -37,7 +42,12 @@ import { EscogerClasesProfesorPage } from './profesor/escoger-clases-profesor/es
     EditarPerfilCentroEducativoPage,
     CodigosCentroEducativoPage,
     AjustesCentroEducativoPage,
-    EscogerClasesProfesorPage
+    EscogerClasesProfesorPage,
+    EscogerAsignaturasProfesorPage,
+    PantallaPrincipalProfesorPage,
+    MisClasesProfesorPage,
+    MisAlumnosProfesorPage,
+    NotasAlumnosProfesorPage
   ],
   exports: [
     RegistroCentroEducativoPage,
@@ -54,7 +64,12 @@ import { EscogerClasesProfesorPage } from './profesor/escoger-clases-profesor/es
     EditarPerfilCentroEducativoPage,
     CodigosCentroEducativoPage,
     AjustesCentroEducativoPage,
-    EscogerClasesProfesorPage
+    EscogerClasesProfesorPage,
+    EscogerAsignaturasProfesorPage,
+    PantallaPrincipalProfesorPage,
+    MisClasesProfesorPage,
+    MisAlumnosProfesorPage,
+    NotasAlumnosProfesorPage
   ],
   imports: [
     IonicModule,

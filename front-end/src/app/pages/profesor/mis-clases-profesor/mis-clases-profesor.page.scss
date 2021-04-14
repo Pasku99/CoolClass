@@ -1,0 +1,66 @@
+ion-header {
+    --ion-background-color: white;
+}
+
+ion-toolbar {
+    --ion-background-color: white;
+}
+
+ion-content {
+    --ion-background-color: white;
+}
+
+.anyadirClase {
+    position: fixed;
+    z-index: 10;
+    right: 0.2rem;
+    bottom: 1.5rem;
+}
+
+.anyadirClase2 {
+    position: fixed;
+    z-index: 10;
+    right: 0.5rem;
+    bottom: 5.5rem;
+}
+
+ion-select {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    background-color: #73C2FB;
+    color: black;
+    --placeholder-color: black;
+    --placeholder-opacity: 1;
+}
+
+.swal2-styled.swal2-confirm {
+    color: black;
+}
+
+// ion-select::part(placeholder),
+// ion-select::part(text) {
+//     flex: 0 0 auto;
+// }
+// ion-select::part(placeholder) {
+//     color: black;
+//     opacity: 1;
+// }
+// ion-select::part(text) {
+//     color: black;
+// }
+// ion-select::part(icon) {
+//     color: black;
+//     opacity: 1;
+// }
+div {
+    background-color: white;
+}
+
+ion-card {
+    background-color: white;
+    box-shadow: none !important;
+    border-bottom: 0.1rem solid #004dff;
+}

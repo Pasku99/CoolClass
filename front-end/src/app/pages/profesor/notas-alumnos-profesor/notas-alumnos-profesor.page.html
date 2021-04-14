@@ -1,0 +1,65 @@
+<ion-header class="ion-no-border" lines="none" style="background-color: white; margin-top: 0.5rem;">
+    <ion-toolbar>
+        <ion-row>
+            <ion-col size="12">
+                <ion-title style="background-color: white; color: #004DFF; text-align: center; font-size: 1.4rem; padding-right: 3rem; padding-left: 3rem;">
+                    CLASE: 2 ESO A
+                </ion-title>
+            </ion-col>
+        </ion-row>
+    </ion-toolbar>
+    <ion-img class="back" src="../../../../assets/ionicons/arrow-back-outline.svg" style="width: 2.5rem; height: 2.5rem; margin-left: 1.5rem; margin-top: 0.5rem;" routerLink="/tabs-profesor/clases/alumnos"></ion-img>
+</ion-header>
+
+<ion-content>
+    <ion-row>
+        <ion-col size="12">
+            <ion-item class="ion-no-border" lines="none">
+                <ion-icon text-center name="person-circle" style="width: 10rem; height: 10rem; text-align: center; width:100%; display:flex; align-items:center; justify-content:center;"></ion-icon>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col size="12">
+            <b style="color: #004DFF; text-align: center; font-size: 1.4rem; width:100%; display:flex; align-items:center; justify-content:center;">Alumno/a: Vanessa Amorós</b>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col size="12">
+            <ion-card (click)="expandItem(item)" *ngFor="let item of items">
+                <ion-row>
+                    <ion-col size="3">
+                        <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;"></ion-icon>
+                    </ion-col>
+                    <ion-col size="4.5">
+                        <!-- <ion-card-header>
+                      <ion-card-title style="color: black; font-size: 16px;"><b>Profesor</b></ion-card-title>
+                  </ion-card-header> -->
+                        <p style="color: black; font-size: 16px;"><b>Prueba</b></p>
+
+                    </ion-col>
+                    <ion-col size="4.5">
+                        <p style="color: black; font-size: 16px;">Tema 3 - Polinomios</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12">
+                        <app-accordion-list expandHeight="100px" [expanded]="item.expanded">
+                            <ion-row>
+                                <ion-col size="3">
+
+                                </ion-col>
+                                <ion-col size="4.5">
+                                    <b style="color: black; font-size: 16px; ">Nota</b>
+                                </ion-col>
+                                <ion-col size="4.5">
+                                    <p style="color: black; font-size: 16px; margin-top: 0rem;">8.8</p>
+                                </ion-col>
+                            </ion-row>
+                        </app-accordion-list>
+                    </ion-col>
+                </ion-row>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+</ion-content>

@@ -1,0 +1,122 @@
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col size="12" align-self-center>
+                <h2 style="text-align: center; color: #004dff; font-weight: bold;">Mis clases</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" align-self-center>
+                <div class="ion-padding">
+                    <ion-slides pages>
+                        <ion-slide>
+                            <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(0)"></ion-icon>
+                            <ion-button class="clases" size="large">2ESO A</ion-button>
+                            <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(0)"></ion-icon>
+                        </ion-slide>
+                        <ion-slide>
+                            <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(0)"></ion-icon>
+                            <ion-button class="clases" size="large">2ESO A</ion-button>
+                            <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(0)"></ion-icon>
+                        </ion-slide>
+                        <ion-slide>
+                            <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(0)"></ion-icon>
+                            <ion-button class="clases" size="large">2ESO A</ion-button>
+                            <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(0)"></ion-icon>
+                        </ion-slide>
+                    </ion-slides>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" align-self-center>
+                <h2 style="text-align: center; color: #004dff; font-weight: bold;">Últimos exámenes</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" align-self-center>
+                <ion-slides pages>
+                    <ion-slide>
+                        <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(1)"></ion-icon>
+                        <!-- <div style="height: 100%; display: flex; align-items: center; justify-content: center;"> -->
+                        <ion-card style="background-color: #00ff7f;">
+                            <ion-card-header>
+                                <ion-card-title style="font-size: 1.2rem; text-align:center;">Tema 4: Polinomios</ion-card-title>
+                                <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
+                                    <ion-icon name="book" no-margin></ion-icon>
+                                </ion-card-subtitle>
+                            </ion-card-header>
+                            <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: 0rem;">
+                                Clase: 2ESO A
+                            </ion-card-content>
+                        </ion-card>
+                        <!-- </div> -->
+                        <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(1)"></ion-icon>
+                    </ion-slide>
+                    <ion-slide>
+                        <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(1)"></ion-icon>
+                        <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <ion-card style="background-color: #00ff7f;">
+                                <ion-card-header>
+                                    <ion-card-title style="font-size: 1.2rem; text-align:center;">Tema 4: Polinomios</ion-card-title>
+                                    <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
+                                        <ion-icon name="book" no-margin></ion-icon>
+                                    </ion-card-subtitle>
+                                </ion-card-header>
+                                <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: 0rem;">
+                                    Clase: 2ESO A
+                                </ion-card-content>
+                            </ion-card>
+                        </div>
+                        <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(1)"></ion-icon>
+                    </ion-slide>
+                </ion-slides>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" align-self-center>
+                <h2 style="text-align: center; color: #004dff; font-weight: bold;">Próximos exámenes</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" align-self-center>
+                <ion-slides>
+                    <ion-slide>
+                        <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(2)"></ion-icon>
+                        <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <ion-card style="background-color: #00ff7f;">
+                                <ion-card-header>
+                                    <ion-card-title style="font-size: 1.2rem; text-align:center;">Tema 5: Sistemas</ion-card-title>
+                                    <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
+                                        <ion-icon name="book" no-margin></ion-icon>
+                                    </ion-card-subtitle>
+                                </ion-card-header>
+                                <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: -0.5rem;">
+                                    Clase: 3ESO B<br>Fecha: 05/06/2021
+                                </ion-card-content>
+                            </ion-card>
+                        </div>
+                        <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(2)"></ion-icon>
+                    </ion-slide>
+                    <ion-slide>
+                        <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(2)"></ion-icon>
+                        <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <ion-card style="background-color: #00ff7f;">
+                                <ion-card-header>
+                                    <ion-card-title style="font-size: 1.2rem; text-align:center;">Tema 5: Sistemas</ion-card-title>
+                                    <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
+                                        <ion-icon name="book" no-margin></ion-icon>
+                                    </ion-card-subtitle>
+                                </ion-card-header>
+                                <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: -0.5rem;">
+                                    Clase: 3ESO B<br>Fecha: 05/06/2021
+                                </ion-card-content>
+                            </ion-card>
+                        </div>
+                        <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(2)"></ion-icon>
+                    </ion-slide>
+                </ion-slides>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

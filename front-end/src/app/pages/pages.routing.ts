@@ -16,6 +16,12 @@ import { EditarPerfilCentroEducativoPage } from './centro-educativo/editar-perfi
 import { CodigosCentroEducativoPage } from './centro-educativo/codigos-centro-educativo/codigos-centro-educativo.page';
 import { AjustesCentroEducativoPage } from './centro-educativo/ajustes-centro-educativo/ajustes-centro-educativo.page';
 import { EscogerClasesProfesorPage } from './profesor/escoger-clases-profesor/escoger-clases-profesor.page';
+import { EscogerAsignaturasProfesorPage } from './profesor/escoger-asignaturas-profesor/escoger-asignaturas-profesor.page';
+import { PantallaPrincipalProfesorPage } from './profesor/pantalla-principal-profesor/pantalla-principal-profesor.page';
+import { TabsProfesorComponent } from '../layouts/tabs-profesor/tabs-profesor.component';
+import { MisClasesProfesorPage } from './profesor/mis-clases-profesor/mis-clases-profesor.page';
+import { MisAlumnosProfesorPage } from './profesor/mis-alumnos-profesor/mis-alumnos-profesor.page';
+import { NotasAlumnosProfesorPage } from './profesor/notas-alumnos-profesor/notas-alumnos-profesor.page';
 
 const routes: Routes = [
   { path: 'registro', component: BlankLayoutComponent,
@@ -23,6 +29,7 @@ const routes: Routes = [
       { path: 'centro-educativo', component: RegistroCentroEducativoPage},
       { path: 'profesor', component: RegistroProfesorPage},
       { path: 'profesor/escoger-clases', component: EscogerClasesProfesorPage},
+      { path: 'profesor/escoger-clases/escoger-asignaturas', component: EscogerAsignaturasProfesorPage},
       { path: 'alumno', component: RegistroAlumnoPage},
     ]
   },
@@ -38,6 +45,14 @@ const routes: Routes = [
       { path: 'perfil/editar-perfil', component: EditarPerfilCentroEducativoPage},
       { path: 'perfil/codigos', component: CodigosCentroEducativoPage},
       { path: 'perfil/ajustes', component: AjustesCentroEducativoPage},
+    ]
+  },
+  { path: 'tabs-profesor', component: TabsProfesorComponent,
+    children: [
+      { path: 'principal', component: PantallaPrincipalProfesorPage},
+      { path: 'clases', component: MisClasesProfesorPage},
+      { path: 'clases/alumnos', component: MisAlumnosProfesorPage},
+      { path: 'clases/alumnos/notas', component: NotasAlumnosProfesorPage},
     ]
   }
 ];
