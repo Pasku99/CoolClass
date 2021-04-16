@@ -30,6 +30,9 @@ import { MisExamenesProfesorPage } from './profesor/mis-examenes-profesor/mis-ex
 import { CrearExamenProfesorPage } from './profesor/crear-examen-profesor/crear-examen-profesor.page';
 import { PerfilProfesorPage } from './profesor/perfil-profesor/perfil-profesor.page';
 import { EditarPerfilProfesorPage } from './profesor/editar-perfil-profesor/editar-perfil-profesor.page';
+import { EscogerClasesConfigProfesorPage } from './profesor/escoger-clases-config-profesor/escoger-clases-config-profesor.page';
+import { EscogerAsignaturasConfigProfesorPage } from './profesor/escoger-asignaturas-config-profesor/escoger-asignaturas-config-profesor.page';
+import { AjustesProfesorPage } from './profesor/ajustes-profesor/ajustes-profesor.page';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,10 @@ import { EditarPerfilProfesorPage } from './profesor/editar-perfil-profesor/edit
     MisExamenesProfesorPage,
     CrearExamenProfesorPage,
     PerfilProfesorPage,
-    EditarPerfilProfesorPage
+    EditarPerfilProfesorPage,
+    EscogerClasesConfigProfesorPage,
+    EscogerAsignaturasConfigProfesorPage,
+    AjustesProfesorPage
   ],
   exports: [
     RegistroCentroEducativoPage,
@@ -84,7 +90,10 @@ import { EditarPerfilProfesorPage } from './profesor/editar-perfil-profesor/edit
     MisExamenesProfesorPage,
     CrearExamenProfesorPage,
     PerfilProfesorPage,
-    EditarPerfilProfesorPage
+    EditarPerfilProfesorPage,
+    EscogerClasesConfigProfesorPage,
+    EscogerAsignaturasConfigProfesorPage,
+    AjustesProfesorPage
   ],
   imports: [
     IonicModule,

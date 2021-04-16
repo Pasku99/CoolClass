@@ -1,0 +1,36 @@
+<ion-header class="ion-no-border" lines="none" style="background-color: #004dff; padding-bottom: 4rem;">
+    <ion-col size="12" align-self-center>
+        <ion-img src="../../../assets/imagotipo2coolclass.png" style="width: 70%; height: 70%; margin-left: auto; margin-right: auto; margin-top: 2rem;"></ion-img>
+    </ion-col>
+</ion-header>
+<ion-content>
+    <div style="background-color: white; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <h2 style="text-align: center; color: #004dff;">Escoger asignaturas</h2>
+                </ion-col>
+            </ion-row>
+            <ion-row style="background-color: #00ff7f; border-radius: 1rem; margin-left: 2rem; margin-right: 2rem; margin-top: 1rem;">
+                <ion-col size="4">
+                    <p style="text-align: left; margin-left: 1rem; font-size: 1.1rem; font-weight: bold; margin-top: 1.6rem;">2 ESO A</p>
+                </ion-col>
+                <ion-col size="8">
+                    <ion-list class="ion-no-border" lines="none" style="background-color: #00ff7f; margin-top: 0.4rem;">
+                        <ion-item style="--background: #00ff7f;">
+                            <ion-select placeholder="Escoger asignatura">
+                                <ion-select-option value="2esoa" style="color: black;">Matemáticas</ion-select-option>
+                                <ion-select-option value="2esob" style="color: black;">Inglés</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+            <ion-row style="margin-top: 2rem;">
+                <ion-col size="12" style="border-radius: 1rem;">
+                    <ion-button size="large" routerLink="/tabs-profesor/principal">Guardar</ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>

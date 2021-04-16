@@ -27,6 +27,9 @@ import { MisExamenesProfesorPage } from './profesor/mis-examenes-profesor/mis-ex
 import { CrearExamenProfesorPage } from './profesor/crear-examen-profesor/crear-examen-profesor.page';
 import { PerfilProfesorPage } from './profesor/perfil-profesor/perfil-profesor.page';
 import { EditarPerfilProfesorPage } from './profesor/editar-perfil-profesor/editar-perfil-profesor.page';
+import { EscogerClasesConfigProfesorPage } from './profesor/escoger-clases-config-profesor/escoger-clases-config-profesor.page';
+import { EscogerAsignaturasConfigProfesorPage } from './profesor/escoger-asignaturas-config-profesor/escoger-asignaturas-config-profesor.page';
+import { AjustesProfesorPage } from './profesor/ajustes-profesor/ajustes-profesor.page';
 
 const routes: Routes = [
   { path: 'registro', component: BlankLayoutComponent,
@@ -63,6 +66,9 @@ const routes: Routes = [
       { path: 'clases/crear-examen', component: CrearExamenProfesorPage},
       { path: 'perfil', component: PerfilProfesorPage},
       { path: 'perfil/editar-perfil', component: EditarPerfilProfesorPage},
+      { path: 'perfil/configuracion-clases', component: EscogerClasesConfigProfesorPage},
+      { path: 'perfil/configuracion-clases/asignaturas', component: EscogerAsignaturasConfigProfesorPage},
+      { path: 'perfil/ajustes', component: AjustesProfesorPage}
     ]
   }
 ];
