@@ -35,6 +35,8 @@ import { EscogerAsignaturasConfigProfesorPage } from './profesor/escoger-asignat
 import { AjustesProfesorPage } from './profesor/ajustes-profesor/ajustes-profesor.page';
 import { EscogerClaseAlumnoPage } from './alumno/escoger-clase-alumno/escoger-clase-alumno.page';
 import { PantallaPrincipalAlumnoPage } from './alumno/pantalla-principal-alumno/pantalla-principal-alumno.page';
+import { MisAsignaturasAlumnoPage } from './alumno/mis-asignaturas-alumno/mis-asignaturas-alumno.page';
+import { InfoAsignaturaAlumnoPage } from './alumno/info-asignatura-alumno/info-asignatura-alumno.page';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,9 @@ import { PantallaPrincipalAlumnoPage } from './alumno/pantalla-principal-alumno/
     EscogerAsignaturasConfigProfesorPage,
     AjustesProfesorPage,
     EscogerClaseAlumnoPage,
-    PantallaPrincipalAlumnoPage
+    PantallaPrincipalAlumnoPage,
+    MisAsignaturasAlumnoPage,
+    InfoAsignaturaAlumnoPage
   ],
   exports: [
     RegistroCentroEducativoPage,
@@ -99,7 +103,9 @@ import { PantallaPrincipalAlumnoPage } from './alumno/pantalla-principal-alumno/
     EscogerAsignaturasConfigProfesorPage,
     AjustesProfesorPage,
     EscogerClaseAlumnoPage,
-    PantallaPrincipalAlumnoPage
+    PantallaPrincipalAlumnoPage,
+    MisAsignaturasAlumnoPage,
+    InfoAsignaturaAlumnoPage
   ],
   imports: [
     IonicModule,

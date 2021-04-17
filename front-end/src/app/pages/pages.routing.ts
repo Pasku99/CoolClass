@@ -33,6 +33,8 @@ import { AjustesProfesorPage } from './profesor/ajustes-profesor/ajustes-profeso
 import { EscogerClaseAlumnoPage } from './alumno/escoger-clase-alumno/escoger-clase-alumno.page';
 import { PantallaPrincipalAlumnoPage } from './alumno/pantalla-principal-alumno/pantalla-principal-alumno.page';
 import { TabsAlumnoComponent } from '../layouts/tabs-alumno/tabs-alumno.component';
+import { MisAsignaturasAlumnoPage } from './alumno/mis-asignaturas-alumno/mis-asignaturas-alumno.page';
+import { InfoAsignaturaAlumnoPage } from './alumno/info-asignatura-alumno/info-asignatura-alumno.page';
 
 const routes: Routes = [
   { path: 'registro', component: BlankLayoutComponent,
@@ -78,6 +80,8 @@ const routes: Routes = [
   { path: 'tabs-alumno', component: TabsAlumnoComponent,
     children: [
       { path: 'principal', component: PantallaPrincipalAlumnoPage},
+      { path: 'asignaturas', component: MisAsignaturasAlumnoPage},
+      { path: 'asignaturas/info-asignatura', component: InfoAsignaturaAlumnoPage},
     ]
   }
 ];
