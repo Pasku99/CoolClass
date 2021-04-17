@@ -33,6 +33,8 @@ import { EditarPerfilProfesorPage } from './profesor/editar-perfil-profesor/edit
 import { EscogerClasesConfigProfesorPage } from './profesor/escoger-clases-config-profesor/escoger-clases-config-profesor.page';
 import { EscogerAsignaturasConfigProfesorPage } from './profesor/escoger-asignaturas-config-profesor/escoger-asignaturas-config-profesor.page';
 import { AjustesProfesorPage } from './profesor/ajustes-profesor/ajustes-profesor.page';
+import { EscogerClaseAlumnoPage } from './alumno/escoger-clase-alumno/escoger-clase-alumno.page';
+import { PantallaPrincipalAlumnoPage } from './alumno/pantalla-principal-alumno/pantalla-principal-alumno.page';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { AjustesProfesorPage } from './profesor/ajustes-profesor/ajustes-profeso
     EditarPerfilProfesorPage,
     EscogerClasesConfigProfesorPage,
     EscogerAsignaturasConfigProfesorPage,
-    AjustesProfesorPage
+    AjustesProfesorPage,
+    EscogerClaseAlumnoPage,
+    PantallaPrincipalAlumnoPage
   ],
   exports: [
     RegistroCentroEducativoPage,
@@ -93,7 +97,9 @@ import { AjustesProfesorPage } from './profesor/ajustes-profesor/ajustes-profeso
     EditarPerfilProfesorPage,
     EscogerClasesConfigProfesorPage,
     EscogerAsignaturasConfigProfesorPage,
-    AjustesProfesorPage
+    AjustesProfesorPage,
+    EscogerClaseAlumnoPage,
+    PantallaPrincipalAlumnoPage
   ],
   imports: [
     IonicModule,

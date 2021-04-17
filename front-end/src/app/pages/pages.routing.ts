@@ -30,6 +30,9 @@ import { EditarPerfilProfesorPage } from './profesor/editar-perfil-profesor/edit
 import { EscogerClasesConfigProfesorPage } from './profesor/escoger-clases-config-profesor/escoger-clases-config-profesor.page';
 import { EscogerAsignaturasConfigProfesorPage } from './profesor/escoger-asignaturas-config-profesor/escoger-asignaturas-config-profesor.page';
 import { AjustesProfesorPage } from './profesor/ajustes-profesor/ajustes-profesor.page';
+import { EscogerClaseAlumnoPage } from './alumno/escoger-clase-alumno/escoger-clase-alumno.page';
+import { PantallaPrincipalAlumnoPage } from './alumno/pantalla-principal-alumno/pantalla-principal-alumno.page';
+import { TabsAlumnoComponent } from '../layouts/tabs-alumno/tabs-alumno.component';
 
 const routes: Routes = [
   { path: 'registro', component: BlankLayoutComponent,
@@ -39,6 +42,7 @@ const routes: Routes = [
       { path: 'profesor/escoger-clases', component: EscogerClasesProfesorPage},
       { path: 'profesor/escoger-clases/escoger-asignaturas', component: EscogerAsignaturasProfesorPage},
       { path: 'alumno', component: RegistroAlumnoPage},
+      { path: 'alumno/escoger-clase', component: EscogerClaseAlumnoPage},
     ]
   },
   { path: 'tabs-centro-educativo', component: TabsCentroEducativoComponent,
@@ -69,6 +73,11 @@ const routes: Routes = [
       { path: 'perfil/configuracion-clases', component: EscogerClasesConfigProfesorPage},
       { path: 'perfil/configuracion-clases/asignaturas', component: EscogerAsignaturasConfigProfesorPage},
       { path: 'perfil/ajustes', component: AjustesProfesorPage}
+    ]
+  },
+  { path: 'tabs-alumno', component: TabsAlumnoComponent,
+    children: [
+      { path: 'principal', component: PantallaPrincipalAlumnoPage},
     ]
   }
 ];

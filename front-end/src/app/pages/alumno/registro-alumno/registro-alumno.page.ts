@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro-alumno',
@@ -19,5 +20,4 @@ export class RegistroAlumnoPage implements OnInit {
 
   ngOnInit() {
   }
-
 }

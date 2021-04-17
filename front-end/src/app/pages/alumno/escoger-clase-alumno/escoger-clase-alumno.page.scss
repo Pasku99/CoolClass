@@ -1,0 +1,63 @@
+ion-img {
+    margin: auto;
+}
+
+.back:hover {
+    cursor: pointer;
+}
+
+ion-content {
+    --ion-background-color: white;
+}
+
+ion-grid {
+    height: 100%;
+}
+
+.filaLogo {
+    height: 40%;
+}
+
+.fila2 {
+    height: 10%;
+}
+
+.fila3 {
+    height: 12%;
+}
+
+.fila4 {
+    height: 20%;
+}
+
+.texto-egypt-blue {
+    text-align: center;
+    color: #004DFF;
+}
+
+ion-item {
+    --ion-background-color: white;
+    --highlight-background: none;
+}
+
+ion-select {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    background-color: #73C2FB;
+    color: black;
+    --placeholder-color: black;
+    --placeholder-opacity: 1;
+}
+
+.boton1 {
+    color: black;
+    --background: #00FF7F;
+    --border-radius: 1rem;
+    border: 0.1rem solid black;
+    border-radius: 1rem;
+    margin-right: 6rem;
+    margin-left: 6rem;
+}

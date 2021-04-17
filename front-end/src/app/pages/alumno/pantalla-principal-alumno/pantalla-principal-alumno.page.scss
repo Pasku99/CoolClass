@@ -1,0 +1,31 @@
+ion-content {
+    --ion-background-color: white;
+}
+
+.clases {
+    --background: #004dff;
+    font-size: 2rem;
+}
+
+ion-button {
+    width: 12rem;
+    height: 8rem;
+}
+
+span {
+    display: none;
+}
+
+ion-card {
+    width: 12rem;
+    height: 11rem;
+}
+
+ion-icon {
+    width: 2rem;
+    height: 2rem;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

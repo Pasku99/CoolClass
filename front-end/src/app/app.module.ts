@@ -11,10 +11,11 @@ import { PagesModule } from './pages/pages.module';
 import { BlankLayoutComponent } from './layouts/blank-layout/blank-layout.component';
 import { TabsCentroEducativoComponent } from './layouts/tabs-centro-educativo/tabs-centro-educativo.component';
 import { TabsProfesorComponent } from './layouts/tabs-profesor/tabs-profesor.component';
+import { TabsAlumnoComponent } from './layouts/tabs-alumno/tabs-alumno.component';
 
 
 @NgModule({
-  declarations: [AppComponent, BlankLayoutComponent, TabsCentroEducativoComponent, TabsProfesorComponent],
+  declarations: [AppComponent, BlankLayoutComponent, TabsCentroEducativoComponent, TabsProfesorComponent, TabsAlumnoComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, MainModule, RouterModule, IonicModule, PagesModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
