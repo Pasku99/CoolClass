@@ -37,6 +37,11 @@ import { MisAsignaturasAlumnoPage } from './alumno/mis-asignaturas-alumno/mis-as
 import { InfoAsignaturaAlumnoPage } from './alumno/info-asignatura-alumno/info-asignatura-alumno.page';
 import { MisExamenesAlumnoPage } from './alumno/mis-examenes-alumno/mis-examenes-alumno.page';
 import { HacerExamenAlumnoPage } from './alumno/hacer-examen-alumno/hacer-examen-alumno.page';
+import { MisNotasAlumnoPage } from './alumno/mis-notas-alumno/mis-notas-alumno.page';
+import { ComprobarExamenAlumnoPage } from './alumno/comprobar-examen-alumno/comprobar-examen-alumno.page';
+import { PerfilAlumnoPage } from './alumno/perfil-alumno/perfil-alumno.page';
+import { EditarPerfilAlumnoPage } from './alumno/editar-perfil-alumno/editar-perfil-alumno.page';
+import { AjustesAlumnoPage } from './alumno/ajustes-alumno/ajustes-alumno.page';
 
 const routes: Routes = [
   { path: 'registro', component: BlankLayoutComponent,
@@ -86,6 +91,11 @@ const routes: Routes = [
       { path: 'asignaturas/info-asignatura', component: InfoAsignaturaAlumnoPage},
       { path: 'asignaturas/info-asignatura/examenes', component: MisExamenesAlumnoPage},
       { path: 'asignaturas/info-asignatura/examenes/hacer-examen', component: HacerExamenAlumnoPage},
+      { path: 'asignaturas/info-asignatura/examenes/notas', component: MisNotasAlumnoPage},
+      { path: 'asignaturas/info-asignatura/examenes/notas/comprobar-examen', component: ComprobarExamenAlumnoPage},
+      { path: 'perfil', component: PerfilAlumnoPage},
+      { path: 'perfil/editar-perfil', component: EditarPerfilAlumnoPage},
+      { path: 'perfil/ajustes', component: AjustesAlumnoPage},
     ]
   }
 ];

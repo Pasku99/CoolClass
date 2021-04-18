@@ -1,0 +1,80 @@
+<ion-header class="ion-no-border" lines="none" style="background-color: #004dff; padding-bottom: 0rem;">
+    <ion-col size="12" style="text-align: center;">
+        <h1>MATEMÁTICAS</h1>
+    </ion-col>
+</ion-header>
+<ion-content class="ion-no-border" lines="none">
+    <div class="contenido" style="background-color: white; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
+        <ion-grid>
+            <ion-row>
+                <ion-col size="12">
+                    <ion-icon class="fotoPerfil" text-center name="person-circle" style="width: 7rem; height: 7rem; text-align: center; width:100%; display:flex; align-items:center; justify-content:center;"></ion-icon>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="12" align-self-center class="ion-no-padding">
+                    <h2 style="text-align: center; margin-top: 4rem;">Profesor: Pascual Sánchez</h2>
+                </ion-col>
+            </ion-row>
+            <ion-row class="ion-no-padding">
+                <ion-col size="12" align-self-center class="ion-no-padding">
+                    <h2 style="text-align: center; color: #004dff; font-weight: bold; margin-bottom: 10rem;">Mis notas</h2>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="12" align-self-center class="ion-no-padding" style="margin-top: -9rem;">
+                    <ion-searchbar placeholder="Buscar examen"></ion-searchbar>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="12" align-self-center class="ion-no-padding" style="margin-top: -6rem;">
+                    <ion-card (click)="expandItem(item)" *ngFor="let item of items">
+                        <ion-row>
+                            <ion-col size="3">
+                                <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;"></ion-icon>
+                            </ion-col>
+                            <ion-col size="4.5">
+                                <!-- <ion-card-header>
+                          <ion-card-title style="color: black; font-size: 16px;"><b>Profesor</b></ion-card-title>
+                      </ion-card-header> -->
+                                <p style="color: black; font-size: 16px;"><b>Nombre</b></p>
+
+                            </ion-col>
+                            <ion-col size="4.5">
+                                <p style="color: black; font-size: 16px;">Tema 4 - Polinomios</p>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col size="12">
+                                <app-accordion-list expandHeight="150px" [expanded]="item.expanded">
+                                    <ion-row>
+                                        <ion-col size="3">
+
+                                        </ion-col>
+                                        <ion-col size="4.5">
+                                            <p style="color: black; font-size: 16px; font-weight: bold;">Puntuación</p>
+                                        </ion-col>
+                                        <ion-col size="4.5">
+                                            <p style="color: black; font-size: 16px;">8.8/10</p>
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                        <ion-col size="3">
+
+                                        </ion-col>
+                                        <ion-col size="4.5">
+                                            <p style="color: black; font-size: 16px; font-weight: bold;">Ver examen</p>
+                                        </ion-col>
+                                        <ion-col size="4.5">
+                                            <ion-icon name="eye" style="width: 2rem; height: 2rem; margin-top: 0.55rem; margin-left: 0; color: #004DFF;" routerLink="/tabs-alumno/asignaturas/info-asignatura/examenes/notas/comprobar-examen"></ion-icon>
+                                        </ion-col>
+                                    </ion-row>
+                                </app-accordion-list>
+                            </ion-col>
+                        </ion-row>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>

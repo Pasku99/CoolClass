@@ -39,6 +39,11 @@ import { MisAsignaturasAlumnoPage } from './alumno/mis-asignaturas-alumno/mis-as
 import { InfoAsignaturaAlumnoPage } from './alumno/info-asignatura-alumno/info-asignatura-alumno.page';
 import { MisExamenesAlumnoPage } from './alumno/mis-examenes-alumno/mis-examenes-alumno.page';
 import { HacerExamenAlumnoPage } from './alumno/hacer-examen-alumno/hacer-examen-alumno.page';
+import { MisNotasAlumnoPage } from './alumno/mis-notas-alumno/mis-notas-alumno.page';
+import { ComprobarExamenAlumnoPage } from './alumno/comprobar-examen-alumno/comprobar-examen-alumno.page';
+import { PerfilAlumnoPage } from './alumno/perfil-alumno/perfil-alumno.page';
+import { EditarPerfilAlumnoPage } from './alumno/editar-perfil-alumno/editar-perfil-alumno.page';
+import { AjustesAlumnoPage } from './alumno/ajustes-alumno/ajustes-alumno.page';
 
 @NgModule({
   declarations: [
@@ -75,7 +80,12 @@ import { HacerExamenAlumnoPage } from './alumno/hacer-examen-alumno/hacer-examen
     MisAsignaturasAlumnoPage,
     InfoAsignaturaAlumnoPage,
     MisExamenesAlumnoPage,
-    HacerExamenAlumnoPage
+    HacerExamenAlumnoPage,
+    MisNotasAlumnoPage,
+    ComprobarExamenAlumnoPage,
+    PerfilAlumnoPage,
+    EditarPerfilAlumnoPage,
+    AjustesAlumnoPage
   ],
   exports: [
     RegistroCentroEducativoPage,
@@ -111,7 +121,12 @@ import { HacerExamenAlumnoPage } from './alumno/hacer-examen-alumno/hacer-examen
     MisAsignaturasAlumnoPage,
     InfoAsignaturaAlumnoPage,
     MisExamenesAlumnoPage,
-    HacerExamenAlumnoPage
+    HacerExamenAlumnoPage,
+    MisNotasAlumnoPage,
+    ComprobarExamenAlumnoPage,
+    PerfilAlumnoPage,
+    EditarPerfilAlumnoPage,
+    AjustesAlumnoPage
   ],
   imports: [
     IonicModule,
