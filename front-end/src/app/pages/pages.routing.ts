@@ -35,6 +35,8 @@ import { PantallaPrincipalAlumnoPage } from './alumno/pantalla-principal-alumno/
 import { TabsAlumnoComponent } from '../layouts/tabs-alumno/tabs-alumno.component';
 import { MisAsignaturasAlumnoPage } from './alumno/mis-asignaturas-alumno/mis-asignaturas-alumno.page';
 import { InfoAsignaturaAlumnoPage } from './alumno/info-asignatura-alumno/info-asignatura-alumno.page';
+import { MisExamenesAlumnoPage } from './alumno/mis-examenes-alumno/mis-examenes-alumno.page';
+import { HacerExamenAlumnoPage } from './alumno/hacer-examen-alumno/hacer-examen-alumno.page';
 
 const routes: Routes = [
   { path: 'registro', component: BlankLayoutComponent,
@@ -82,6 +84,8 @@ const routes: Routes = [
       { path: 'principal', component: PantallaPrincipalAlumnoPage},
       { path: 'asignaturas', component: MisAsignaturasAlumnoPage},
       { path: 'asignaturas/info-asignatura', component: InfoAsignaturaAlumnoPage},
+      { path: 'asignaturas/info-asignatura/examenes', component: MisExamenesAlumnoPage},
+      { path: 'asignaturas/info-asignatura/examenes/hacer-examen', component: HacerExamenAlumnoPage},
     ]
   }
 ];
