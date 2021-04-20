@@ -45,9 +45,8 @@ export class RegistroCentroEducativoPage implements OnInit {
         this.registerForm.get('password').disable();
         this.enablepass = false;
         this.registerForm.markAsPristine();
-        this.centroeducativoService.limpiarLocalStorage();
-        localStorage.setItem('email', this.registerForm.value.email);
-        this.router.navigateByUrl("/tabs-centro-educativo/principal")
+        // localStorage.setItem('email', this.registerForm.value.email);
+        this.router.navigateByUrl("/inicio-sesion")
       }, (err) => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({

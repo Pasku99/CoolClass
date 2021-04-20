@@ -42,30 +42,32 @@ import { ComprobarExamenAlumnoPage } from './alumno/comprobar-examen-alumno/comp
 import { PerfilAlumnoPage } from './alumno/perfil-alumno/perfil-alumno.page';
 import { EditarPerfilAlumnoPage } from './alumno/editar-perfil-alumno/editar-perfil-alumno.page';
 import { AjustesAlumnoPage } from './alumno/ajustes-alumno/ajustes-alumno.page';
+import { AuthcentroGuard } from '../guards/authcentro.guard';
+import { NoauthCentroGuard } from '../guards/noauthcentro.guard';
 
 const routes: Routes = [
-  { path: 'registro', component: BlankLayoutComponent,
+  { path: 'registro', component: BlankLayoutComponent, canActivate: [ NoauthCentroGuard ],
     children: [
-      { path: 'centro-educativo', component: RegistroCentroEducativoPage},
-      { path: 'profesor', component: RegistroProfesorPage},
-      { path: 'profesor/escoger-clases', component: EscogerClasesProfesorPage},
-      { path: 'profesor/escoger-clases/escoger-asignaturas', component: EscogerAsignaturasProfesorPage},
-      { path: 'alumno', component: RegistroAlumnoPage},
-      { path: 'alumno/escoger-clase', component: EscogerClaseAlumnoPage},
+      { path: 'centro-educativo', component: RegistroCentroEducativoPage, canActivate: [ NoauthCentroGuard ]},
+      { path: 'profesor', component: RegistroProfesorPage, canActivate: [ NoauthCentroGuard ]},
+      { path: 'profesor/escoger-clases', component: EscogerClasesProfesorPage, canActivate: [ NoauthCentroGuard ]},
+      { path: 'profesor/escoger-clases/escoger-asignaturas', component: EscogerAsignaturasProfesorPage, canActivate: [ NoauthCentroGuard ]},
+      { path: 'alumno', component: RegistroAlumnoPage, canActivate: [ NoauthCentroGuard ]},
+      { path: 'alumno/escoger-clase', component: EscogerClaseAlumnoPage, canActivate: [ NoauthCentroGuard ]},
     ]
   },
-  { path: 'tabs-centro-educativo', component: TabsCentroEducativoComponent,
+  { path: 'tabs-centro-educativo', component: TabsCentroEducativoComponent, canActivate: [ AuthcentroGuard ], data: {rol: 'ROL_CENTRO'},
     children: [
-      { path: 'principal', component: PantallaPrincipalCentroEducativoPage},
-      { path: 'profesores', component: ProfesoresCentroEducativoPage},
-      { path: 'clases', component: ClasesCentroEducativoPage},
-      { path: 'clases/profesores', component: ProfesoresClaseCentroEducativoPage},
-      { path: 'clases/alumnos', component: ClaseAlumnosCentroEducativoPage},
-      { path: 'clases/alumnos/notas', component: ClaseAlumnosNotasCentroEducativoPage},
-      { path: 'perfil', component: PerfilCentroEducativoPage},
-      { path: 'perfil/editar-perfil', component: EditarPerfilCentroEducativoPage},
-      { path: 'perfil/codigos', component: CodigosCentroEducativoPage},
-      { path: 'perfil/ajustes', component: AjustesCentroEducativoPage},
+      { path: 'principal', component: PantallaPrincipalCentroEducativoPage, canActivate: [ AuthcentroGuard ], data: {rol: 'ROL_CENTRO'}},
+      { path: 'profesores', component: ProfesoresCentroEducativoPage, canActivate: [ AuthcentroGuard ], data: {rol: 'ROL_CENTRO'}} ,
+      { path: 'clases', component: ClasesCentroEducativoPage, canActivate: [ AuthcentroGuard ], data: {rol: 'ROL_CENTRO'}},
+      { path: 'clases/profesores', component: ProfesoresClaseCentroEducativoPage, canActivate: [ AuthcentroGuard ], data: {rol: 'ROL_CENTRO'}},
+      { path: 'clases/alumnos', component: ClaseAlumnosCentroEducativoPage, canActivate: [ AuthcentroGuard ], data: {rol: 'ROL_CENTRO'}},
+      { path: 'clases/alumnos/notas', component: ClaseAlumnosNotasCentroEducativoPage, canActivate: [ AuthcentroGuard ], data: {rol: 'ROL_CENTRO'}},
+      { path: 'perfil', component: PerfilCentroEducativoPage, canActivate: [ AuthcentroGuard ], data: {rol: 'ROL_CENTRO'}},
+      { path: 'perfil/editar-perfil', component: EditarPerfilCentroEducativoPage, canActivate: [ AuthcentroGuard ], data: {rol: 'ROL_CENTRO'}},
+      { path: 'perfil/codigos', component: CodigosCentroEducativoPage, canActivate: [ AuthcentroGuard ], data: {rol: 'ROL_CENTRO'}},
+      { path: 'perfil/ajustes', component: AjustesCentroEducativoPage, canActivate: [ AuthcentroGuard ], data: {rol: 'ROL_CENTRO'}},
     ]
   },
   { path: 'tabs-profesor', component: TabsProfesorComponent,
