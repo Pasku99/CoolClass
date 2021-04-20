@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 const Centroeducativo = require('../models/centroeducativo');
 const { validarPassword } = require('../helpers/validarPassword');
 const { infoToken } = require('../helpers/infoToken');
-
+const generator = require('generate-password');
 
 const sleep = (ms) => {
     return new Promise((resolve) => {
@@ -103,10 +103,23 @@ const crearCentro = async(req, res = response) => {
         const salt = bcrypt.genSaltSync();
         const cpassword = bcrypt.hashSync(password, salt);
 
+        const codigoProfesor = generator.generate({
+            length: 8,
+            numbers: true
+        });
+
+        const codigoAlumno = generator.generate({
+            length: 8,
+            numbers: true
+        });
+
+
         // Vamos a tomar todo lo que nos llega por el req.body y crear el centro
         const {...object } = req.body;
         const centro = new Centroeducativo(object);
         centro.password = cpassword;
+        centro.codigoProfesor = codigoProfesor;
+        centro.codigoAlumno = codigoAlumno;
         // Lo guardamos en base de datos
         const centroGuardado = await centro.save();
 

@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const CentroEducativoSchema = Schema({
+const ProfesorSchema = Schema({
     nombre: {
         type: String,
         require: true,
@@ -21,28 +21,27 @@ const CentroEducativoSchema = Schema({
     rol: {
         type: String,
         require: true,
-        default: 'ROL_PARENT'
+        default: 'ROL_PROFESOR'
     },
     codigoProfesor: {
         type: String,
-        unique: true,
+        require: true,
     },
-    codigoAlumno: {
+    uidCentro: {
         type: String,
-        unique: true,
     },
     tokenRecovery: {
         type: String,
         default: ''
     },
-}, { collection: 'centroeducativo' });
+}, { collection: 'profesor' });
 
 
-CentroEducativoSchema.method('toJSON', function() {
+ProfesorSchema.method('toJSON', function() {
     const { __v, _id, password, ...object } = this.toObject();
 
     object.uid = _id;
     return object;
 })
 
-module.exports = model('CentroEducativo', CentroEducativoSchema);
+module.exports = model('Profesor', ProfesorSchema);
