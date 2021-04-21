@@ -8,6 +8,7 @@ const Centroeducativo = require('../models/centroeducativo');
 const { validarPassword } = require('../helpers/validarPassword');
 const { infoToken } = require('../helpers/infoToken');
 const generator = require('generate-password');
+const Clase = require('../models/clase');
 
 const sleep = (ms) => {
     return new Promise((resolve) => {
@@ -103,6 +104,7 @@ const crearCentro = async(req, res = response) => {
         const salt = bcrypt.genSaltSync();
         const cpassword = bcrypt.hashSync(password, salt);
 
+        // Se crean los codigos con caracteres aleatorios
         const codigoProfesor = generator.generate({
             length: 8,
             numbers: true
@@ -133,7 +135,7 @@ const crearCentro = async(req, res = response) => {
         res.json({
             ok: true,
             msg: 'Centro educativo registrado con éxito',
-            centro,
+            centroGuardado,
         });
 
     } catch (error) {
@@ -145,4 +147,107 @@ const crearCentro = async(req, res = response) => {
     }
 }
 
-module.exports = { crearCentro, obtenerCentros }
+const obtenerClases = async(req, res) => {
+    const id = req.params.id;
+    try {
+        // Se comprueba que sea rol admin para poder listar
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_CENTRO') || (infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === id))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para listar clases',
+            });
+        }
+
+        const centro = await Centroeducativo.findById(id);
+        if (!centro) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar centro',
+            });
+        }
+
+        const clases = await Clase.find({ uidCentro: id });
+        if (!clases) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar clases',
+            });
+        }
+
+        let total = clases.length;
+
+        res.json({
+            ok: true,
+            msg: 'getClases',
+            clases,
+            total
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error obteniendo usuarios'
+        });
+    }
+}
+
+const crearClase = async(req, res = response) => {
+
+    const { nombre, uidCentro } = req.body;
+
+    try {
+        const centro = await Centroeducativo.findById(uidCentro);
+        if (!centro) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar centro',
+            });
+        }
+
+        const clases = await Clase.find({ uidCentro: uidCentro });
+        if (!clases) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar clases',
+            });
+        }
+
+        for (let i = 0; i < clases.length; i++) {
+            if (clases[i].nombre == nombre) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'El nombre de la clase ya está registrado en este centro. Por favor, pruebe con otro.',
+                });
+            }
+        }
+
+        // Vamos a tomar todo lo que nos llega por el req.body y crear el centro
+        const {...object } = req.body;
+        const clase = new Clase(object);
+        // Lo guardamos en base de datos
+        const claseGuardada = await clase.save();
+        if (!claseGuardada) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al almacenar la clase',
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'Clase registrada con éxito',
+            claseGuardada,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error creando centro educativo'
+        });
+    }
+}
+
+module.exports = { crearCentro, obtenerCentros, obtenerClases, crearClase }
