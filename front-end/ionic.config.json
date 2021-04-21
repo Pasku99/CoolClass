@@ -1,7 +1,8 @@
 {
-    "name": "CoolClass",
-    "integrations": {
-        "capacitor": {}
-    },
-    "type": "angular"
+  "name": "CoolClass",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
 }

@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { Clase } from 'src/app/models/clase.model';
 import Swal from 'sweetalert2'
+import { CentroeducativoService } from '../../../services/centroeducativo.service';
 
 @Component({
   selector: 'app-clases-centro-educativo',
@@ -11,8 +13,10 @@ import Swal from 'sweetalert2'
 export class ClasesCentroEducativoPage implements OnInit {
 
   public items: any = [];
+  public filtro: string = '';
+  public listaClases: Clase[] = [];
 
-  constructor() {
+  constructor(private centroeducativoService: CentroeducativoService) {
     this.items = [
       { expanded: false },
       { expanded: false },
@@ -41,7 +45,9 @@ export class ClasesCentroEducativoPage implements OnInit {
     }
   }
 
-  ngOnInit(){}
+  ngOnInit(){
+    this.cargarClases(this.filtro, this.centroeducativoService.uid);
+  }
 
   anyadirClase(){
     Swal.fire({
@@ -66,13 +72,34 @@ export class ClasesCentroEducativoPage implements OnInit {
       }
     }).then((result) => {
       if (result.value) {
-        Swal.fire(
-          '¡Añadida!',
-          'Clase añadida con éxito',
-          'success'
-        )
+        const data = {
+          uidCentro : this.centroeducativoService.uid,
+          nombre: result.value,
+        };
+        this.centroeducativoService.nuevaClase(data)
+          .subscribe(res => {
+            Swal.fire({
+              title: '¡Añadida!',
+              text: 'Clase añadida con éxito',
+              icon: 'success',
+              heightAuto: false
+            });
+          }, (err) => {
+            const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+            Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+            return;
+          });
       }
     });
+  }
+
+  cargarClases(filtro, uid){
+    this.centroeducativoService.cargarClases(filtro, uid)
+      .subscribe(res =>{
+        this.listaClases = res['clases'];
+      }, (err) =>{
+
+      });
   }
 
 }

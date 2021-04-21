@@ -19,7 +19,7 @@ export class AuthcentroGuard implements CanActivate {
                 tap( resp => {
                   // Si devuelve falso, el token no es bueno, salimos a login
                   if (!resp) {
-                    this.router.navigateByUrl('/login');
+                    console.log('Aqui')
                   }
                   // else if(this.usuarioService.verificado == false){
                   //   Swal.fire({

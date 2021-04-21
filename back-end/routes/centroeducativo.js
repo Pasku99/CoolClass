@@ -28,9 +28,9 @@ router.post('/', [
 
 router.get('/:id/clases', [
     validarJWT,
-    check('nombre', 'El argumento username es obligatorio').not().isEmpty().trim(),
-    check('uidCentro', 'El argumento debe ser válido').not().isEmpty().trim(),
-    validarCampos,
+    // check('nombre', 'El argumento username es obligatorio').not().isEmpty().trim(),
+    // check('uidCentro', 'El argumento debe ser válido').not().isEmpty().trim(),
+    // validarCampos,
 ], obtenerClases);
 
 router.post('/clases', [

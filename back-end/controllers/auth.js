@@ -37,7 +37,8 @@ const loginCentroEducativo = async(req, res = response) => {
             ok: true,
             msg: 'login',
             uid: _id,
-            token
+            token,
+            rol
         });
     } catch (error) {
         console.log(error);

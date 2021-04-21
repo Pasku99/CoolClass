@@ -8,6 +8,7 @@ import { tap, map, catchError } from 'rxjs/operators';
 import { Plugins } from '@capacitor/core';
 const { Storage } = Plugins;
 import { Observable, of } from 'rxjs';
+import { Clase } from '../models/clase.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,14 @@ export class CentroeducativoService {
 
   nuevoCentro ( data: CentroEducativo) {
     return this.http.post(`${environment.base_url}/centroeducativo`, data, this.cabeceras);
+  }
+
+  nuevaClase(data) {
+    return this.http.post(`${environment.base_url}/centroeducativo/clases`, data, this.cabeceras);
+  }
+
+  cargarClases ( filtro: string, uid: string) {
+    return this.http.get(`${environment.base_url}/centroeducativo/${uid}/clases`, this.cabeceras);
   }
 
   loginCentroEducativo( formData: loginForm) {
@@ -59,6 +68,7 @@ export class CentroeducativoService {
         tap( (res: any) => {
           // extaemos los datos que nos ha devuelto y los guardamos en el usurio y en localstore
           const { uid, nombre, email, rol, codigoProfesor, codigoAlumno, token } = res;
+          this.setToken(token);
           this.centro = new CentroEducativo(uid, nombre, email, rol, codigoProfesor, codigoAlumno);
         }),
         map ( res => {

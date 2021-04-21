@@ -68,6 +68,7 @@ const routes: Routes = [
       { path: 'perfil/editar-perfil', component: EditarPerfilCentroEducativoPage, canActivate: [ AuthcentroGuard ], data: {rol: 'ROL_CENTRO'}},
       { path: 'perfil/codigos', component: CodigosCentroEducativoPage, canActivate: [ AuthcentroGuard ], data: {rol: 'ROL_CENTRO'}},
       { path: 'perfil/ajustes', component: AjustesCentroEducativoPage, canActivate: [ AuthcentroGuard ], data: {rol: 'ROL_CENTRO'}},
+      { path: '**', redirectTo: 'principal'}
     ]
   },
   { path: 'tabs-profesor', component: TabsProfesorComponent,
