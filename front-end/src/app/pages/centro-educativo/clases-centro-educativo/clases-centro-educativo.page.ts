@@ -15,6 +15,7 @@ export class ClasesCentroEducativoPage implements OnInit {
   public items: any = [];
   public filtro: string = '';
   public listaClases: Clase[] = [];
+  public listaDesplegable: Clase[] = [];
 
   constructor(private centroeducativoService: CentroeducativoService) {
     this.items = [
@@ -34,7 +35,7 @@ export class ClasesCentroEducativoPage implements OnInit {
     if (item.expanded) {
       item.expanded = false;
     } else {
-      this.items.map(listItem => {
+      this.listaClases.map(listItem => {
         if (item == listItem) {
           listItem.expanded = !listItem.expanded;
         } else {
@@ -46,7 +47,7 @@ export class ClasesCentroEducativoPage implements OnInit {
   }
 
   ngOnInit(){
-    this.cargarClases(this.filtro, this.centroeducativoService.centro.uid);
+    this.cargarClases(this.centroeducativoService.centro.uid, this.filtro);
   }
 
   anyadirClase(){
@@ -93,13 +94,36 @@ export class ClasesCentroEducativoPage implements OnInit {
     });
   }
 
-  cargarClases(filtro, uid){
-    this.centroeducativoService.cargarClases(filtro, uid)
+  cargarClases(uid, filtro){
+    let expanded = false;
+    this.centroeducativoService.cargarClases(uid, filtro)
       .subscribe(res =>{
-        this.listaClases = res['clases'];
+        this.listaDesplegable = res['arrayClases'];
+        this.listaClases = res['arrayClases'];
       }, (err) =>{
 
       });
+  }
+
+  cargarClasesFiltro(uid, filtro){
+    let expanded = false;
+    this.centroeducativoService.cargarClases(uid, filtro)
+      .subscribe(res =>{
+        this.listaClases = res['arrayClases'];
+      }, (err) =>{
+
+      });
+  }
+
+  filtrarNombre($event){
+    console.log($event.target.value);
+    this.filtro = $event.target.value;
+    if(this.filtro == 'Todas'){
+      this.filtro = '';
+      this.cargarClases(this.centroeducativoService.centro.uid, this.filtro);
+    } else {
+      this.cargarClasesFiltro(this.centroeducativoService.centro.uid, this.filtro);
+    }
   }
 
 }

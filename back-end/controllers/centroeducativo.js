@@ -149,6 +149,8 @@ const crearCentro = async(req, res = response) => {
 
 const obtenerClases = async(req, res) => {
     const id = req.params.id;
+    const filtro = req.query.nombre || '';
+    let arrayClases = [];
     try {
         // Se comprueba que sea rol admin para poder listar
         const token = req.header('x-token');
@@ -174,13 +176,23 @@ const obtenerClases = async(req, res) => {
                 msg: 'Error al buscar clases',
             });
         }
-
-        let total = clases.length;
+        let total;
+        if (filtro != '') {
+            for (let i = 0; i < clases.length; i++) {
+                if (clases[i].nombre == filtro) {
+                    arrayClases.push(clases[i]);
+                }
+            }
+            total = 1;
+        } else {
+            arrayClases = [...clases];
+            total = arrayClases.length;
+        }
 
         res.json({
             ok: true,
             msg: 'getClases',
-            clases,
+            arrayClases,
             total
         });
 
