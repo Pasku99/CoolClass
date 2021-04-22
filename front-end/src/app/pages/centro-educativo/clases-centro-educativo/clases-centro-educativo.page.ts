@@ -117,7 +117,7 @@ export class ClasesCentroEducativoPage implements OnInit {
   }
 
   filtrarNombre($event){
-    console.log($event.target.value);
+    // console.log($event.target.value);
     this.filtro = $event.target.value;
     if(this.filtro == 'Todas'){
       this.filtro = '';

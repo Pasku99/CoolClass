@@ -147,6 +147,101 @@ const crearCentro = async(req, res = response) => {
     }
 }
 
+const actualizarCentro = async(req, res = response) => {
+
+    // Asegurarnos de que aunque venga el password no se va a actualizar, la modificaciñon del password es otra llamada
+    // Comprobar que si cambia el email no existe ya en BD, si no existe puede cambiarlo
+    const { nombre, email, nuevopassword, nuevopassword2, ...object } = req.body;
+    const uid = req.params.id;
+
+    try {
+        // Para actualizar usuario o eres admin o eres usuario del token y el uid que nos llega es el mismo
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_CENTRO') || (infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === id))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para actualizar',
+            });
+        }
+
+        // Comprobar si está intentando cambiar el email, que no coincida con alguno que ya esté en BD
+        // Obtenemos si hay un centro en BD con el email que nos llega en post
+        const existeEmail = await Centroeducativo.findOne({ email: email });
+
+        if (existeEmail) {
+            // Si existe un centro con ese email
+            // Comprobamos que sea el suyo, el UID ha de ser igual, si no el email est en uso
+            if (existeEmail._id != uid) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Email ya existe'
+                });
+            }
+        }
+
+        // Comprueba si el nombre de centro ya existe
+
+        const existeNombre = await Centroeducativo.findOne({ nombre: nombre });
+
+        if (existeNombre) {
+            if (existeNombre._id != uid) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Nombre de centro ya existe'
+                });
+            }
+        }
+
+        // Comprobar si existe el centro que queremos actualizar
+        const existeCentro = await Centroeducativo.findById(uid);
+
+        if (!existeCentro) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'El centro no existe'
+            });
+        }
+        // llegado aquí el email o es el mismo o no está en BD, es obligatorio que siempre llegue un email
+        object.email = email;
+        // igual con el username
+        object.nombre = nombre;
+
+        // Se actualiza la contraseña si llegan los campos
+        if (nuevopassword != '' && nuevopassword2 != '') {
+            if (nuevopassword !== nuevopassword2) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'La contraseña repetida no coincide con la nueva contraseña',
+                });
+            }
+
+            const salt = bcrypt.genSaltSync();
+            const cpassword = bcrypt.hashSync(nuevopassword, salt);
+            object.password = cpassword;
+        }
+
+        // Almacenar en BD
+        await existeCentro.save();
+        // Si el rol es de administrador, entonces si en los datos venía el campo activo lo dejamos
+        // al haber extraido password del req.body nunca se va a enviar en este put
+        const centro = await Centroeducativo.findByIdAndUpdate(uid, object, { new: true });
+
+        res.json({
+            ok: true,
+            msg: 'Usuario actualizado',
+            centro: centro
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error actualizando usuario'
+        });
+    }
+
+}
+
 const obtenerClases = async(req, res) => {
     const id = req.params.id;
     const filtro = req.query.nombre || '';
@@ -268,4 +363,4 @@ const crearClase = async(req, res = response) => {
     }
 }
 
-module.exports = { crearCentro, obtenerCentros, obtenerClases, crearClase }
+module.exports = { crearCentro, obtenerCentros, obtenerClases, crearClase, actualizarCentro }

@@ -97,8 +97,17 @@ const buscarTipoUsuario = async(req, res = response) => {
     let resultado;
     try {
         const centro = await Centroeducativo.find({ email: email });
+        if (!centro) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar el tipo de usuario',
+            });
+        }
         if (centro.length == 0) {
-
+            return res.status(400).json({
+                ok: false,
+                msg: 'Usuario o contraseña incorrectos',
+            });
         }
         resultado = centro;
         res.json({
@@ -112,7 +121,6 @@ const buscarTipoUsuario = async(req, res = response) => {
         return res.status(400).json({
             ok: false,
             msg: 'Error al buscar el tipo de usuario',
-            token: ''
         });
     }
 }

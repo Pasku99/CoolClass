@@ -21,12 +21,6 @@ export class CentroeducativoService {
   user = null;
   authenticationState = new BehaviorSubject(false);
 
-  // constructor(private http: HttpClient, private router: Router, private helper: JwtHelperService, private storage: Storage,
-  //   private plt: Platform, private alertController: AlertController) {
-  //   this.plt.ready().then(() => {
-  //     this.checkToken();
-  //   });
-  // }
   constructor (private http: HttpClient, private router: Router, private helper: JwtHelperService, private storage: Storage,
       private plt: Platform, private alertController: AlertController){
         this.plt.ready().then(() => {
@@ -38,14 +32,14 @@ export class CentroeducativoService {
     this.storage.get(TOKEN_KEY).then(token => {
       if (token) {
         let decoded = this.helper.decodeToken(token);
-        // let isExpired = this.helper.isTokenExpired(token);
+        let isExpired = this.helper.isTokenExpired(token);
 
-      //  if (!isExpired) {
-          // this.user = decoded;
+       if (!isExpired) {
+          this.user = decoded;
           this.authenticationState.next(true);
-        // } else {
-        //   this.storage.remove(TOKEN_KEY);
-        // }
+        } else {
+          this.storage.remove(TOKEN_KEY);
+        }
       }
     });
   }
@@ -58,8 +52,21 @@ export class CentroeducativoService {
     return this.http.post(`${environment.base_url}/centroeducativo/clases`, data, this.cabeceras);
   }
 
-  cargarClases (  uid: string, filtro?: string): Observable<object> {
+  cargarClases ( uid: string, filtro?: string): Observable<object> {
     return this.http.get(`${environment.base_url}/centroeducativo/${uid}/clases/?nombre=${filtro}`, this.cabeceras);
+  }
+
+  cargarCentro ( uid: string ) {
+    return this.http.get(`${environment.base_url}/centroeducativo/?id=${uid}`, this.cabeceras);
+  }
+
+  actualizarCentro( uid: string, data ){
+    return this.http.put(`${environment.base_url}/centroeducativo/${uid}`, data, this.cabeceras);
+  }
+
+  establecerdatos( nombre: string, email: string ): void {
+    this.centro.nombre = nombre;
+    this.centro.email = email;
   }
 
   loginCentroEducativo( formData: loginForm) {
@@ -70,10 +77,6 @@ export class CentroeducativoService {
         this.user = this.helper.decodeToken(res['token']);
         this.centro = new CentroEducativo(res['uid'], res['rol']);
         this.authenticationState.next(true);
-      }),
-      catchError(e => {
-        this.showAlert(e.error.msg);
-        throw new Error(e);
       })
     );
   }

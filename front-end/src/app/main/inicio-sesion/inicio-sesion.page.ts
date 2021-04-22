@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { CentroEducativo } from '../../models/centroeducativo.model';
 import { Router } from '@angular/router';
 import { CentroeducativoService } from '../../services/centroeducativo.service';
+import { NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -25,9 +26,17 @@ export class InicioSesionPage implements OnInit {
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               public centroeducativoService: CentroeducativoService,
-              private router: Router) {  }
+              private router: Router,
+              private zone: NgZone) {  }
 
   ngOnInit() {
+    this.refresh();
+  }
+
+  refresh() {
+    this.zone.run(() => {
+      console.log('force update the screen');
+    });
   }
 
   login() {
@@ -40,7 +49,6 @@ export class InicioSesionPage implements OnInit {
         if(res['resultado'][0].rol == 'ROL_CENTRO'){
           this.centroeducativoService.loginCentroEducativo(this.loginForm.value)
             .subscribe( res => {
-              console.log('Entra aqui');
               // this.router.navigateByUrl('/tabs-centro-educativo/principal');
               this.router.navigate(['/tabs-centro-educativo/principal'])
                 .then(() => {
@@ -48,7 +56,7 @@ export class InicioSesionPage implements OnInit {
                 });
             }, (err) =>{
               Swal.fire({
-                title: 'Error!',
+                title: '¡Error!',
                 text: err.error.msg || 'No pudo completarse la acción, vuelva a intentarlo más tarde',
                 icon: 'error',
                 confirmButtonText: 'Ok',

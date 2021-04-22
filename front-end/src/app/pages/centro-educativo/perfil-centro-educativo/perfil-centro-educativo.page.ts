@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CentroeducativoService } from '../../../services/centroeducativo.service';
 import { Storage } from '@ionic/storage';
+import Swal from 'sweetalert2'
+import { CentroEducativo } from '../../../models/centroeducativo.model';
 
 @Component({
   selector: 'app-perfil-centro-educativo',
@@ -9,7 +11,7 @@ import { Storage } from '@ionic/storage';
 })
 export class PerfilCentroEducativoPage implements OnInit {
 
-  constructor(private centroeducativoService: CentroeducativoService, private storage: Storage) { }
+  constructor( public centroeducativoService: CentroeducativoService ) { }
 
   ngOnInit() {
   }
@@ -17,4 +19,5 @@ export class PerfilCentroEducativoPage implements OnInit {
   logout(){
     this.centroeducativoService.logout();
   }
+
 }
