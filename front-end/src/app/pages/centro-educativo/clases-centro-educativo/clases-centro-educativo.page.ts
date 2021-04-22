@@ -85,6 +85,7 @@ export class ClasesCentroEducativoPage implements OnInit {
               icon: 'success',
               heightAuto: false
             });
+            this.cargarClases(this.centroeducativoService.centro.uid, this.filtro);
           }, (err) => {
             const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
             Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
