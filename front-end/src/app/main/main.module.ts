@@ -9,6 +9,7 @@ import { InicioComponent } from './inicio/inicio.component';
 import { BlankLayoutComponent } from '../layouts/blank-layout/blank-layout.component';
 import { InicioSesionPage } from './inicio-sesion/inicio-sesion.page';
 import { RegistroPage } from './registro/registro.page';
+import { CentroeducativoService } from '../services/centroeducativo.service';
 
 @NgModule({
   declarations: [

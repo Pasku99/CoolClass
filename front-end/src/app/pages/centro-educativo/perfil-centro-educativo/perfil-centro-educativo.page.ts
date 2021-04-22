@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CentroeducativoService } from '../../../services/centroeducativo.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-perfil-centro-educativo',
@@ -7,8 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PerfilCentroEducativoPage implements OnInit {
 
-  constructor() { }
+  constructor(private centroeducativoService: CentroeducativoService, private storage: Storage) { }
 
   ngOnInit() {
+  }
+
+  logout(){
+    this.centroeducativoService.logout();
   }
 }

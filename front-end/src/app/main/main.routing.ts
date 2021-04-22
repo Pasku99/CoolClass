@@ -4,20 +4,19 @@ import { InicioComponent } from './inicio/inicio.component';
 import { BlankLayoutComponent } from '../layouts/blank-layout/blank-layout.component';
 import { InicioSesionPage } from './inicio-sesion/inicio-sesion.page';
 import { RegistroPage } from './registro/registro.page';
-import { NoauthCentroGuard } from '../guards/noauthcentro.guard';
 
 const routes: Routes = [
-  { path: 'inicio', component: BlankLayoutComponent, canActivate: [ NoauthCentroGuard ],
+  { path: 'inicio', component: BlankLayoutComponent,
     children: [
       { path: '', component: InicioComponent},
     ]
   },
-  { path: 'inicio-sesion', component: BlankLayoutComponent, canActivate: [ NoauthCentroGuard ],
+  { path: 'inicio-sesion', component: BlankLayoutComponent,
     children: [
       { path: '', component: InicioSesionPage},
     ]
   },
-  { path: 'escoger-registro', component: BlankLayoutComponent, canActivate: [ NoauthCentroGuard ],
+  { path: 'escoger-registro', component: BlankLayoutComponent,
     children: [
       { path: '', component: RegistroPage},
     ]

@@ -46,7 +46,7 @@ export class ClasesCentroEducativoPage implements OnInit {
   }
 
   ngOnInit(){
-    this.cargarClases(this.filtro, this.centroeducativoService.uid);
+    this.cargarClases(this.filtro, this.centroeducativoService.centro.uid);
   }
 
   anyadirClase(){
@@ -73,7 +73,7 @@ export class ClasesCentroEducativoPage implements OnInit {
     }).then((result) => {
       if (result.value) {
         const data = {
-          uidCentro : this.centroeducativoService.uid,
+          uidCentro : this.centroeducativoService.centro.uid,
           nombre: result.value,
         };
         this.centroeducativoService.nuevaClase(data)

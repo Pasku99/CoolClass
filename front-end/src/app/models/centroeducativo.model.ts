@@ -12,6 +12,7 @@ export class CentroEducativo {
                  public rol?: string,
                  public codigoProfesor?: string,
                  public codigoAlumno?: string,
+                 public token?: string,
                 ) {}
 
 }

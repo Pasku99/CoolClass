@@ -8,6 +8,7 @@ import { CentroeducativoService } from '../../services/centroeducativo.service';
 
 @Component({
   selector: 'app-inicio-sesion',
+  providers: [CentroeducativoService],
   templateUrl: './inicio-sesion.page.html',
   styleUrls: ['./inicio-sesion.page.scss'],
 })
@@ -23,7 +24,7 @@ export class InicioSesionPage implements OnInit {
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
-              private centroeducativoService: CentroeducativoService,
+              public centroeducativoService: CentroeducativoService,
               private router: Router) {  }
 
   ngOnInit() {
@@ -39,7 +40,12 @@ export class InicioSesionPage implements OnInit {
         if(res['resultado'][0].rol == 'ROL_CENTRO'){
           this.centroeducativoService.loginCentroEducativo(this.loginForm.value)
             .subscribe( res => {
-              this.router.navigateByUrl('/tabs-centro-educativo/principal');
+              console.log('Entra aqui');
+              // this.router.navigateByUrl('/tabs-centro-educativo/principal');
+              this.router.navigate(['/tabs-centro-educativo/principal'])
+                .then(() => {
+                  window.location.reload();
+                });
             }, (err) =>{
               Swal.fire({
                 title: 'Error!',

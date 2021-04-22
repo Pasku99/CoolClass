@@ -1,25 +1,54 @@
-import { HttpClient } from '@angular/common/http';
+import { Platform, AlertController } from '@ionic/angular';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Storage } from '@ionic/storage';
 import { environment } from '../../environments/environment';
-import { loginForm } from '../interfaces/login-form.interface';
+import { tap, catchError, map } from 'rxjs/operators';
+import { BehaviorSubject, of, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 import { CentroEducativo } from '../models/centroeducativo.model';
-import { tap, map, catchError } from 'rxjs/operators';
-import { Plugins } from '@capacitor/core';
-const { Storage } = Plugins;
-import { Observable, of } from 'rxjs';
-import { Clase } from '../models/clase.model';
+import { loginForm } from '../interfaces/login-form.interface';
+const TOKEN_KEY = 'access_token';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CentroeducativoService {
 
-  private centro: CentroEducativo;
+  public centro: CentroEducativo;
   public tokenC: string;
+  user = null;
+  authenticationState = new BehaviorSubject(false);
 
-  constructor( private http: HttpClient,
-               private router: Router ) { }
+  // constructor(private http: HttpClient, private router: Router, private helper: JwtHelperService, private storage: Storage,
+  //   private plt: Platform, private alertController: AlertController) {
+  //   this.plt.ready().then(() => {
+  //     this.checkToken();
+  //   });
+  // }
+  constructor (private http: HttpClient, private router: Router, private helper: JwtHelperService, private storage: Storage,
+      private plt: Platform, private alertController: AlertController){
+        this.plt.ready().then(() => {
+              this.checkToken();
+            });
+      }
+
+  checkToken() {
+    this.storage.get(TOKEN_KEY).then(token => {
+      if (token) {
+        let decoded = this.helper.decodeToken(token);
+        // let isExpired = this.helper.isTokenExpired(token);
+
+      //  if (!isExpired) {
+          // this.user = decoded;
+          this.authenticationState.next(true);
+        // } else {
+        //   this.storage.remove(TOKEN_KEY);
+        // }
+      }
+    });
+  }
 
   nuevoCentro ( data: CentroEducativo) {
     return this.http.post(`${environment.base_url}/centroeducativo`, data, this.cabeceras);
@@ -35,47 +64,92 @@ export class CentroeducativoService {
 
   loginCentroEducativo( formData: loginForm) {
     return this.http.post(`${environment.base_url}/login/centroeducativo`, formData)
-            .pipe(
-              tap( (res : any) => {
-                // localStorage.setItem('token', res['token']);
-                this.setToken(res['token']);
-                const {uid, rol} = res;
-                this.centro = new CentroEducativo(uid, rol);
-                this.getToken();
-              })
-            );
+    .pipe(
+      tap(res => {
+        this.storage.set(TOKEN_KEY, res['token']);
+        this.user = this.helper.decodeToken(res['token']);
+        this.centro = new CentroEducativo(res['uid'], res['rol']);
+        this.authenticationState.next(true);
+      }),
+      catchError(e => {
+        this.showAlert(e.error.msg);
+        throw new Error(e);
+      })
+    );
   }
 
-  async setToken(token) {
-    await Storage.set({
-      key: 'token',
-      value: token
+  logout() {
+    this.storage.remove(TOKEN_KEY).then(() => {
+      this.authenticationState.next(false);
     });
   }
 
-  async removeToken() {
-    await Storage.remove({ key: 'token' });
+  getSpecialData() {
+    return this.http.get(`${environment.base_url}/login/tokencentro`).pipe(
+      catchError(e => {
+        let status = e.status;
+        if (status === 401) {
+          this.showAlert('You are not authorized for this!');
+          this.logout();
+        }
+        throw new Error(e);
+      })
+    )
+  }
+
+  isAuthenticated() {
+    return this.authenticationState.value;
+  }
+
+  showAlert(msg) {
+    let alert = this.alertController.create({
+      message: msg,
+      header: 'Error',
+      buttons: ['OK']
+    });
+    alert.then(alert => alert.present());
+  }
+
+  // async setToken(token) {
+  //   await Storage.set({
+  //     key: 'token',
+  //     value: token
+  //   });
+  // }
+
+  // async removeToken() {
+  //   await Storage.remove({ key: 'token' });
+  // }
+
+  cogerToken(){
+    this.storage.get(TOKEN_KEY).then((result) => {
+      return this.http.get(`${environment.base_url}/login/tokencentro`, {
+        headers: {'x-token': result}
+      }).subscribe(res => {
+        this.centro = new CentroEducativo(res['uid'], res['nombre'], res['email'], res['rol'], res['codigoProfesor'], res['codigoAlumno'], res['token']);
+      });
+    });
   }
 
   validarCentro(correcto: boolean, incorrecto: boolean): Observable<boolean> {
-    if (this.token === '') {
-      console.log('Por aqui');
-      this.removeToken();
-      return of(incorrecto);
-    }
+    // if (this.token === '') {
+    //   console.log('Por aqui');
+    //   // this.removeToken();
+    //   return of(incorrecto);
+    // }
     return this.http.get(`${environment.base_url}/login/tokencentro`, this.cabeceras)
       .pipe(
         tap( (res: any) => {
           // extaemos los datos que nos ha devuelto y los guardamos en el usurio y en localstore
           const { uid, nombre, email, rol, codigoProfesor, codigoAlumno, token } = res;
-          this.setToken(token);
+          // this.setToken(token);
           this.centro = new CentroEducativo(uid, nombre, email, rol, codigoProfesor, codigoAlumno);
         }),
         map ( res => {
           return correcto;
         }),
         catchError ( err => {
-          this.removeToken();
+          // this.removeToken();
           return of(incorrecto);
         })
       );
@@ -92,19 +166,18 @@ export class CentroeducativoService {
   get cabeceras() {
     return {
       headers: {
-        'x-token': this.tokenC,
+        'x-token': this.token,
       }};
   }
 
   get token(): string {
-    // return localStorage.getItem('token') || '';
-    return this.tokenC;
+    return this.centro.token;
   }
 
-  async getToken() {
-    const token = await Storage.get({ key: 'token' });
-    this.tokenC = token.value;
-  }
+  // async getToken() {
+  //   const token = await Storage.get({ key: 'token' });
+  //   this.tokenC = token.value;
+  // }
 
   get uid(): string {
     return this.centro.uid;
