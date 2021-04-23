@@ -14,24 +14,24 @@
             <form [formGroup]="registerForm" (ngSubmit)="enviar()">
                 <ion-item class="input0">
                     <ion-input type="text" placeholder="Nombre del centro" formControlName="nombre" lines="none" required></ion-input>
-                    <div class="invalid-feedback" *ngIf="campoNoValido('nombre')">
+                    <!-- <div class="invalid-feedback" *ngIf="campoNoValido('nombre')">
                         El campo es obligatorio
-                    </div>
+                    </div> -->
                 </ion-item>
                 <ion-item class="input1">
                     <ion-input type="text" placeholder="Email" formControlName="email" lines="none" required></ion-input>
-                    <div class="invalid-feedback " *ngIf="campoNoValido( 'email')">
+                    <!-- <div class="invalid-feedback " *ngIf="campoNoValido( 'email')">
                         El campo es obligatorio
-                    </div>
+                    </div> -->
                 </ion-item>
                 <ion-item class="input2">
                     <ion-input type="password" placeholder="Contraseña" formControlName="password" lines="none" required></ion-input>
-                    <div class="invalid-feedback " *ngIf="campoNoValidoPassword( 'password') ">
+                    <!-- <div class="invalid-feedback " *ngIf="campoNoValidoPassword( 'password') ">
                         El campo es obligatorio
                     </div>
                     <div class="invalid-feedback " *ngIf="campoNoValido( 'password') ">
                         La contraseña ha de tener mínimo 8 caracteres y estar formada por al menos una mayúscula, minúscula y un número.
-                    </div>
+                    </div> -->
                 </ion-item>
                 <ion-button class="boton1" type="submit" size="large" expand="block">Registrarse</ion-button>
             </form>

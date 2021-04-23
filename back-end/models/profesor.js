@@ -4,7 +4,6 @@ const ProfesorSchema = Schema({
     nombre: {
         type: String,
         require: true,
-        unique: true
     },
     email: {
         type: String,
@@ -23,19 +22,15 @@ const ProfesorSchema = Schema({
         require: true,
         default: 'ROL_PROFESOR'
     },
-    codigoProfesor: {
-        type: String,
-        require: true,
-    },
     uidCentro: {
         type: String,
+        require: true,
     },
     tokenRecovery: {
         type: String,
         default: ''
     },
 }, { collection: 'profesor' });
-
 
 ProfesorSchema.method('toJSON', function() {
     const { __v, _id, password, ...object } = this.toObject();

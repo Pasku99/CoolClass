@@ -44,16 +44,17 @@ import { EditarPerfilAlumnoPage } from './alumno/editar-perfil-alumno/editar-per
 import { AjustesAlumnoPage } from './alumno/ajustes-alumno/ajustes-alumno.page';
 import { AuthcentroGuard } from '../guards/authcentro.guard';
 import { NoauthCentroGuard } from '../guards/noauthcentro.guard';
+import { AuthprofesorGuard } from '../guards/authprofesor.guard';
 
 const routes: Routes = [
-  { path: 'registro', component: BlankLayoutComponent, canActivate: [ NoauthCentroGuard ],
+  { path: 'registro', component: BlankLayoutComponent,
     children: [
-      { path: 'centro-educativo', component: RegistroCentroEducativoPage, canActivate: [ NoauthCentroGuard ]},
-      { path: 'profesor', component: RegistroProfesorPage, canActivate: [ NoauthCentroGuard ]},
-      { path: 'profesor/escoger-clases', component: EscogerClasesProfesorPage, canActivate: [ NoauthCentroGuard ]},
-      { path: 'profesor/escoger-clases/escoger-asignaturas', component: EscogerAsignaturasProfesorPage, canActivate: [ NoauthCentroGuard ]},
-      { path: 'alumno', component: RegistroAlumnoPage, canActivate: [ NoauthCentroGuard ]},
-      { path: 'alumno/escoger-clase', component: EscogerClaseAlumnoPage, canActivate: [ NoauthCentroGuard ]},
+      { path: 'centro-educativo', component: RegistroCentroEducativoPage},
+      { path: 'profesor', component: RegistroProfesorPage},
+      { path: 'profesor/escoger-clases', component: EscogerClasesProfesorPage},
+      { path: 'profesor/escoger-clases/escoger-asignaturas', component: EscogerAsignaturasProfesorPage},
+      { path: 'alumno', component: RegistroAlumnoPage},
+      { path: 'alumno/escoger-clase', component: EscogerClaseAlumnoPage},
     ]
   },
   { path: 'tabs-centro-educativo', component: TabsCentroEducativoComponent, canActivate: [ AuthcentroGuard ],
@@ -71,20 +72,20 @@ const routes: Routes = [
       { path: '**', redirectTo: 'principal'}
     ]
   },
-  { path: 'tabs-profesor', component: TabsProfesorComponent,
+  { path: 'tabs-profesor', component: TabsProfesorComponent, canActivate: [ AuthprofesorGuard ],
     children: [
-      { path: 'principal', component: PantallaPrincipalProfesorPage},
-      { path: 'clases', component: MisClasesProfesorPage},
-      { path: 'clases/alumnos', component: MisAlumnosProfesorPage},
-      { path: 'clases/alumnos/notas', component: NotasAlumnosProfesorPage},
-      { path: 'clases/alumnos/notas/comprobar-examen', component: ComprobarExamenProfesorPage},
-      { path: 'clases/examenes', component: MisExamenesProfesorPage},
-      { path: 'clases/crear-examen', component: CrearExamenProfesorPage},
-      { path: 'perfil', component: PerfilProfesorPage},
-      { path: 'perfil/editar-perfil', component: EditarPerfilProfesorPage},
-      { path: 'perfil/configuracion-clases', component: EscogerClasesConfigProfesorPage},
-      { path: 'perfil/configuracion-clases/asignaturas', component: EscogerAsignaturasConfigProfesorPage},
-      { path: 'perfil/ajustes', component: AjustesProfesorPage}
+      { path: 'principal', component: PantallaPrincipalProfesorPage, canActivate: [ AuthprofesorGuard ]},
+      { path: 'clases', component: MisClasesProfesorPage, canActivate: [ AuthprofesorGuard ]},
+      { path: 'clases/alumnos', component: MisAlumnosProfesorPage, canActivate: [ AuthprofesorGuard ]},
+      { path: 'clases/alumnos/notas', component: NotasAlumnosProfesorPage, canActivate: [ AuthprofesorGuard ]},
+      { path: 'clases/alumnos/notas/comprobar-examen', component: ComprobarExamenProfesorPage, canActivate: [ AuthprofesorGuard ]},
+      { path: 'clases/examenes', component: MisExamenesProfesorPage, canActivate: [ AuthprofesorGuard ]},
+      { path: 'clases/crear-examen', component: CrearExamenProfesorPage, canActivate: [ AuthprofesorGuard ]},
+      { path: 'perfil', component: PerfilProfesorPage, canActivate: [ AuthprofesorGuard ]},
+      { path: 'perfil/editar-perfil', component: EditarPerfilProfesorPage, canActivate: [ AuthprofesorGuard ]},
+      { path: 'perfil/configuracion-clases', component: EscogerClasesConfigProfesorPage, canActivate: [ AuthprofesorGuard ]},
+      { path: 'perfil/configuracion-clases/asignaturas', component: EscogerAsignaturasConfigProfesorPage, canActivate: [ AuthprofesorGuard ]},
+      { path: 'perfil/ajustes', component: AjustesProfesorPage, canActivate: [ AuthprofesorGuard ]}
     ]
   },
   { path: 'tabs-alumno', component: TabsAlumnoComponent,

@@ -6,6 +6,7 @@ import { CentroEducativo } from '../../models/centroeducativo.model';
 import { Router } from '@angular/router';
 import { CentroeducativoService } from '../../services/centroeducativo.service';
 import { NgZone } from '@angular/core';
+import { ProfesorService } from '../../services/profesor.service';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -26,17 +27,11 @@ export class InicioSesionPage implements OnInit {
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               public centroeducativoService: CentroeducativoService,
+              public profesorService: ProfesorService,
               private router: Router,
               private zone: NgZone) {  }
 
   ngOnInit() {
-    this.refresh();
-  }
-
-  refresh() {
-    this.zone.run(() => {
-      console.log('force update the screen');
-    });
   }
 
   login() {
@@ -64,6 +59,23 @@ export class InicioSesionPage implements OnInit {
                 heightAuto: false
               });
             });
+        } else if(res['resultado'][0].rol == 'ROL_PROFESOR'){
+          this.profesorService.loginProfesor(this.loginForm.value)
+          .subscribe( res => {
+            this.router.navigate(['/tabs-profesor/principal'])
+              .then(() => {
+                window.location.reload();
+              });
+          }, (err) =>{
+            Swal.fire({
+              title: '¡Error!',
+              text: err.error.msg || 'No pudo completarse la acción, vuelva a intentarlo más tarde',
+              icon: 'error',
+              confirmButtonText: 'Ok',
+              allowOutsideClick: false,
+              heightAuto: false
+            });
+          });
         }
       }, (err) => {
         Swal.fire({

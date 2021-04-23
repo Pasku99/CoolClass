@@ -11,14 +11,14 @@ import Swal from 'sweetalert2';
 })
 export class RegistroCentroEducativoPage implements OnInit {
 
-  private formSubmited = false;
-  public enablepass: boolean = true;
-  public showOKP: boolean = false;
-  public waiting: boolean = false;
+  // private formSubmited = false;
+  // public enablepass: boolean = true;
+  // public showOKP: boolean = false;
+  // public waiting: boolean = false;
 
   public registerForm = this.fb.group({
     nombre: ['', Validators.required ],
-    email: [localStorage.getItem('email') || '', [Validators.required, Validators.email] ],
+    email: ['', [Validators.required, Validators.email] ],
     password: ['', Validators.required ],
     rol: ['ROL_CENTRO', Validators.required ],
   });
@@ -32,19 +32,19 @@ export class RegistroCentroEducativoPage implements OnInit {
   }
 
   enviar(){
-    this.formSubmited = true;
+    // this.formSubmited = true;
     // console.log(this.datosForm);
-    if (this.registerForm.invalid) { return; }
+    // if (this.registerForm.invalid) { return; }
     // Diferenciar entre dar de alta uno nuevo o actualizar uno que ya existe
     // Alta de uno nuevo
-    this.waiting = true;
+    // this.waiting = true;
     this.centroeducativoService.nuevoCentro( this.registerForm.value )
       .subscribe( res => {
         // console.log('Entra aquí');
-        this.waiting = false;
-        this.registerForm.get('password').disable();
-        this.enablepass = false;
-        this.registerForm.markAsPristine();
+        // this.waiting = false;
+        // this.registerForm.get('password').disable();
+        // this.enablepass = false;
+        // this.registerForm.markAsPristine();
         // localStorage.setItem('email', this.registerForm.value.email);
         this.router.navigateByUrl("/inicio-sesion")
       }, (err) => {
@@ -54,24 +54,24 @@ export class RegistroCentroEducativoPage implements OnInit {
           title: 'Oops...',
           text: errtext,
         });
-        this.waiting = false;
+        // this.waiting = false;
         return;
       });
   }
 
   cancelar(): void {
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/inicio-sesion');
   }
 
-  campoNoValido( campo: string) {
-    return this.registerForm.get(campo).invalid && this.formSubmited;
-  }
+  // campoNoValido( campo: string) {
+  //   return this.registerForm.get(campo).invalid && this.formSubmited;
+  // }
 
-  campoNoValidoPassword( campo: string) {
-    if(this.registerForm.get(campo).value == "" && this.formSubmited){
-      return true;
-    }
-    return false;
-  }
+  // campoNoValidoPassword( campo: string) {
+  //   if(this.registerForm.get(campo).value == "" && this.formSubmited){
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
 }

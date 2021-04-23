@@ -20,6 +20,7 @@ export class CentroeducativoService {
   public tokenC: string;
   user = null;
   authenticationState = new BehaviorSubject(false);
+  public autenticado = false;
 
   constructor (private http: HttpClient, private router: Router, private helper: JwtHelperService, private storage: Storage,
       private plt: Platform, private alertController: AlertController){
@@ -35,6 +36,7 @@ export class CentroeducativoService {
         let isExpired = this.helper.isTokenExpired(token);
 
        if (!isExpired) {
+          this.autenticado = true;
           this.user = decoded;
           this.authenticationState.next(true);
         } else {
@@ -49,7 +51,7 @@ export class CentroeducativoService {
   }
 
   nuevaClase(data) {
-    return this.http.post(`${environment.base_url}/centroeducativo/clases`, data, this.cabeceras);
+    return this.http.post(`${environment.base_url}/centroeducativo/clases`, data, this.cabecerasVacia);
   }
 
   cargarClases ( uid: string, filtro?: string): Observable<object> {
@@ -69,6 +71,22 @@ export class CentroeducativoService {
     this.centro.email = email;
   }
 
+  generarCodigoProfesor( data ){
+    return this.http.put(`${environment.base_url}/centroeducativo/generarcodigoprofesor`, data, this.cabeceras);
+  }
+
+  establecercodigoProfesor( codigoProfesor: string ): void {
+    this.centro.codigoProfesor = codigoProfesor;
+  }
+
+  generarCodigoAlumno( data ){
+    return this.http.put(`${environment.base_url}/centroeducativo/generarcodigoalumno`, data, this.cabeceras);
+  }
+
+  establecercodigoAlumno( codigoAlumno: string ): void {
+    this.centro.codigoAlumno = codigoAlumno;
+  }
+
   loginCentroEducativo( formData: loginForm) {
     return this.http.post(`${environment.base_url}/login/centroeducativo`, formData)
     .pipe(
@@ -77,6 +95,7 @@ export class CentroeducativoService {
         this.user = this.helper.decodeToken(res['token']);
         this.centro = new CentroEducativo(res['uid'], res['rol']);
         this.authenticationState.next(true);
+        this.autenticado = true;
       })
     );
   }
@@ -84,6 +103,7 @@ export class CentroeducativoService {
   logout() {
     this.storage.remove(TOKEN_KEY).then(() => {
       this.authenticationState.next(false);
+      this.autenticado = false;
     });
   }
 
@@ -102,6 +122,7 @@ export class CentroeducativoService {
 
   isAuthenticated() {
     return this.authenticationState.value;
+    // return this.autenticado;
   }
 
   showAlert(msg) {
@@ -166,6 +187,13 @@ export class CentroeducativoService {
     return this.validarCentro(false, true);
   }
 
+  get cabecerasVacia() {
+    return {
+      headers: {
+        'x-token': '',
+      }};
+  }
+
   get cabeceras() {
     return {
       headers: {
@@ -174,7 +202,7 @@ export class CentroeducativoService {
   }
 
   get token(): string {
-    return this.centro.token;
+    return this.centro.token || '';
   }
 
   // async getToken() {
@@ -196,6 +224,14 @@ export class CentroeducativoService {
 
   get email(): string{
     return this.centro.email;
+  }
+
+  get codigoProfesor(): string{
+    return this.centro.codigoProfesor;
+  }
+
+  get codigoAlumno(): string{
+    return this.centro.codigoAlumno;
   }
 
   // get imagen(): string{

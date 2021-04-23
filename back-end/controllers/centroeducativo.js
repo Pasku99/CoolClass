@@ -9,6 +9,7 @@ const { validarPassword } = require('../helpers/validarPassword');
 const { infoToken } = require('../helpers/infoToken');
 const generator = require('generate-password');
 const Clase = require('../models/clase');
+var ObjectId = require('mongodb').ObjectID;
 
 const sleep = (ms) => {
     return new Promise((resolve) => {
@@ -82,10 +83,18 @@ const crearCentro = async(req, res = response) => {
     const { nombre, email, password, rol } = req.body;
 
     try {
-        // Se comprueba que dicho email no exista ya
+        // Se comprueba que dicho email no exista ya en ningún tipo de usuario
         const existeEmail = await Centroeducativo.findOne({ email: email });
 
         if (existeEmail) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Email ya existe'
+            });
+        }
+
+        const existeEmailProfesor = await Profesor.findOne({ email: email });
+        if (existeEmailProfesor) {
             return res.status(400).json({
                 ok: false,
                 msg: 'Email ya existe'
@@ -242,6 +251,114 @@ const actualizarCentro = async(req, res = response) => {
 
 }
 
+const generarCodigoProfesor = async(req, res) => {
+    const { uid, ...object } = req.body;
+    try {
+        const existeCentro = await Centroeducativo.findById(uid);
+
+        if (!existeCentro) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'El centro no existe'
+            });
+        }
+
+        const codigoProfesor = generator.generate({
+            length: 8,
+            numbers: true
+        });
+
+        const existeCodigo = await Centroeducativo.findOne({ codigoProfesor: codigoProfesor });
+
+        if (existeCodigo) {
+            if (existeCodigo._id != uid) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'El código de profesor ya existe para otro centro. Por favor, vuelva a generarlo.'
+                });
+            }
+        }
+
+        object.codigoProfesor = codigoProfesor;
+        await existeCentro.save();
+
+        const codigoProfesorActualizado = await Centroeducativo.findByIdAndUpdate(uid, object, { new: true });
+        if (!codigoProfesorActualizado) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al actualizar código de profesor'
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'Código de profesor actualizado',
+            centro: codigoProfesorActualizado.codigoProfesor
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error generando código profesor'
+        });
+    }
+}
+
+const generarCodigoAlumno = async(req, res) => {
+    const { uid, ...object } = req.body;
+    try {
+        const existeCentro = await Centroeducativo.findById(uid);
+
+        if (!existeCentro) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'El centro no existe'
+            });
+        }
+
+        const codigoAlumno = generator.generate({
+            length: 8,
+            numbers: true
+        });
+
+        const existeCodigo = await Centroeducativo.findOne({ codigoAlumno: codigoAlumno });
+
+        if (existeCodigo) {
+            if (existeCodigo._id != uid) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'El código de alumno ya existe para otro centro. Por favor, vuelva a generarlo.'
+                });
+            }
+        }
+
+        object.codigoAlumno = codigoAlumno;
+        await existeCentro.save();
+
+        const codigoAlumnoActualizado = await Centroeducativo.findByIdAndUpdate(uid, object, { new: true });
+        if (!codigoAlumnoActualizado) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al actualizar código de alumno'
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'Código de alumno actualizado',
+            centro: codigoAlumnoActualizado.codigoAlumno
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error generando código profesor'
+        });
+    }
+}
+
 const obtenerClases = async(req, res) => {
     const id = req.params.id;
     const filtro = req.query.nombre || '';
@@ -363,4 +480,4 @@ const crearClase = async(req, res = response) => {
     }
 }
 
-module.exports = { crearCentro, obtenerCentros, obtenerClases, crearClase, actualizarCentro }
+module.exports = { crearCentro, obtenerCentros, obtenerClases, crearClase, actualizarCentro, generarCodigoProfesor, generarCodigoAlumno }
