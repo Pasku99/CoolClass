@@ -10,7 +10,7 @@
     </ion-row>
     <ion-row class="filaForm">
         <ion-col>
-            <form [formGroup]="loginForm" (ngSubmit)="login()">
+            <form [formGroup]="loginForm" (ngSubmit)="login()" id="login">
                 <ion-item class="input1">
                     <ion-input type="text" placeholder="Email" formControlName="email" lines="none" required></ion-input>
                 </ion-item>

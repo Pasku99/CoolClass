@@ -9,6 +9,7 @@ import { BehaviorSubject, of, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { CentroEducativo } from '../models/centroeducativo.model';
 import { loginForm } from '../interfaces/login-form.interface';
+import { AuthService } from './auth.service';
 const TOKEN_KEY = 'access_token';
 
 @Injectable({
@@ -23,7 +24,7 @@ export class CentroeducativoService {
   public autenticado = false;
 
   constructor (private http: HttpClient, private router: Router, private helper: JwtHelperService, private storage: Storage,
-      private plt: Platform, private alertController: AlertController){
+      private plt: Platform, private alertController: AlertController, private authService: AuthService){
         this.plt.ready().then(() => {
               this.checkToken();
             });
@@ -51,7 +52,7 @@ export class CentroeducativoService {
   }
 
   nuevaClase(data) {
-    return this.http.post(`${environment.base_url}/centroeducativo/clases`, data, this.cabecerasVacia);
+    return this.http.post(`${environment.base_url}/centroeducativo/clases`, data, this.cabeceras);
   }
 
   cargarClases ( uid: string, filtro?: string): Observable<object> {
@@ -202,7 +203,7 @@ export class CentroeducativoService {
   }
 
   get token(): string {
-    return this.centro.token || '';
+    return this.authService.centro.token || '';
   }
 
   // async getToken() {
@@ -211,27 +212,27 @@ export class CentroeducativoService {
   // }
 
   get uid(): string {
-    return this.centro.uid;
+    return this.authService.centro.uid;
   }
 
   get rol(): string {
-    return this.centro.rol;
+    return this.authService.centro.rol;
   }
 
   get nombre(): string{
-    return this.centro.nombre;
+    return this.authService.centro.nombre;
   }
 
   get email(): string{
-    return this.centro.email;
+    return this.authService.centro.email;
   }
 
   get codigoProfesor(): string{
-    return this.centro.codigoProfesor;
+    return this.authService.centro.codigoProfesor;
   }
 
   get codigoAlumno(): string{
-    return this.centro.codigoAlumno;
+    return this.authService.centro.codigoAlumno;
   }
 
   // get imagen(): string{

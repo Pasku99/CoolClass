@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CentroeducativoService } from '../../../services/centroeducativo.service';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-editar-perfil-centro-educativo',
@@ -18,7 +19,8 @@ export class EditarPerfilCentroEducativoPage implements OnInit {
   });
 
   constructor(private fb: FormBuilder,
-              public centroEducativoService: CentroeducativoService) { }
+              public centroEducativoService: CentroeducativoService,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.cargarCentro();
@@ -27,7 +29,7 @@ export class EditarPerfilCentroEducativoPage implements OnInit {
   actualizarCentro(){
     this.centroEducativoService.actualizarCentro(this.centroEducativoService.uid, this.editarPerfil.value)
       .subscribe( res => {
-        this.centroEducativoService.establecerdatos( res['centro'].nombre, res['centro'].email );
+        this.authService.establecerdatosCentro( res['centro'].nombre, res['centro'].email );
         this.cargarCentroActualizado(res['centro'].nombre, res['centro'].email);
         Swal.fire({
           icon: 'success',

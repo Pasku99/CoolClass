@@ -21,6 +21,7 @@ export class AppComponent {
     private statusBar: StatusBar,
     private centroeducativoService: CentroeducativoService,
     private profesorService: ProfesorService,
+    private authService: AuthService,
     private router: Router
   ) {
     this.initializeApp();
@@ -31,11 +32,9 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
-      this.centroeducativoService.authenticationState.subscribe(res => {
+      this.authService.authenticationState.subscribe(res => {
         if (res) {
-          this.entra = true;
-          this.router.navigateByUrl('/tabs-centro-educativo/principal');
-          this.centroeducativoService.cogerToken();
+          this.authService.cogerToken();
         } else {
           this.router.navigateByUrl('/inicio-sesion');
         }

@@ -3,6 +3,7 @@ import { CentroeducativoService } from '../../../services/centroeducativo.servic
 import { Storage } from '@ionic/storage';
 import Swal from 'sweetalert2'
 import { CentroEducativo } from '../../../models/centroeducativo.model';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-perfil-centro-educativo',
@@ -11,13 +12,14 @@ import { CentroEducativo } from '../../../models/centroeducativo.model';
 })
 export class PerfilCentroEducativoPage implements OnInit {
 
-  constructor( public centroeducativoService: CentroeducativoService ) { }
+  constructor( public authService: AuthService,
+                public centroeducativoService: CentroeducativoService ) { }
 
   ngOnInit() {
   }
 
   logout(){
-    this.centroeducativoService.logout();
+    this.authService.logout();
   }
 
 }

@@ -177,6 +177,74 @@ const tokenProfesor = async(req, res = response) => {
     }
 }
 
+const token = async(req, res = response) => {
+
+    const token = req.headers['x-token'];
+
+    try {
+        const { uid, rol, ...object } = jwt.verify(token, process.env.JWTSECRET);
+
+        if (rol == 'ROL_CENTRO') {
+            const centro = await Centroeducativo.findById(uid);
+            if (!centro) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Token no válido',
+                    token: ''
+                });
+            }
+            const rolBD = centro.rol;
+
+            const nuevoToken = await generarJWT(uid, rol);
+
+            res.json({
+                ok: true,
+                msg: 'Token',
+                uid: uid,
+                nombre: centro.nombre,
+                email: centro.email,
+                rol: rolBD,
+                imagen: centro.imagen,
+                codigoProfesor: centro.codigoProfesor,
+                codigoAlumno: centro.codigoAlumno,
+                token: nuevoToken
+            });
+
+        } else if (rol == 'ROL_PROFESOR') {
+            const profesor = await Profesor.findById(uid);
+            if (!profesor) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Token no válido',
+                    token: ''
+                });
+            }
+            const rolBD = profesor.rol;
+
+            const nuevoToken = await generarJWT(uid, rol);
+
+            res.json({
+                ok: true,
+                msg: 'Token',
+                uid: uid,
+                nombre: profesor.nombre,
+                email: profesor.email,
+                rol: rolBD,
+                imagen: profesor.imagen,
+                uidCentro: profesor.uidCentro,
+                token: nuevoToken
+            });
+        }
+
+    } catch {
+        return res.status(400).json({
+            ok: false,
+            msg: 'Token no válido',
+            token: ''
+        });
+    }
+}
+
 const buscarTipoUsuario = async(req, res = response) => {
     const { email } = req.body;
     let resultado;
@@ -223,4 +291,4 @@ const buscarTipoUsuario = async(req, res = response) => {
     }
 }
 
-module.exports = { loginCentroEducativo, tokenCentro, buscarTipoUsuario, loginProfesor, tokenProfesor }
+module.exports = { loginCentroEducativo, tokenCentro, buscarTipoUsuario, loginProfesor, tokenProfesor, token }

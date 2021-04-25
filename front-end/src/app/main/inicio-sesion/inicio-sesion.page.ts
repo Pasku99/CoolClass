@@ -19,7 +19,7 @@ export class InicioSesionPage implements OnInit {
   private centro: CentroEducativo;
 
   public loginForm = this.fb.group({
-    email: [localStorage.getItem('email') || '', [Validators.required, Validators.email] ],
+    email: ['', [Validators.required, Validators.email] ],
     password: ['', Validators.required ],
     // remember: [ false || localStorage.getItem('email') ]
   });
@@ -40,15 +40,15 @@ export class InicioSesionPage implements OnInit {
     };
     this.authService.buscarTipo(data)
       .subscribe( res => {
-        // console.log(res['resultado']);
         if(res['resultado'][0].rol == 'ROL_CENTRO'){
-          this.centroeducativoService.loginCentroEducativo(this.loginForm.value)
+          this.authService.loginCentroEducativo(this.loginForm.value)
             .subscribe( res => {
-              // this.router.navigateByUrl('/tabs-centro-educativo/principal');
-              this.router.navigate(['/tabs-centro-educativo/principal'])
-                .then(() => {
-                  window.location.reload();
-                });
+              this.router.navigateByUrl('/tabs-centro-educativo/principal');
+              // window.location.reload();
+              // this.router.navigate(['/tabs-centro-educativo/principal'])
+              //   .then(() => {
+              //     window.location.reload();
+              //   });
             }, (err) =>{
               Swal.fire({
                 title: '¡Error!',
@@ -60,12 +60,14 @@ export class InicioSesionPage implements OnInit {
               });
             });
         } else if(res['resultado'][0].rol == 'ROL_PROFESOR'){
-          this.profesorService.loginProfesor(this.loginForm.value)
+          this.authService.loginProfesor(this.loginForm.value)
           .subscribe( res => {
-            this.router.navigate(['/tabs-profesor/principal'])
-              .then(() => {
-                window.location.reload();
-              });
+            this.router.navigateByUrl('/tabs-profesor/principal');
+            // window.location.reload();
+            // this.router.navigate(['/tabs-profesor/principal'])
+            //   .then(() => {
+            //     window.location.reload();
+            //   });
           }, (err) =>{
             Swal.fire({
               title: '¡Error!',

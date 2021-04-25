@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CentroeducativoService } from '../../../services/centroeducativo.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-codigos-centro-educativo',
@@ -13,7 +14,8 @@ export class CodigosCentroEducativoPage implements OnInit {
   private codigoProf : string = '';
 
   constructor(public centroeducativoService: CentroeducativoService,
-              private router: Router) { }
+              private router: Router,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.cargarCodigoProfesor(this.centroeducativoService.codigoProfesor);
@@ -27,7 +29,8 @@ export class CodigosCentroEducativoPage implements OnInit {
     this.centroeducativoService.generarCodigoProfesor(data)
       .subscribe ( res => {
         this.codigoProf = res['centro'];
-        this.centroeducativoService.establecercodigoProfesor(this.codigoProf);
+        console.log(this.codigoProf);
+        this.authService.establecercodigoProfesor(this.codigoProf);
         this.cargarCodigoProfesor(this.codigoProf);
         Swal.fire({
           icon: 'success',
@@ -53,7 +56,7 @@ export class CodigosCentroEducativoPage implements OnInit {
     this.centroeducativoService.generarCodigoAlumno(data)
       .subscribe ( res => {
         this.codigoProf = res['centro'];
-        this.centroeducativoService.establecercodigoAlumno(this.codigoProf);
+        this.authService.establecercodigoAlumno(this.codigoProf);
         this.cargarCodigoAlumno(this.codigoProf);
         Swal.fire({
           icon: 'success',

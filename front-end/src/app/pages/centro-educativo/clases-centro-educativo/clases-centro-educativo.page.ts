@@ -4,6 +4,7 @@ import { NavController } from '@ionic/angular';
 import { Clase } from 'src/app/models/clase.model';
 import Swal from 'sweetalert2'
 import { CentroeducativoService } from '../../../services/centroeducativo.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-clases-centro-educativo',
@@ -17,7 +18,8 @@ export class ClasesCentroEducativoPage implements OnInit {
   public listaClases: Clase[] = [];
   public listaDesplegable: Clase[] = [];
 
-  constructor(private centroeducativoService: CentroeducativoService) {
+  constructor(private centroeducativoService: CentroeducativoService,
+              private authService: AuthService) {
     this.items = [
       { expanded: false },
       { expanded: false },
@@ -47,7 +49,7 @@ export class ClasesCentroEducativoPage implements OnInit {
   }
 
   ngOnInit(){
-    this.cargarClases(this.centroeducativoService.centro.uid, this.filtro);
+    this.cargarClases(this.centroeducativoService.uid, this.filtro);
   }
 
   anyadirClase(){
@@ -74,7 +76,7 @@ export class ClasesCentroEducativoPage implements OnInit {
     }).then((result) => {
       if (result.value) {
         const data = {
-          uidCentro : this.centroeducativoService.centro.uid,
+          uidCentro : this.centroeducativoService.uid,
           nombre: result.value,
         };
         this.centroeducativoService.nuevaClase(data)
@@ -85,7 +87,7 @@ export class ClasesCentroEducativoPage implements OnInit {
               icon: 'success',
               heightAuto: false
             });
-            this.cargarClases(this.centroeducativoService.centro.uid, this.filtro);
+            this.cargarClases(this.centroeducativoService.uid, this.filtro);
           }, (err) => {
             const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
             Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
@@ -121,9 +123,9 @@ export class ClasesCentroEducativoPage implements OnInit {
     this.filtro = $event.target.value;
     if(this.filtro == 'Todas'){
       this.filtro = '';
-      this.cargarClases(this.centroeducativoService.centro.uid, this.filtro);
+      this.cargarClases(this.centroeducativoService.uid, this.filtro);
     } else {
-      this.cargarClasesFiltro(this.centroeducativoService.centro.uid, this.filtro);
+      this.cargarClasesFiltro(this.centroeducativoService.uid, this.filtro);
     }
   }
 
