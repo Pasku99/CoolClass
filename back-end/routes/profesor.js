@@ -4,7 +4,7 @@ Ruta base: /api/profesores
 
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { obtenerProfesores, crearProfesor, escogerClases } = require('../controllers/profesor');
+const { obtenerProfesores, crearProfesor, escogerClases, obtenerClasesProfesor, anyadirClasesProfesor } = require('../controllers/profesor');
 const { validarCampos } = require('../middleware/validar-campos');
 const { validarJWT } = require('../middleware/validar-jwt');
 
@@ -25,6 +25,15 @@ router.post('/', [
     check('codigoProfesor', 'El argumento codigoProfesor es obligatorio').not().isEmpty(),
     validarCampos,
 ], crearProfesor);
+
+router.get('/clases/:idcentro/:idprofesor', [
+    validarJWT,
+], obtenerClasesProfesor);
+
+router.post('/escogerclases/', [
+    validarJWT,
+], anyadirClasesProfesor);
+
 
 // router.post('/escogerclase', [
 //     validarCampos,

@@ -154,6 +154,73 @@ const crearProfesor = async(req, res = response) => {
     }
 }
 
+const obtenerClasesProfesor = async(req, res = response) => {
+    const uidProfesor = req.params.idprofesor;
+    const uidCentro = req.params.idcentro;
+
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para obtener clases',
+            });
+        }
+        const centro = await Centroeducativo.findById(uidCentro);
+        if (!centro) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar el centro correspondiente',
+            });
+        }
+        const clases = await Clase.find({ uidCentro: uidCentro });
+        if (!clases) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar clases del centro',
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'getClasesCentro',
+            clases,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Clases del profesor obtenidas con éxito'
+        });
+    }
+}
+
+const anyadirClasesProfesor = async(req, res = response) => {
+    const { nombreClase, uidClase, uidCentro, uidProfesor } = req.body;
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para agregar clases',
+            });
+        }
+        const clase = await Clase.find({ uidCentro: uidCentro, nombre: nombreClase });
+        res.json({
+            ok: true,
+            msg: 'anyadirClase',
+            clase,
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Clases del profesor obtenidas con éxito'
+        });
+    }
+}
+
 // const escogerClases = async(req, res = response) => {
 //     const uidCentro = req.params.id;
 //     try {
@@ -174,4 +241,4 @@ const crearProfesor = async(req, res = response) => {
 //     }
 // }
 
-module.exports = { crearProfesor, obtenerProfesores }
+module.exports = { crearProfesor, obtenerProfesores, obtenerClasesProfesor, anyadirClasesProfesor }

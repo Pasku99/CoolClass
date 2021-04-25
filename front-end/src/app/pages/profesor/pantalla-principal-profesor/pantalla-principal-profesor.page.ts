@@ -1,5 +1,6 @@
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-pantalla-principal-profesor',
@@ -11,7 +12,7 @@ export class PantallaPrincipalProfesorPage implements OnInit {
 
   @ViewChildren(IonSlides) slides: QueryList<IonSlides>;
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   public moveForward(index: number): void {
     this.slides.toArray()[index].slideNext(500);
@@ -22,6 +23,7 @@ export class PantallaPrincipalProfesorPage implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.cogerToken();
   }
 
   // next( index) {

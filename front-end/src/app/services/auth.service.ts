@@ -100,7 +100,7 @@ export class AuthService {
               this.centro = new CentroEducativo(res['uid'], res['nombre'], res['email'], res['rol'], res['codigoProfesor'], res['codigoAlumno'], res['token']);
               this.router.navigateByUrl('tabs-centro-educativo/principal');
             } else if(res['rol'] == 'ROL_PROFESOR'){
-              console.log('Profesor');
+              // console.log('Profesor');
               this.profesor = new Profesor(res['uid'], res['nombre'], res['email'], res['rol'], res['uidCentro'], res['token']);
               this.router.navigateByUrl('tabs-profesor/principal');
             }
