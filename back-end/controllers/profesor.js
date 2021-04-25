@@ -196,8 +196,9 @@ const obtenerClasesProfesor = async(req, res = response) => {
     }
 }
 
-const anyadirClasesProfesor = async(req, res = response) => {
-    const { nombreClase, uidClase, uidCentro, uidProfesor } = req.body;
+const escogerAsignaturasProfesor = async(req, res = response) => {
+    const { nombreClase, uidCentro, uidProfesor, asignatura } = req.body;
+    let claseGuardada;
     try {
         const token = req.header('x-token');
         if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
@@ -206,20 +207,163 @@ const anyadirClasesProfesor = async(req, res = response) => {
                 msg: 'No tiene permisos para agregar clases',
             });
         }
-        const clase = await Clase.find({ uidCentro: uidCentro, nombre: nombreClase });
+        const clase = await Clase.findOne({ uidCentro: uidCentro, nombre: nombreClase });
+        if (!clase) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar la clase',
+            });
+        }
+        for (let i = 0; i < clase.arrayAsignaturasProfesores.length; i++) {
+            for (let j = 0; j < clase.arrayAsignaturasProfesores[i].length; j++) {
+                if (clase.arrayAsignaturasProfesores[i][j] == asignatura) {
+                    if (clase.arrayAsignaturasProfesores[i][j + 1] != '') {
+                        return res.status(400).json({
+                            ok: false,
+                            msg: 'En la clase ya hay un profesor en dicha asignatura. Por favor, comuníquese con su centro.',
+                        });
+                    } else {
+                        clase.arrayAsignaturasProfesores[i][j + 1] = uidProfesor;
+                    }
+                }
+            }
+        }
+        clase.markModified('arrayAsignaturasProfesores');
+        claseGuardada = await clase.save();
+        if (!claseGuardada) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al guardar los cambios',
+            });
+        }
         res.json({
             ok: true,
-            msg: 'anyadirClase',
-            clase,
+            msg: 'anyadirAsignatura',
+            clase: claseGuardada,
         });
     } catch (error) {
         console.log(error);
         return res.status(400).json({
             ok: false,
-            msg: 'Clases del profesor obtenidas con éxito'
+            msg: 'Error agregando asignaturas'
         });
     }
 }
+
+const obtenerAsignaturas = async(req, res = response) => {
+    try {
+        let arrayAsignaturas = ['Matemáticas', 'Castellano', 'Inglés', 'Francés', 'Valenciano', 'FyQ', 'Biología', 'Tecnología', 'Informática', 'C.Sociales', 'E.Física', 'Latín'];
+        res.json({
+            ok: true,
+            msg: 'getAsignaturas',
+            asignaturas: arrayAsignaturas,
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error obteniendo asignaturas'
+        });
+    }
+}
+
+const escogerClasesProfesor = async(req, res = response) => {
+    const { nombreClase, uidCentro, uidProfesor } = req.body;
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para agregar clases',
+            });
+        }
+        const clase = await Clase.findOne({ uidCentro: uidCentro, nombre: nombreClase });
+        if (!clase) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar la clase',
+            });
+        }
+        clase.arrayProfesores.push(uidProfesor);
+        const claseGuardada = await clase.save();
+        if (!claseGuardada) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al guardar los cambios',
+            });
+        }
+        res.json({
+            ok: true,
+            msg: 'anyadirClase',
+            clase: claseGuardada,
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error agregando clases'
+        });
+    }
+}
+
+const eliminarClaseAsignaturaProfesor = async(req, res = response) => {
+    const { nombreClase, uidCentro, uidProfesor, asignatura } = req.body;
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para eliminar las clases',
+            });
+        }
+        const clase = await Clase.findOne({ uidCentro: uidCentro, nombre: nombreClase });
+        if (!clase) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar la clase',
+            });
+        }
+        for (let i = 0; i < clase.arrayAsignaturasProfesores.length; i++) {
+            for (let j = 0; j < clase.arrayAsignaturasProfesores[i].length; j++) {
+                if (clase.arrayAsignaturasProfesores[i][j] == asignatura) {
+                    if (clase.arrayAsignaturasProfesores[i][j] != '') {
+                        clase.arrayAsignaturasProfesores[i][j + 1] = '';
+                    } else {
+                        return res.status(400).json({
+                            ok: false,
+                            msg: 'Esa clase no tiene ningún profesor asociado. No es posible borrarla.',
+                        });
+                    }
+                }
+            }
+        }
+        for (let i = 0; i < clase.arrayProfesores.length; i++) {
+            if (clase.arrayProfesores[i] == uidProfesor) {
+                clase.arrayProfesores.splice(i, 1);
+            }
+        }
+        clase.markModified('arrayAsignaturasProfesores');
+        const claseGuardada = await clase.save();
+        if (!claseGuardada) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al eliminar los cambios',
+            });
+        }
+        res.json({
+            ok: true,
+            msg: 'eliminarClaseAsignaturaProfesor',
+            clase: claseGuardada,
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error eliminando clase del profesor'
+        });
+    }
+}
+
 
 // const escogerClases = async(req, res = response) => {
 //     const uidCentro = req.params.id;
@@ -241,4 +385,4 @@ const anyadirClasesProfesor = async(req, res = response) => {
 //     }
 // }
 
-module.exports = { crearProfesor, obtenerProfesores, obtenerClasesProfesor, anyadirClasesProfesor }
+module.exports = { crearProfesor, obtenerProfesores, obtenerClasesProfesor, escogerAsignaturasProfesor, obtenerAsignaturas, escogerClasesProfesor, eliminarClaseAsignaturaProfesor }

@@ -28,6 +28,9 @@ const ClaseSchema = Schema({
             ['E.Física', ''],
             ['Latín', '']
         ]
+    },
+    arrayProfesores: {
+        type: Array,
     }
 }, { collection: 'clase' });
 

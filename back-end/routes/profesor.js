@@ -4,7 +4,7 @@ Ruta base: /api/profesores
 
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { obtenerProfesores, crearProfesor, escogerClases, obtenerClasesProfesor, anyadirClasesProfesor } = require('../controllers/profesor');
+const { obtenerProfesores, crearProfesor, escogerClasesProfesor, obtenerClasesProfesor, obtenerAsignaturas, escogerAsignaturasProfesor, eliminarClaseAsignaturaProfesor } = require('../controllers/profesor');
 const { validarCampos } = require('../middleware/validar-campos');
 const { validarJWT } = require('../middleware/validar-jwt');
 
@@ -30,10 +30,33 @@ router.get('/clases/:idcentro/:idprofesor', [
     validarJWT,
 ], obtenerClasesProfesor);
 
-router.post('/escogerclases/', [
+router.post('/escogerasignaturas', [
     validarJWT,
-], anyadirClasesProfesor);
+    check('nombreClase', 'El argumento nombreClase es obligatorio').not().isEmpty().trim(),
+    check('uidCentro', 'El argumento email debe ser un email').not().isEmpty(),
+    check('uidProfesor', 'El argumento uidProfesor es obligatorio').not().isEmpty(),
+    check('asignatura', 'El argumento asignatura es obligatorio').not().isEmpty(),
+    validarCampos,
+], escogerAsignaturasProfesor);
 
+router.post('/escogerclases', [
+    validarJWT,
+    check('nombreClase', 'El argumento nombreClase es obligatorio').not().isEmpty().trim(),
+    check('uidCentro', 'El argumento email debe ser un email').not().isEmpty(),
+    check('uidProfesor', 'El argumento uidProfesor es obligatorio').not().isEmpty(),
+    validarCampos,
+], escogerClasesProfesor);
+
+router.get('/asignaturas', [], obtenerAsignaturas);
+
+router.put('/eliminarclaseprofesor', [
+    validarJWT,
+    check('nombreClase', 'El argumento nombreClase es obligatorio').not().isEmpty().trim(),
+    check('uidCentro', 'El argumento email debe ser un email').not().isEmpty(),
+    check('uidProfesor', 'El argumento uidProfesor es obligatorio').not().isEmpty(),
+    check('asignatura', 'El argumento asignatura es obligatorio').not().isEmpty(),
+    validarCampos,
+], eliminarClaseAsignaturaProfesor);
 
 // router.post('/escogerclase', [
 //     validarCampos,
