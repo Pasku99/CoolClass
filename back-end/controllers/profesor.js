@@ -154,9 +154,10 @@ const crearProfesor = async(req, res = response) => {
     }
 }
 
-const obtenerClasesProfesor = async(req, res = response) => {
+const obtenerClasesCentro = async(req, res = response) => {
     const uidProfesor = req.params.idprofesor;
     const uidCentro = req.params.idcentro;
+    let arrayNombres = [];
 
     try {
         const token = req.header('x-token');
@@ -180,11 +181,14 @@ const obtenerClasesProfesor = async(req, res = response) => {
                 msg: 'Error al buscar clases del centro',
             });
         }
-
+        for (let i = 0; i < clases.length; i++) {
+            arrayNombres.push(clases[i].nombre);
+        }
         res.json({
             ok: true,
             msg: 'getClasesCentro',
             clases,
+            nombresCentro: arrayNombres,
         });
 
     } catch (error) {
@@ -192,6 +196,74 @@ const obtenerClasesProfesor = async(req, res = response) => {
         return res.status(400).json({
             ok: false,
             msg: 'Clases del profesor obtenidas con éxito'
+        });
+    }
+}
+
+const obtenerClasesProfesor = async(req, res = response) => {
+    const uidProfesor = req.params.idprofesor;
+    const uidCentro = req.params.idcentro;
+    let arrayNombres = [];
+    let arrayNombresNoProfesor = [];
+
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para obtener clases',
+            });
+        }
+        const centro = await Centroeducativo.findById(uidCentro);
+        if (!centro) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar el centro correspondiente',
+            });
+        }
+        const clases = await Clase.find({ uidCentro: uidCentro });
+        if (!clases) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar clases del centro',
+            });
+        }
+        let nocoincide = false;
+        for (let i = 0; i < clases.length; i++) {
+            nocoincide = false;
+            if (clases[i].arrayProfesores != undefined || clases[i].arrayProfesores != null) {
+                if (clases[i].arrayProfesores == '') {
+                    arrayNombresNoProfesor.push(clases[i].nombre);
+                } else {
+                    for (let j = 0; j < clases[i].arrayProfesores.length; j++) {
+                        if (clases[i].arrayProfesores[j] == uidProfesor) {
+                            nocoincide = false;
+                            arrayNombres.push(clases[i].nombre);
+                        } else {
+                            nocoincide = true;
+                        }
+                    }
+                    if (nocoincide) {
+                        arrayNombres.push(clases[i].nombre);
+                    }
+                }
+            } else {
+                arrayNombresNoProfesor.push(clases[i].nombre);
+            }
+        }
+        res.json({
+            ok: true,
+            msg: 'getClasesCentro',
+            clases,
+            nombres: arrayNombres,
+            nombresNoProfesor: arrayNombresNoProfesor
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error obteniendo clases del profesor'
         });
     }
 }
@@ -385,4 +457,4 @@ const eliminarClaseAsignaturaProfesor = async(req, res = response) => {
 //     }
 // }
 
-module.exports = { crearProfesor, obtenerProfesores, obtenerClasesProfesor, escogerAsignaturasProfesor, obtenerAsignaturas, escogerClasesProfesor, eliminarClaseAsignaturaProfesor }
+module.exports = { crearProfesor, obtenerProfesores, obtenerClasesCentro, escogerAsignaturasProfesor, obtenerAsignaturas, escogerClasesProfesor, eliminarClaseAsignaturaProfesor, obtenerClasesProfesor }

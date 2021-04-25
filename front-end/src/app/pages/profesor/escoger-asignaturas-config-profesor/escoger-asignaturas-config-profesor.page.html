@@ -19,8 +19,8 @@
                     <ion-list class="ion-no-border" lines="none" style="background-color: #00ff7f; margin-top: 0.4rem;">
                         <ion-item style="--background: #00ff7f;">
                             <ion-select placeholder="Escoger asignatura">
-                                <ion-select-option value="2esoa" style="color: black;">Matemáticas</ion-select-option>
-                                <ion-select-option value="2esob" style="color: black;">Inglés</ion-select-option>
+                                <ion-select-option value="2esoa" style="color: black;" *ngFor="let asignatura of this.listaAsignaturas">{{asignatura}}</ion-select-option>
+                                <!-- <ion-select-option value="2esob" style="color: black;">Inglés</ion-select-option> -->
                             </ion-select>
                         </ion-item>
                     </ion-list>

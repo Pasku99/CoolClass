@@ -9,6 +9,7 @@ import { BehaviorSubject, of, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Profesor } from '../models/profesor.model';
 import { loginForm } from '../interfaces/login-form.interface';
+import { AuthService } from './auth.service';
 const TOKEN_KEY = 'access_token';
 
 @Injectable({
@@ -22,7 +23,7 @@ export class ProfesorService {
   public autenticado = false;
 
   constructor(private http: HttpClient, private router: Router, private helper: JwtHelperService, private storage: Storage,
-              private plt: Platform, private alertController: AlertController) {
+              private authService: AuthService, private plt: Platform, private alertController: AlertController) {
               this.plt.ready().then(() => {
                 this.checkToken();
               });}
@@ -46,6 +47,22 @@ export class ProfesorService {
 
   nuevoProfesor ( data: Profesor) {
     return this.http.post(`${environment.base_url}/profesores`, data, this.cabecerasVacia);
+  }
+
+  cargarAsignaturas(){
+    return this.http.get(`${environment.base_url}/profesores/asignaturas`, this.cabecerasVacia);
+  }
+
+  cargarClasesCentro( uidCentro: string, uidProfesor: string ){
+    return this.http.get(`${environment.base_url}/profesores/clases/${uidCentro}/${uidProfesor}`, this.cabeceras);
+  }
+
+  cargarClasesProfesor( uidCentro: string, uidProfesor: string ){
+    return this.http.get(`${environment.base_url}/profesores/clasesprofesor/${uidCentro}/${uidProfesor}`, this.cabeceras);
+  }
+
+  anyadirClaseProfesor( data ) {
+    return this.http.post(`${environment.base_url}/profesores/escogerclase`, data, this.cabeceras);
   }
 
   loginProfesor( formData: loginForm) {
@@ -116,32 +133,32 @@ export class ProfesorService {
   get cabeceras() {
     return {
       headers: {
-        'x-token': this.token,
+        'x-token': this.authService.profesor.token,
       }};
   }
 
   get token(): string {
-    return this.profesor.token || '';
+    return this.authService.profesor.token || '';
   }
 
   get uid(): string {
-    return this.profesor.uid;
+    return this.authService.profesor.uid;
   }
 
   get rol(): string {
-    return this.profesor.rol;
+    return this.authService.profesor.rol;
   }
 
   get nombre(): string{
-    return this.profesor.nombre;
+    return this.authService.profesor.nombre;
   }
 
   get email(): string{
-    return this.profesor.email;
+    return this.authService.profesor.email;
   }
 
   get uidCentro(): string{
-    return this.profesor.uidCentro;
+    return this.authService.profesor.uidCentro;
   }
 
 }
