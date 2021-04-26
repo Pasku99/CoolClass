@@ -58,7 +58,6 @@ router.put('/eliminarclaseprofesor', [
     check('nombreClase', 'El argumento nombreClase es obligatorio').not().isEmpty().trim(),
     check('uidCentro', 'El argumento email debe ser un email').not().isEmpty(),
     check('uidProfesor', 'El argumento uidProfesor es obligatorio').not().isEmpty(),
-    check('asignatura', 'El argumento asignatura es obligatorio').not().isEmpty(),
     validarCampos,
 ], eliminarClaseAsignaturaProfesor);
 

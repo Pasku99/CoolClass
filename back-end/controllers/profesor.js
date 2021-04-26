@@ -205,6 +205,8 @@ const obtenerClasesProfesor = async(req, res = response) => {
     const uidCentro = req.params.idcentro;
     let arrayNombres = [];
     let arrayNombresNoProfesor = [];
+    let asignaturasProfesor = [];
+    let asignaturasProfesorOrdenado = [];
 
     try {
         const token = req.header('x-token');
@@ -228,35 +230,109 @@ const obtenerClasesProfesor = async(req, res = response) => {
                 msg: 'Error al buscar clases del centro',
             });
         }
-        let nocoincide = false;
+        let noc = false;
         for (let i = 0; i < clases.length; i++) {
-            nocoincide = false;
-            if (clases[i].arrayProfesores != undefined || clases[i].arrayProfesores != null) {
-                if (clases[i].arrayProfesores == '') {
-                    arrayNombresNoProfesor.push(clases[i].nombre);
-                } else {
-                    for (let j = 0; j < clases[i].arrayProfesores.length; j++) {
-                        if (clases[i].arrayProfesores[j] == uidProfesor) {
-                            nocoincide = false;
-                            arrayNombres.push(clases[i].nombre);
-                        } else {
-                            nocoincide = true;
-                        }
-                    }
-                    if (nocoincide) {
-                        arrayNombres.push(clases[i].nombre);
+            noc = false;
+            for (let j = 0; j < clases[i].arrayAsignaturasProfesores.length; j++) {
+                if (noc == true) {
+                    break;
+                }
+                for (let z = 0; z < clases[i].arrayAsignaturasProfesores[j].length; z++) {
+                    if (clases[i].arrayAsignaturasProfesores[j][z + 1] == uidProfesor) {
+                        noc = true;
+                        asignaturasProfesor.push(clases[i].nombre);
+                        asignaturasProfesor.push(clases[i].arrayAsignaturasProfesores[j][z]);
+                        break;
+                    } else {
+                        noc = false;
                     }
                 }
-            } else {
-                arrayNombresNoProfesor.push(clases[i].nombre);
+            }
+            if (noc == false) {
+                asignaturasProfesor.push(clases[i].nombre);
+                asignaturasProfesor.push('');
             }
         }
+        // for (let i = 0; i < asignaturasProfesor.length; i++) {
+        //     if (asignaturasProfesor[i] == '') {
+        //         asignaturasProfesor.splice(i, 1);
+        //         asignaturasProfesor.push('');
+        //     }
+        // }
+        // let tieneasignatura = false;
+        // for (let i = 0; i < clases.length; i++) {
+        //     if (clases[i].arrayProfesores != undefined || clases[i].arrayProfesores != null) {
+        //         if (clases[i].arrayProfesores == '') {
+
+        //         } else {
+        //             for (let j = 0; j < clases[i].arrayProfesores.length; j++) {
+        //                 if (clases[i].arrayProfesores[j] == uidProfesor) {
+        //                     for (let x = 0; x < clases[i].arrayAsignaturasProfesores.length; x++) {
+        //                         for (let z = 0; z < clases[i].arrayAsignaturasProfesores[x].length; z++) {
+        //                             if (clases[i].arrayAsignaturasProfesores[x][z + 1] == uidProfesor) {
+        //                                 tieneasignatura = true;
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+        //             }
+
+        //         }
+        //     }
+        // }
+        let esta = false;
+        for (let i = 0; i < asignaturasProfesor.length; i++) {
+            if (asignaturasProfesor[i + 1] == asignaturasProfesor.length) {
+                break;
+            }
+            if (asignaturasProfesor[i + 1] == '') {
+                for (let x = 0; x < clases.length; x++) {
+                    esta = false;
+                    if (clases[x].nombre == asignaturasProfesor[i]) {
+                        // console.log(clases[x].nombre + ' ' + asignaturasProfesor[i]);
+                        if (clases[x].arrayProfesores != undefined || clases[x].arrayProfesores != null) {
+                            if (clases[x].arrayProfesores == '') {
+
+                            } else {
+                                for (let j = 0; j < clases[x].arrayProfesores.length; j++) {
+                                    if (clases[x].arrayProfesores[j] == uidProfesor) {
+                                        esta = true;
+                                        break;
+                                    } else {
+
+                                    }
+                                }
+                            }
+                            if (!esta) {
+                                arrayNombresNoProfesor.push(asignaturasProfesor[i]);
+                                arrayNombresNoProfesor.push(asignaturasProfesor[i + 1]);
+                                asignaturasProfesor.splice(i, 2);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // arrayNombres = arrayNombres.sort(function(a, b) {
+        //     if (a < b) { return -1; }
+        //     if (a > b) { return 1; }
+        //     return 0;
+        // });
+
+        // arrayNombresNoProfesor = arrayNombresNoProfesor.sort(function(a, b) {
+        //     if (a < b) { return -1; }
+        //     if (a > b) { return 1; }
+        //     return 0;
+        // });
+
         res.json({
             ok: true,
             msg: 'getClasesCentro',
             clases,
-            nombres: arrayNombres,
-            nombresNoProfesor: arrayNombresNoProfesor
+            // nombres: arrayNombres,
+            asignaturas: asignaturasProfesor,
+            clasesNoProfesor: arrayNombresNoProfesor
         });
 
     } catch (error) {
@@ -286,6 +362,29 @@ const escogerAsignaturasProfesor = async(req, res = response) => {
                 msg: 'Error al buscar la clase',
             });
         }
+        let ocupado = false;
+        for (let i = 0; i < clase.arrayAsignaturasProfesores.length; i++) {
+            for (let j = 0; j < clase.arrayAsignaturasProfesores[i].length; j++) {
+                if (clase.arrayAsignaturasProfesores[i][j] == asignatura) {
+                    if (clase.arrayAsignaturasProfesores[i][j + 1] != '') {
+                        return res.status(400).json({
+                            ok: false,
+                            msg: 'En la clase ya hay un profesor en dicha asignatura. Por favor, comuníquese con su centro.',
+                        });
+                    }
+                }
+            }
+        }
+
+        for (let i = 0; i < clase.arrayAsignaturasProfesores.length; i++) {
+            for (let j = 0; j < clase.arrayAsignaturasProfesores[i].length; j++) {
+                if (clase.arrayAsignaturasProfesores[i][j + 1] == uidProfesor) {
+                    clase.arrayAsignaturasProfesores[i][j + 1] = '';
+                }
+            }
+        }
+        clase.markModified('arrayAsignaturasProfesores');
+        claseGuardada = await clase.save();
         for (let i = 0; i < clase.arrayAsignaturasProfesores.length; i++) {
             for (let j = 0; j < clase.arrayAsignaturasProfesores[i].length; j++) {
                 if (clase.arrayAsignaturasProfesores[i][j] == asignatura) {
@@ -381,6 +480,7 @@ const escogerClasesProfesor = async(req, res = response) => {
 const eliminarClaseAsignaturaProfesor = async(req, res = response) => {
     const { nombreClase, uidCentro, uidProfesor, asignatura } = req.body;
     try {
+        console.log(asignatura);
         const token = req.header('x-token');
         if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
             return res.status(400).json({
@@ -395,23 +495,31 @@ const eliminarClaseAsignaturaProfesor = async(req, res = response) => {
                 msg: 'Error al buscar la clase',
             });
         }
-        for (let i = 0; i < clase.arrayAsignaturasProfesores.length; i++) {
-            for (let j = 0; j < clase.arrayAsignaturasProfesores[i].length; j++) {
-                if (clase.arrayAsignaturasProfesores[i][j] == asignatura) {
-                    if (clase.arrayAsignaturasProfesores[i][j] != '') {
-                        clase.arrayAsignaturasProfesores[i][j + 1] = '';
-                    } else {
-                        return res.status(400).json({
-                            ok: false,
-                            msg: 'Esa clase no tiene ningún profesor asociado. No es posible borrarla.',
-                        });
+        if (asignatura == '') {
+            for (let i = 0; i < clase.arrayProfesores.length; i++) {
+                if (clase.arrayProfesores[i] == uidProfesor) {
+                    clase.arrayProfesores.splice(i, 1);
+                }
+            }
+        } else {
+            for (let i = 0; i < clase.arrayAsignaturasProfesores.length; i++) {
+                for (let j = 0; j < clase.arrayAsignaturasProfesores[i].length; j++) {
+                    if (clase.arrayAsignaturasProfesores[i][j] == asignatura) {
+                        if (clase.arrayAsignaturasProfesores[i][j] != '') {
+                            clase.arrayAsignaturasProfesores[i][j + 1] = '';
+                        } else {
+                            return res.status(400).json({
+                                ok: false,
+                                msg: 'Esa clase no tiene ningún profesor asociado. No es posible borrarla.',
+                            });
+                        }
                     }
                 }
             }
-        }
-        for (let i = 0; i < clase.arrayProfesores.length; i++) {
-            if (clase.arrayProfesores[i] == uidProfesor) {
-                clase.arrayProfesores.splice(i, 1);
+            for (let i = 0; i < clase.arrayProfesores.length; i++) {
+                if (clase.arrayProfesores[i] == uidProfesor) {
+                    clase.arrayProfesores.splice(i, 1);
+                }
             }
         }
         clase.markModified('arrayAsignaturasProfesores');

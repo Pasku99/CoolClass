@@ -10,6 +10,7 @@ export class Clase {
                  public uidCentro?: string,
                  public nombre?: string,
                  public arrayAsignaturasProfesores?: string,
+                 public arrayProfesores?: Array<string>,
                  public expanded?: boolean,
                 ) {}
 

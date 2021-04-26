@@ -62,7 +62,15 @@ export class ProfesorService {
   }
 
   anyadirClaseProfesor( data ) {
-    return this.http.post(`${environment.base_url}/profesores/escogerclase`, data, this.cabeceras);
+    return this.http.post(`${environment.base_url}/profesores/escogerclases`, data, this.cabeceras);
+  }
+
+  escogerAsignaturas( data ) {
+    return this.http.post(`${environment.base_url}/profesores/escogerasignaturas`, data, this.cabeceras);
+  }
+
+  eliminarClaseAsignaturaProfesor( data ) {
+    return this.http.put(`${environment.base_url}/profesores/eliminarclaseprofesor`, data, this.cabeceras);
   }
 
   loginProfesor( formData: loginForm) {
