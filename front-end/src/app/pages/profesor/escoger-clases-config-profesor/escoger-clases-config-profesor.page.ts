@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProfesorService } from '../../../services/profesor.service';
 import Swal from 'sweetalert2';
 import { Clase } from 'src/app/models/clase.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-escoger-clases-config-profesor',
@@ -19,7 +20,8 @@ export class EscogerClasesConfigProfesorPage implements OnInit {
   public asignatura: string = '';
   public listaClasesModel: Clase[] = [];
 
-  constructor(private profesorService: ProfesorService) { }
+  constructor(private profesorService: ProfesorService,
+              private router: Router) { }
 
   ngOnInit() {
     this.cargarAsignaturas();
@@ -46,7 +48,6 @@ export class EscogerClasesConfigProfesorPage implements OnInit {
         for(let i = 0; i <  this.listaClases.length; i = i + 2){
           this.listaClasesNombres.push(this.listaClases[i]);
         }
-        console.log(this.listaClasesNombres);
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
@@ -66,7 +67,6 @@ export class EscogerClasesConfigProfesorPage implements OnInit {
         for(let i = 1; i <  this.listaAsignaturasEnUso.length; i = i + 2){
           this.listaAsignaturasEnUsoProf.push(this.listaAsignaturasEnUso[i]);
         }
-        console.log(this.listaAsignaturasEnUsoProf)
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
@@ -86,8 +86,12 @@ export class EscogerClasesConfigProfesorPage implements OnInit {
         this.cargarClasesProfesor();
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
-        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
-        return;
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false}).then((result) => {
+          if(result.value) {
+            this.cargarClasesCentro();
+            this.cargarClasesProfesor();
+          }
+        })
       }));
   }
 
@@ -104,13 +108,16 @@ export class EscogerClasesConfigProfesorPage implements OnInit {
         this.cargarClasesProfesor();
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
-        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
-        return;
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false}).then((result) => {
+          if(result.value) {
+            this.cargarClasesCentro();
+            this.cargarClasesProfesor();
+          }
+        })
       }));
   }
 
   eliminarClaseProfesor(nombreClase, asignatura){
-    console.log(asignatura)
     const data = {
       nombreClase : nombreClase,
       uidCentro : this.profesorService.uidCentro,
@@ -130,7 +137,6 @@ export class EscogerClasesConfigProfesorPage implements OnInit {
 
   cogerClase($event){
     this.asignatura = $event.target.value;
-    console.log(this.asignatura);
   }
 
 }

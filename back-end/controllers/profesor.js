@@ -480,7 +480,6 @@ const escogerClasesProfesor = async(req, res = response) => {
 const eliminarClaseAsignaturaProfesor = async(req, res = response) => {
     const { nombreClase, uidCentro, uidProfesor, asignatura } = req.body;
     try {
-        console.log(asignatura);
         const token = req.header('x-token');
         if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
             return res.status(400).json({
