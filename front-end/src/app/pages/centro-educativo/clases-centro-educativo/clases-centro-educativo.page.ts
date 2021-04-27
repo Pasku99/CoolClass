@@ -49,6 +49,11 @@ export class ClasesCentroEducativoPage implements OnInit {
   }
 
   ngOnInit(){
+    // this.changeRef.detectChanges();
+    // this.cargarClases(this.centroeducativoService.uid, this.filtro);
+  }
+
+  ionViewWillEnter(){
     this.cargarClases(this.centroeducativoService.uid, this.filtro);
   }
 

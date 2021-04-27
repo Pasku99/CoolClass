@@ -47,6 +47,11 @@ export class MisClasesProfesorPage implements OnInit {
   }
 
   ngOnInit() {
+    // this.cargarClases(this.profesorService.uidCentro, this.profesorService.uid, this.filtro);
+    // console.log('Entramos');
+  }
+
+  ionViewWillEnter(){
     this.cargarClases(this.profesorService.uidCentro, this.profesorService.uid, this.filtro);
   }
 

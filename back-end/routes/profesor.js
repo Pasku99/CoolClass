@@ -26,6 +26,15 @@ router.post('/', [
     validarCampos,
 ], crearProfesor);
 
+router.put('/eliminarclaseprofesor', [
+    validarJWT,
+    check('nombreClase', 'El argumento nombreClase es obligatorio').not().isEmpty().trim(),
+    check('uidCentro', 'El argumento uidCentro es obligatorio').not().isEmpty(),
+    check('uidProfesor', 'El argumento uidProfesor es obligatorio').not().isEmpty(),
+    check('asignatura', 'El argumento asignatura es obligatorio').not().isEmpty(),
+    validarCampos,
+], eliminarClaseAsignaturaProfesor);
+
 router.put('/:id', [
     validarJWT,
     check('nombre', 'El argumento nombre es obligatorio').not().isEmpty().trim(),
@@ -59,14 +68,6 @@ router.post('/escogerclases', [
 ], escogerClasesProfesor);
 
 router.get('/asignaturas', [], obtenerAsignaturas);
-
-router.put('/eliminarclaseprofesor', [
-    validarJWT,
-    check('nombreClase', 'El argumento nombreClase es obligatorio').not().isEmpty().trim(),
-    check('uidCentro', 'El argumento email debe ser un email').not().isEmpty(),
-    check('uidProfesor', 'El argumento uidProfesor es obligatorio').not().isEmpty(),
-    validarCampos,
-], eliminarClaseAsignaturaProfesor);
 
 // router.post('/escogerclase', [
 //     validarCampos,
