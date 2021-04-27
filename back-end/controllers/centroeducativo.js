@@ -9,6 +9,7 @@ const { validarPassword } = require('../helpers/validarPassword');
 const { infoToken } = require('../helpers/infoToken');
 const generator = require('generate-password');
 const Clase = require('../models/clase');
+const Profesor = require('../models/profesor');
 var ObjectId = require('mongodb').ObjectID;
 
 const sleep = (ms) => {
@@ -493,4 +494,49 @@ const crearClase = async(req, res = response) => {
     }
 }
 
-module.exports = { crearCentro, obtenerCentros, obtenerClases, crearClase, actualizarCentro, generarCodigoProfesor, generarCodigoAlumno }
+const obtenerProfesores = async(req, res) => {
+    // Para búsqueda por texto
+    // Obtenemos el ID del centro
+    const id = req.params.id;
+    // El filtro por nombre del profesor si se da el caso
+    const filtro = req.query.nombre || '';
+    try {
+        // Se comprueba que sea rol admin para poder listar
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === id))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para listar profesores',
+            });
+        }
+
+        let profesores, total;
+        if (filtro == '') {
+            [profesores, total] = await Promise.all([
+                Profesor.find({ uidCentro: id }),
+                Profesor.countDocuments({ uidCentro: id })
+            ]);
+        } else {
+            [profesores, total] = await Promise.all([
+                Profesor.find({ uidCentro: id, nombre: filtro }),
+                Profesor.countDocuments({ uidCentro: id, nombre: filtro })
+            ]);
+        }
+
+        res.json({
+            ok: true,
+            msg: 'getProfesores',
+            profesores,
+            total
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error obteniendo profesores'
+        });
+    }
+}
+
+module.exports = { crearCentro, obtenerCentros, obtenerClases, crearClase, actualizarCentro, generarCodigoProfesor, generarCodigoAlumno, obtenerProfesores }

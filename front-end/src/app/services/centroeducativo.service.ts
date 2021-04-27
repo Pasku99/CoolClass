@@ -63,6 +63,14 @@ export class CentroeducativoService {
     return this.http.get(`${environment.base_url}/centroeducativo/?id=${uid}`, this.cabeceras);
   }
 
+  cargarProfesores( uid: string, filtro?: string ) {
+    return this.http.get(`${environment.base_url}/centroeducativo/profesores/${uid}/?nombre=${filtro}`, this.cabeceras);
+  }
+
+  cargarClasesProfesor( uidCentro: string, uidProfesor: string, filtro?: string ){
+    return this.http.get(`${environment.base_url}/profesores/clasesprofesor/${uidCentro}/${uidProfesor}/?nombre=${filtro}`, this.cabeceras);
+  }
+
   actualizarCentro( uid: string, data ){
     return this.http.put(`${environment.base_url}/centroeducativo/${uid}`, data, this.cabeceras);
   }

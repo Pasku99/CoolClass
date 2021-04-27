@@ -301,10 +301,9 @@ const obtenerClasesProfesor = async(req, res = response) => {
     let arrayNombresNoProfesor = [];
     let asignaturasProfesor = [];
     const filtro = req.query.nombre || '';
-
     try {
         const token = req.header('x-token');
-        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor) || (infoToken(token).uid === uidCentro))) {
             return res.status(400).json({
                 ok: false,
                 msg: 'No tiene permisos para obtener clases',
