@@ -10,6 +10,7 @@ const { infoToken } = require('../helpers/infoToken');
 const generator = require('generate-password');
 const Clase = require('../models/clase');
 const Profesor = require('../models/profesor');
+const Alumno = require('../models/alumno');
 var ObjectId = require('mongodb').ObjectID;
 
 const sleep = (ms) => {
@@ -96,6 +97,14 @@ const crearCentro = async(req, res = response) => {
 
         const existeEmailProfesor = await Profesor.findOne({ email: email });
         if (existeEmailProfesor) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Email ya existe'
+            });
+        }
+
+        const existeEmailAlumno = await Alumno.findOne({ email: email });
+        if (existeEmailAlumno) {
             return res.status(400).json({
                 ok: false,
                 msg: 'Email ya existe'

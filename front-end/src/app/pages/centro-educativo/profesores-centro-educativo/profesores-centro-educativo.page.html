@@ -30,10 +30,10 @@
                     <ion-col size="3">
                         <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;" (click)="this.cargarClasesProfesor(this.centroeducativoService.uid, profesor.uid)"></ion-icon>
                     </ion-col>
-                    <ion-col size="4.5">
+                    <ion-col size="4">
                         <p style="color: black; font-size: 16px;"><b>Profesor</b></p>
                     </ion-col>
-                    <ion-col size="4.5">
+                    <ion-col size="5">
                         <p style="color: black; font-size: 16px;">{{profesor.nombre}}</p>
                     </ion-col>
                 </ion-row>
@@ -44,11 +44,11 @@
                                 <ion-col size="3">
 
                                 </ion-col>
-                                <ion-col size="4.5">
+                                <ion-col size="4">
                                     <b style="color: black; font-size: 16px; ">Clases</b>
                                 </ion-col>
-                                <ion-col size="4.5">
-                                    <p style="color: black; font-size: 16px; margin-top: 0rem;">2ESO A, 3ESOA, 3ESOB</p>
+                                <ion-col size="5">
+                                    <p style="color: black; font-size: 16px; margin-top: 0rem; display: inline;" *ngFor="let clases of this.listaClasesProfesor">{{clases}}, </p>
                                 </ion-col>
                             </ion-row>
                         </app-accordion-list>

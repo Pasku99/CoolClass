@@ -93,7 +93,6 @@ export class ProfesoresCentroEducativoPage implements OnInit {
         for(let i = 0; i <  this.listaAsignaturasEnUso.length; i = i + 2){
           this.listaClasesProfesor.push(this.listaAsignaturasEnUso[i]);
         }
-        console.log(this.listaClasesProfesor);
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});

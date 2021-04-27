@@ -5,6 +5,7 @@ const { generarJWT } = require('../helpers/jwt');
 const jwt = require('jsonwebtoken');
 const Centroeducativo = require('../models/centroeducativo');
 const Profesor = require('../models/profesor');
+const Alumno = require('../models/profesor');
 var ObjectId = require('mongodb').ObjectID;
 
 const loginCentroEducativo = async(req, res = response) => {
@@ -177,6 +178,92 @@ const tokenProfesor = async(req, res = response) => {
     }
 }
 
+const loginAlumno = async(req, res = response) => {
+
+    const { email, password } = req.body;
+
+    try {
+
+        const alumno = await Alumno.findOne({ email });
+        if (!alumno) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Usuario o contraseña incorrectos',
+                token: ''
+            });
+        }
+
+        const validPassword = bcrypt.compareSync(password, profesor.password);
+        if (!validPassword) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Usuario o contraseña incorrectos',
+                token: ''
+            });
+        }
+
+        const { _id, rol } = alumno;
+        const token = await generarJWT(alumno._id, alumno.rol);
+
+        res.json({
+            ok: true,
+            msg: 'login',
+            uid: _id,
+            token,
+            rol
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error en login',
+            token: ''
+        });
+    }
+}
+
+const tokenAlumno = async(req, res = response) => {
+
+    const token = req.headers['x-token'];
+
+    try {
+        const { uid, rol, ...object } = jwt.verify(token, process.env.JWTSECRET);
+
+        const alumno = await Alumno.findById(uid);
+        if (!alumno) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Token no válido',
+                token: ''
+            });
+        }
+        const rolBD = alumno.rol;
+
+        const nuevoToken = await generarJWT(uid, rol);
+
+        res.json({
+            ok: true,
+            msg: 'Token',
+            uid: uid,
+            nombre: alumno.nombre,
+            email: alumno.email,
+            uidCentro: alumno.uidCentro,
+            uidClase: alumno.uidClase,
+            nombreClase: alumno.nombreClase,
+            rol: rolBD,
+            imagen: alumno.imagen,
+            token: nuevoToken
+        });
+
+    } catch {
+        return res.status(400).json({
+            ok: false,
+            msg: 'Token no válido',
+            token: ''
+        });
+    }
+}
+
 const token = async(req, res = response) => {
 
     const token = req.headers['x-token'];
@@ -265,10 +352,21 @@ const buscarTipoUsuario = async(req, res = response) => {
                 });
             }
             if (profesor.length == 0) {
-                return res.status(400).json({
-                    ok: false,
-                    msg: 'Usuario o contraseña incorrectos',
-                });
+                const alumno = await Alumno.find({ email: email });
+                if (!alumno) {
+                    return res.status(400).json({
+                        ok: false,
+                        msg: 'Error al buscar el tipo de usuario',
+                    });
+                }
+                if (alumno.length == 0) {
+                    return res.status(400).json({
+                        ok: false,
+                        msg: 'Error al buscar el tipo de usuario',
+                    });
+                } else {
+                    resultado = alumno;
+                }
             } else {
                 resultado = profesor;
             }
@@ -291,4 +389,4 @@ const buscarTipoUsuario = async(req, res = response) => {
     }
 }
 
-module.exports = { loginCentroEducativo, tokenCentro, buscarTipoUsuario, loginProfesor, tokenProfesor, token }
+module.exports = { loginCentroEducativo, tokenCentro, buscarTipoUsuario, loginProfesor, tokenProfesor, token, loginAlumno, tokenAlumno }

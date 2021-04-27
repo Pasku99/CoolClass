@@ -17,6 +17,7 @@ app.use(express.json());
 app.use('/api/centroeducativo', require('./routes/centroeducativo'));
 app.use('/api/login', require('./routes/auth'));
 app.use('/api/profesores', require('./routes/profesor'));
+app.use('/api/alumnos', require('./routes/alumno'));
 
 app.listen(process.env.PORT, () => {
     console.log('Servidor corriendo en el puerto ' + process.env.PORT);
