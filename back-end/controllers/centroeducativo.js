@@ -188,6 +188,19 @@ const actualizarCentro = async(req, res = response) => {
             }
         }
 
+        const existeEmailProfesor = await Profesor.findOne({ email: email });
+
+        if (existeEmailProfesor) {
+            // Si existe un centro con ese email
+            // Comprobamos que sea el suyo, el UID ha de ser igual, si no el email est en uso
+            if (existeEmailProfesor._id != uid) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Email ya existe'
+                });
+            }
+        }
+
         // Comprueba si el nombre de centro ya existe
 
         const existeNombre = await Centroeducativo.findOne({ nombre: nombre });

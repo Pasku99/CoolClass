@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
+import { ProfesorService } from '../../../services/profesor.service';
 
 @Component({
   selector: 'app-perfil-profesor',
@@ -8,7 +9,8 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class PerfilProfesorPage implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              public profesorService: ProfesorService) { }
 
   ngOnInit() {
   }

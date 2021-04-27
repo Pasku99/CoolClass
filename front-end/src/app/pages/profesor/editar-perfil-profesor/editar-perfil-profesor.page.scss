@@ -15,6 +15,12 @@ ion-input {
     --background: white;
 }
 
+p {
+    margin-left: 0.9rem;
+    margin-bottom: -1.5rem;
+    color: #004dff;
+}
+
 ion-item {
     --ion-background-color: white;
     --highlight-background: none;
@@ -54,13 +60,6 @@ ion-item {
         right: 0rem;
         top: 19rem;
     }
-    .cambiarFoto {
-        position: fixed;
-        z-index: 2;
-        color: white;
-        right: 2rem;
-        top: 19rem;
-    }
 }
 
 @media (max-height: 700px) {
@@ -68,13 +67,6 @@ ion-item {
         position: fixed;
         z-index: 1;
         right: 0rem;
-        top: 9.5rem;
-    }
-    .cambiarFoto {
-        position: fixed;
-        z-index: 2;
-        color: white;
-        right: 2rem;
         top: 9.5rem;
     }
 }
@@ -86,13 +78,6 @@ ion-item {
         right: 0rem;
         top: 10rem;
     }
-    .cambiarFoto {
-        position: fixed;
-        z-index: 2;
-        color: white;
-        right: 2rem;
-        top: 10rem;
-    }
 }
 
 @media (min-height: 1000px) and (max-height: 1300px) {
@@ -100,13 +85,6 @@ ion-item {
         position: fixed;
         z-index: 1;
         right: 0rem;
-        top: 15rem;
-    }
-    .cambiarFoto {
-        position: fixed;
-        z-index: 2;
-        color: white;
-        right: 2rem;
         top: 15rem;
     }
 }

@@ -11,9 +11,9 @@
         <ion-col size="12">
             <ion-list class="ion-no-border" lines="none" style="background-color: white;">
                 <ion-item style="background-color: white;">
-                    <ion-select placeholder="Filtrar clase">
-                        <ion-select-option value="2esoa" style="color: black;">2ESOA</ion-select-option>
-                        <ion-select-option value="2esob" style="color: black;">2ESOB</ion-select-option>
+                    <ion-select placeholder="Filtrar clase" (ionChange)="filtrarNombre($event)">
+                        <ion-select-option value="Todas" style="color: black;" value="Todas">Todas</ion-select-option>
+                        <ion-select-option value="clases" style="color: black;" *ngFor="let clase of this.listaDesplegable" [value]="clase.nombre">{{clase.nombre}}</ion-select-option>
                     </ion-select>
                 </ion-item>
             </ion-list>
@@ -21,21 +21,21 @@
     </ion-row>
     <ion-row>
         <ion-col size="12">
-            <ion-card (click)="expandItem(item)" *ngFor="let item of items">
+            <ion-card (click)="expandItem(clase)" *ngFor="let clase of this.listaClasesProfesor">
                 <ion-row>
                     <ion-col size="3">
                         <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;"></ion-icon>
                     </ion-col>
                     <ion-col size="9">
                         <ion-card-header>
-                            <ion-card-title style="color: black; font-size: 24px;">2ESO A</ion-card-title>
+                            <ion-card-title style="color: black; font-size: 24px;">{{clase.nombre}}</ion-card-title>
                         </ion-card-header>
                     </ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col size="12">
                         <ion-card-content>
-                            <app-accordion-list expandHeight="150px" [expanded]="item.expanded">
+                            <app-accordion-list expandHeight="150px" [expanded]="clase.expanded">
                                 <ion-row>
                                     <ion-col size="3">
 

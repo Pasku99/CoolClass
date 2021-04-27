@@ -57,12 +57,16 @@ export class ProfesorService {
     return this.http.get(`${environment.base_url}/profesores/clases/${uidCentro}/${uidProfesor}`, this.cabeceras);
   }
 
-  cargarClasesProfesor( uidCentro: string, uidProfesor: string ){
-    return this.http.get(`${environment.base_url}/profesores/clasesprofesor/${uidCentro}/${uidProfesor}`, this.cabeceras);
+  cargarClasesProfesor( uidCentro: string, uidProfesor: string, filtro?: string ){
+    return this.http.get(`${environment.base_url}/profesores/clasesprofesor/${uidCentro}/${uidProfesor}/?nombre=${filtro}`, this.cabeceras);
   }
 
   anyadirClaseProfesor( data ) {
     return this.http.post(`${environment.base_url}/profesores/escogerclases`, data, this.cabeceras);
+  }
+
+  actualizarProfesor( uid: string, data ){
+    return this.http.put(`${environment.base_url}/profesores/${uid}`, data, this.cabeceras);
   }
 
   escogerAsignaturas( data ) {

@@ -154,6 +154,101 @@ const crearProfesor = async(req, res = response) => {
     }
 }
 
+const actualizarProfesor = async(req, res = response) => {
+
+    // Asegurarnos de que aunque venga el password no se va a actualizar, la modificaciñon del password es otra llamada
+    // Comprobar que si cambia el email no existe ya en BD, si no existe puede cambiarlo
+    const { nombre, email, nuevopassword, nuevopassword2, ...object } = req.body;
+    const uid = req.params.id;
+
+    try {
+        // Para actualizar profesor o eres admin o eres usuario del token y el uid que nos llega es el mismo
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uid))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para obtener clases',
+            });
+        }
+
+        // Comprobar si está intentando cambiar el email, que no coincida con alguno que ya esté en BD
+        // Obtenemos si hay un centro en BD con el email que nos llega en post
+        const existeEmail = await Profesor.findOne({ email: email });
+
+        if (existeEmail) {
+            // Si existe un centro con ese email
+            // Comprobamos que sea el suyo, el UID ha de ser igual, si no el email est en uso
+            if (existeEmail._id != uid) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Email ya existe'
+                });
+            }
+        }
+
+        // Comprueba si el nombre de centro ya existe
+
+        const existeEmailCentro = await Centroeducativo.findOne({ email: email });
+
+        if (existeEmailCentro) {
+            if (existeEmailCentro._id != uid) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Email ya existe'
+                });
+            }
+        }
+
+        // Comprobar si existe el centro que queremos actualizar
+        const existeProfesor = await Profesor.findById(uid);
+
+        if (!existeProfesor) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'El centro no existe'
+            });
+        }
+        // llegado aquí el email o es el mismo o no está en BD, es obligatorio que siempre llegue un email
+        object.email = email;
+        // igual con el username
+        object.nombre = nombre;
+
+        // Se actualiza la contraseña si llegan los campos
+        if (nuevopassword != '' && nuevopassword2 != '') {
+            if (nuevopassword !== nuevopassword2) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'La contraseña repetida no coincide con la nueva contraseña',
+                });
+            }
+
+            const salt = bcrypt.genSaltSync();
+            const cpassword = bcrypt.hashSync(nuevopassword, salt);
+            object.password = cpassword;
+        }
+
+        // Almacenar en BD
+        await existeProfesor.save();
+        // Si el rol es de administrador, entonces si en los datos venía el campo activo lo dejamos
+        // al haber extraido password del req.body nunca se va a enviar en este put
+        const profesor = await Profesor.findByIdAndUpdate(uid, object, { new: true });
+
+        res.json({
+            ok: true,
+            msg: 'Profesor actualizado',
+            profesor: profesor
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error actualizando profesor'
+        });
+    }
+
+}
+
 const obtenerClasesCentro = async(req, res = response) => {
     const uidProfesor = req.params.idprofesor;
     const uidCentro = req.params.idcentro;
@@ -203,10 +298,9 @@ const obtenerClasesCentro = async(req, res = response) => {
 const obtenerClasesProfesor = async(req, res = response) => {
     const uidProfesor = req.params.idprofesor;
     const uidCentro = req.params.idcentro;
-    let arrayNombres = [];
     let arrayNombresNoProfesor = [];
     let asignaturasProfesor = [];
-    let asignaturasProfesorOrdenado = [];
+    const filtro = req.query.nombre || '';
 
     try {
         const token = req.header('x-token');
@@ -253,33 +347,7 @@ const obtenerClasesProfesor = async(req, res = response) => {
                 asignaturasProfesor.push('');
             }
         }
-        // for (let i = 0; i < asignaturasProfesor.length; i++) {
-        //     if (asignaturasProfesor[i] == '') {
-        //         asignaturasProfesor.splice(i, 1);
-        //         asignaturasProfesor.push('');
-        //     }
-        // }
-        // let tieneasignatura = false;
-        // for (let i = 0; i < clases.length; i++) {
-        //     if (clases[i].arrayProfesores != undefined || clases[i].arrayProfesores != null) {
-        //         if (clases[i].arrayProfesores == '') {
 
-        //         } else {
-        //             for (let j = 0; j < clases[i].arrayProfesores.length; j++) {
-        //                 if (clases[i].arrayProfesores[j] == uidProfesor) {
-        //                     for (let x = 0; x < clases[i].arrayAsignaturasProfesores.length; x++) {
-        //                         for (let z = 0; z < clases[i].arrayAsignaturasProfesores[x].length; z++) {
-        //                             if (clases[i].arrayAsignaturasProfesores[x][z + 1] == uidProfesor) {
-        //                                 tieneasignatura = true;
-        //                             }
-        //                         }
-        //                     }
-        //                 }
-        //             }
-
-        //         }
-        //     }
-        // }
         let esta = false;
         for (let i = 0; i < asignaturasProfesor.length; i++) {
             if (asignaturasProfesor[i + 1] == asignaturasProfesor.length) {
@@ -289,7 +357,6 @@ const obtenerClasesProfesor = async(req, res = response) => {
                 for (let x = 0; x < clases.length; x++) {
                     esta = false;
                     if (clases[x].nombre == asignaturasProfesor[i]) {
-                        // console.log(clases[x].nombre + ' ' + asignaturasProfesor[i]);
                         if (clases[x].arrayProfesores != undefined || clases[x].arrayProfesores != null) {
                             if (clases[x].arrayProfesores == '') {
 
@@ -313,24 +380,19 @@ const obtenerClasesProfesor = async(req, res = response) => {
                 }
             }
         }
-
-        // arrayNombres = arrayNombres.sort(function(a, b) {
-        //     if (a < b) { return -1; }
-        //     if (a > b) { return 1; }
-        //     return 0;
-        // });
-
-        // arrayNombresNoProfesor = arrayNombresNoProfesor.sort(function(a, b) {
-        //     if (a < b) { return -1; }
-        //     if (a > b) { return 1; }
-        //     return 0;
-        // });
-
+        if (filtro != '') {
+            for (let i = 0; i < asignaturasProfesor.length; i = i + 2) {
+                if (filtro == asignaturasProfesor[i]) {
+                    asignaturasProfesor.push(asignaturasProfesor[i]);
+                    asignaturasProfesor.push(asignaturasProfesor[i + 1]);
+                    asignaturasProfesor.splice(0, asignaturasProfesor.length - 2);
+                }
+            }
+        }
         res.json({
             ok: true,
             msg: 'getClasesCentro',
             clases,
-            // nombres: arrayNombres,
             asignaturas: asignaturasProfesor,
             clasesNoProfesor: arrayNombresNoProfesor
         });
@@ -543,25 +605,4 @@ const eliminarClaseAsignaturaProfesor = async(req, res = response) => {
     }
 }
 
-
-// const escogerClases = async(req, res = response) => {
-//     const uidCentro = req.params.id;
-//     try {
-//         const clases = await Clase.find({ uidCentro: uidCentro });
-//         if (!clases) {
-//             return res.status(400).json({
-//                 ok: false,
-//                 msg: 'Error al encontrar clases del centro'
-//             });
-//         }
-
-//     } catch (error) {
-//         console.log(error);
-//         return res.status(400).json({
-//             ok: false,
-//             msg: 'Clase escogida con éxito'
-//         });
-//     }
-// }
-
-module.exports = { crearProfesor, obtenerProfesores, obtenerClasesCentro, escogerAsignaturasProfesor, obtenerAsignaturas, escogerClasesProfesor, eliminarClaseAsignaturaProfesor, obtenerClasesProfesor }
+module.exports = { crearProfesor, obtenerProfesores, obtenerClasesCentro, escogerAsignaturasProfesor, obtenerAsignaturas, escogerClasesProfesor, eliminarClaseAsignaturaProfesor, obtenerClasesProfesor, actualizarProfesor }

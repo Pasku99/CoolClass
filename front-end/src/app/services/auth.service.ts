@@ -127,6 +127,11 @@ export class AuthService {
     this.centro.email = email;
   }
 
+  establecerdatosProfesor( nombre: string, email: string ): void {
+    this.profesor.nombre = nombre;
+    this.profesor.email = email;
+  }
+
   get cabecerasVacia() {
     return {
       headers: {

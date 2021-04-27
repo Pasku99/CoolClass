@@ -12,6 +12,7 @@ export class Profesor {
                  public rol?: string,
                  public uidCentro?: string,
                  public token?: string,
+                 public expanded?: boolean,
                 ) {}
 
 }
