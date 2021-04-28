@@ -31,8 +31,15 @@
                 <h2 style="text-align: left;">Ajustes</h2>
             </ion-col>
         </ion-row>
+        <ion-row style="border-bottom: 0.1rem solid #73C2FB; margin-left: 2rem; margin-right: 2rem;">
+            <ion-item class="ion-no-border" lines="none">
+                <ion-select placeholder="Cambiar clase" (ionChange)="cogerClase($event); escogerClase();">
+                    <ion-select-option value="clase" style="color: black;" *ngFor="let clase of this.listaClases" [value]="clase.nombre">{{clase.nombre}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+        </ion-row>
         <ion-row style="border-bottom: 0.1rem solid #73C2FB; margin-left: 2rem; margin-right: 2rem;" routerLink="/inicio-sesion">
-            <ion-col size="3">
+            <ion-col size="3" (click)="logout()">
                 <ion-icon name="log-out" style="width: 3rem; height: 3rem; margin-top: 0.41rem; margin-left: 1rem; color: #004dff;"></ion-icon>
             </ion-col>
             <ion-col size="9">

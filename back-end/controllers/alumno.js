@@ -6,6 +6,7 @@ const Profesor = require('../models/profesor');
 const Alumno = require('../models/alumno');
 const { validarPassword } = require('../helpers/validarPassword');
 const { infoToken } = require('../helpers/infoToken');
+const { updateOne } = require('../models/clase');
 
 const sleep = (ms) => {
     return new Promise((resolve) => {
@@ -158,4 +159,60 @@ const crearAlumno = async(req, res = response) => {
     }
 }
 
-module.exports = { obtenerAlumnos, crearAlumno }
+const escogerClase = async(req, res = response) => {
+    const { uidAlumno, uidCentro, nombreClase } = req.body;
+    try {
+        const centro = await Centroeducativo.findById(uidCentro);
+        if (!centro) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar centro educativo correspondiente'
+            });
+        }
+
+        const clase = await Clase.findOne({ nombre: nombreClase });
+        if (!clase) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar clase correspondiente'
+            });
+        }
+        const buscarClaseAlumno = await Alumno.findById(uidAlumno);
+        if (!buscarClaseAlumno) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar alumno/a correspondiente'
+            });
+        }
+
+        if (buscarClaseAlumno.nombreClase == nombreClase) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Ya estás registrado en dicha clase'
+            });
+        }
+
+        const alumno = await Alumno.findByIdAndUpdate(uidAlumno, { uidClase: clase._id, nombreClase: clase.nombre });
+        if (!alumno) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar alumno correspondiente'
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'Clase escogida con éxito',
+            alumno,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error escogiendo clase'
+        });
+    }
+}
+
+module.exports = { obtenerAlumnos, crearAlumno, escogerClase }

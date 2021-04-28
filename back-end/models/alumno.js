@@ -20,11 +20,9 @@ const AlumnoSchema = Schema({
     },
     uidClase: {
         type: String,
-        require: true,
     },
     nombreClase: {
         type: String,
-        require: true,
     },
     imagen: {
         type: String,

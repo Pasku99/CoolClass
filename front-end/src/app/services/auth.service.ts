@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { CentroEducativo } from '../models/centroeducativo.model';
 import { loginForm } from '../interfaces/login-form.interface';
 import { Profesor } from '../models/profesor.model';
+import { Alumno } from '../models/alumno.model';
 const TOKEN_KEY = 'access_token';
 
 @Injectable({
@@ -19,6 +20,7 @@ export class AuthService {
 
   public profesor: Profesor;
   public centro: CentroEducativo;
+  public alumno: Alumno;
   user = null;
   authenticationState = new BehaviorSubject(false);
 
@@ -58,13 +60,25 @@ export class AuthService {
     );
   }
 
-  loginProfesor( formData: loginForm) {
+  loginProfesor( formData: loginForm ) {
     return this.http.post(`${environment.base_url}/login/profesor`, formData)
     .pipe(
       tap(res => {
         this.storage.set(TOKEN_KEY, res['token']);
         this.user = this.helper.decodeToken(res['token']);
         this.profesor = new Profesor(res['uid'], res['rol']);
+        this.authenticationState.next(true);
+      })
+    );
+  }
+
+  loginAlumno( formData: loginForm ) {
+    return this.http.post(`${environment.base_url}/login/alumno`, formData)
+    .pipe(
+      tap(res => {
+        this.storage.set(TOKEN_KEY, res['token']);
+        this.user = this.helper.decodeToken(res['token']);
+        this.alumno = new Alumno(res['uid'], res['rol']);
         this.authenticationState.next(true);
       })
     );
@@ -100,9 +114,11 @@ export class AuthService {
               this.centro = new CentroEducativo(res['uid'], res['nombre'], res['email'], res['rol'], res['codigoProfesor'], res['codigoAlumno'], res['token']);
               this.router.navigateByUrl('tabs-centro-educativo/principal');
             } else if(res['rol'] == 'ROL_PROFESOR'){
-              // console.log('Profesor');
               this.profesor = new Profesor(res['uid'], res['nombre'], res['email'], res['rol'], res['uidCentro'], res['token']);
               this.router.navigateByUrl('tabs-profesor/principal');
+            } else if(res['rol'] == 'ROL_ALUMNO'){
+              this.alumno = new Alumno(res['uid'], res['nombre'], res['email'], res['rol'], res['uidCentro'], res['uidClase'], res['token']);
+              this.router.navigateByUrl('tabs-alumno/principal');
             }
           }
         });

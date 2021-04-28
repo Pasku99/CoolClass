@@ -11,6 +11,31 @@ ion-content {
     --ion-background-color: #004DFF;
 }
 
+ion-item {
+    --ion-background-color: white;
+    --highlight-background: none;
+    // border-bottom: 0.1rem solid #73C2FB;
+    // margin-left: 2rem;
+    // padding-right: 5%;
+}
+
+ion-select {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    margin-left: 1.6rem;
+    margin-right: 2rem;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+    text-indent: 2rem;
+    background-color: white;
+    color: black;
+    --placeholder-color: black;
+    --placeholder-opacity: 1;
+    font-size: 1.4rem;
+    color: black;
+}
+
 @media (max-height: 700px) {
     div {
         padding-bottom: 6rem;

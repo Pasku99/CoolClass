@@ -88,18 +88,18 @@ const routes: Routes = [
       { path: 'perfil/ajustes', component: AjustesProfesorPage, canActivate: [ AuthcentroGuard ]}
     ]
   },
-  { path: 'tabs-alumno', component: TabsAlumnoComponent,
+  { path: 'tabs-alumno', component: TabsAlumnoComponent, canActivate: [ AuthcentroGuard ],
     children: [
-      { path: 'principal', component: PantallaPrincipalAlumnoPage},
-      { path: 'asignaturas', component: MisAsignaturasAlumnoPage},
-      { path: 'asignaturas/info-asignatura', component: InfoAsignaturaAlumnoPage},
-      { path: 'asignaturas/info-asignatura/examenes', component: MisExamenesAlumnoPage},
-      { path: 'asignaturas/info-asignatura/examenes/hacer-examen', component: HacerExamenAlumnoPage},
-      { path: 'asignaturas/info-asignatura/examenes/notas', component: MisNotasAlumnoPage},
-      { path: 'asignaturas/info-asignatura/examenes/notas/comprobar-examen', component: ComprobarExamenAlumnoPage},
-      { path: 'perfil', component: PerfilAlumnoPage},
-      { path: 'perfil/editar-perfil', component: EditarPerfilAlumnoPage},
-      { path: 'perfil/ajustes', component: AjustesAlumnoPage},
+      { path: 'principal', component: PantallaPrincipalAlumnoPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'asignaturas', component: MisAsignaturasAlumnoPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'asignaturas/info-asignatura', component: InfoAsignaturaAlumnoPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'asignaturas/info-asignatura/examenes', component: MisExamenesAlumnoPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'asignaturas/info-asignatura/examenes/hacer-examen', component: HacerExamenAlumnoPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'asignaturas/info-asignatura/examenes/notas', component: MisNotasAlumnoPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'asignaturas/info-asignatura/examenes/notas/comprobar-examen', component: ComprobarExamenAlumnoPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'perfil', component: PerfilAlumnoPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'perfil/editar-perfil', component: EditarPerfilAlumnoPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'perfil/ajustes', component: AjustesAlumnoPage, canActivate: [ AuthcentroGuard ]},
     ]
   }
 ];

@@ -5,7 +5,7 @@ const { generarJWT } = require('../helpers/jwt');
 const jwt = require('jsonwebtoken');
 const Centroeducativo = require('../models/centroeducativo');
 const Profesor = require('../models/profesor');
-const Alumno = require('../models/profesor');
+const Alumno = require('../models/alumno');
 var ObjectId = require('mongodb').ObjectID;
 
 const loginCentroEducativo = async(req, res = response) => {
@@ -183,8 +183,7 @@ const loginAlumno = async(req, res = response) => {
     const { email, password } = req.body;
 
     try {
-
-        const alumno = await Alumno.findOne({ email });
+        const alumno = await Alumno.findOne({ email: email });
         if (!alumno) {
             return res.status(400).json({
                 ok: false,
@@ -193,7 +192,7 @@ const loginAlumno = async(req, res = response) => {
             });
         }
 
-        const validPassword = bcrypt.compareSync(password, profesor.password);
+        const validPassword = bcrypt.compareSync(password, alumno.password);
         if (!validPassword) {
             return res.status(400).json({
                 ok: false,
@@ -321,6 +320,32 @@ const token = async(req, res = response) => {
                 uidCentro: profesor.uidCentro,
                 token: nuevoToken
             });
+        } else if (rol == 'ROL_ALUMNO') {
+            const alumno = await Alumno.findById(uid);
+            if (!alumno) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Token no válido',
+                    token: ''
+                });
+            }
+            const rolBD = alumno.rol;
+
+            const nuevoToken = await generarJWT(uid, rol);
+
+            res.json({
+                ok: true,
+                msg: 'Token',
+                uid: uid,
+                nombre: alumno.nombre,
+                email: alumno.email,
+                uidCentro: alumno.uidCentro,
+                uidClase: alumno.uidClase,
+                nombreClase: alumno.nombreClase,
+                rol: rolBD,
+                imagen: alumno.imagen,
+                token: nuevoToken
+            });
         }
 
     } catch {
@@ -362,7 +387,7 @@ const buscarTipoUsuario = async(req, res = response) => {
                 if (alumno.length == 0) {
                     return res.status(400).json({
                         ok: false,
-                        msg: 'Error al buscar el tipo de usuario',
+                        msg: 'Usuario y/o contraseña incorrectos',
                     });
                 } else {
                     resultado = alumno;

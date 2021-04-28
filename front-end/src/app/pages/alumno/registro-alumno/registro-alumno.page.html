@@ -12,9 +12,9 @@
         </ion-row>
         <ion-row class="filaForm">
             <ion-col size="12" align-self-center>
-                <form [formGroup]="registerForm">
+                <form [formGroup]="registerForm" (ngSubmit)="enviar()">
                     <ion-item class="input0">
-                        <ion-input type="text" placeholder="Nombre del centro" formControlName="nombre" lines="none" required></ion-input>
+                        <ion-input type="text" placeholder="Nombre del alumno/a" formControlName="nombre" lines="none" required></ion-input>
                     </ion-item>
                     <ion-item class="input1">
                         <ion-input type="text" placeholder="Email" formControlName="email" lines="none" required></ion-input>
@@ -23,9 +23,9 @@
                         <ion-input type="password" placeholder="Contraseña" formControlName="password" lines="none" required></ion-input>
                     </ion-item>
                     <ion-item class="input3">
-                        <ion-input type="text" placeholder="Código de profesor" formControlName="codigo" lines="none" required></ion-input>
+                        <ion-input type="text" placeholder="Código de alumno/a" formControlName="codigoAlumno" lines="none" required></ion-input>
                     </ion-item>
-                    <ion-button class="boton1" type="submit" size="large" expand="block" routerLink="/registro/alumno/escoger-clase">Registrarse</ion-button>
+                    <ion-button class="boton1" type="submit" size="large" expand="block">Registrarse</ion-button>
                 </form>
             </ion-col>
         </ion-row>

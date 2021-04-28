@@ -63,11 +63,20 @@ export class InicioSesionPage implements OnInit {
           this.authService.loginProfesor(this.loginForm.value)
           .subscribe( res => {
             this.router.navigateByUrl('/tabs-profesor/principal');
-            // window.location.reload();
-            // this.router.navigate(['/tabs-profesor/principal'])
-            //   .then(() => {
-            //     window.location.reload();
-            //   });
+          }, (err) =>{
+            Swal.fire({
+              title: '¡Error!',
+              text: err.error.msg || 'No pudo completarse la acción, vuelva a intentarlo más tarde',
+              icon: 'error',
+              confirmButtonText: 'Ok',
+              allowOutsideClick: false,
+              heightAuto: false
+            });
+          });
+        } else if(res['resultado'][0].rol == 'ROL_ALUMNO'){
+          this.authService.loginAlumno(this.loginForm.value)
+          .subscribe( res => {
+            this.router.navigateByUrl('/tabs-alumno/principal');
           }, (err) =>{
             Swal.fire({
               title: '¡Error!',
