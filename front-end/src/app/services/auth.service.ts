@@ -117,7 +117,7 @@ export class AuthService {
               this.profesor = new Profesor(res['uid'], res['nombre'], res['email'], res['rol'], res['uidCentro'], res['token']);
               this.router.navigateByUrl('tabs-profesor/principal');
             } else if(res['rol'] == 'ROL_ALUMNO'){
-              this.alumno = new Alumno(res['uid'], res['nombre'], res['email'], res['rol'], res['uidCentro'], res['uidClase'], res['token']);
+              this.alumno = new Alumno(res['uid'], res['nombre'], res['email'], res['rol'], res['uidCentro'], res['uidClase'], res['nombreClase'], res['token']);
               this.router.navigateByUrl('tabs-alumno/principal');
             }
           }
@@ -146,6 +146,11 @@ export class AuthService {
   establecerdatosProfesor( nombre: string, email: string ): void {
     this.profesor.nombre = nombre;
     this.profesor.email = email;
+  }
+
+  establecerdatosAlumno( nombre: string, email: string ): void {
+    this.alumno.nombre = nombre;
+    this.alumno.email = email;
   }
 
   get cabecerasVacia() {

@@ -5,9 +5,9 @@
                 <h2 style="color: #004dff;">MIS ASIGNATURAS</h2>
             </ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row *ngFor="let asignatura of this.listaAsignaturasMayus; let i =index">
             <ion-col size="12" style="text-align: center;">
-                <ion-button class="clases" size="large" style="font-size: 1.3rem;" routerLink="/tabs-alumno/asignaturas/info-asignatura">MATEMÁTICAS</ion-button>
+                <ion-button class="clases" size="large" style="font-size: 1.3rem;" [routerLink]="['/tabs-alumno/asignaturas/info-asignatura', this.listaAsignaturas[i]]">{{asignatura}}</ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>

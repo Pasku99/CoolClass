@@ -12,6 +12,7 @@ export class Alumno {
                  public rol?: string,
                  public uidCentro?: string,
                  public uidClase?: string,
+                 public nombreClase?: string,
                  public token?: string,
                  public expanded?: boolean,
                 ) {}

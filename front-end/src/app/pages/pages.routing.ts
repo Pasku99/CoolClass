@@ -62,7 +62,7 @@ const routes: Routes = [
       { path: 'principal', component: PantallaPrincipalCentroEducativoPage, canActivate: [ AuthcentroGuard ]},
       { path: 'profesores', component: ProfesoresCentroEducativoPage, canActivate: [ AuthcentroGuard ]} ,
       { path: 'clases', component: ClasesCentroEducativoPage, canActivate: [ AuthcentroGuard ]},
-      { path: 'clases/profesores', component: ProfesoresClaseCentroEducativoPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'clases/profesores/:idClase', component: ProfesoresClaseCentroEducativoPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases/alumnos', component: ClaseAlumnosCentroEducativoPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases/alumnos/notas', component: ClaseAlumnosNotasCentroEducativoPage, canActivate: [ AuthcentroGuard ]},
       { path: 'perfil', component: PerfilCentroEducativoPage, canActivate: [ AuthcentroGuard ]},
@@ -92,7 +92,7 @@ const routes: Routes = [
     children: [
       { path: 'principal', component: PantallaPrincipalAlumnoPage, canActivate: [ AuthcentroGuard ]},
       { path: 'asignaturas', component: MisAsignaturasAlumnoPage, canActivate: [ AuthcentroGuard ]},
-      { path: 'asignaturas/info-asignatura', component: InfoAsignaturaAlumnoPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'asignaturas/info-asignatura/:asignatura', component: InfoAsignaturaAlumnoPage, canActivate: [ AuthcentroGuard ]},
       { path: 'asignaturas/info-asignatura/examenes', component: MisExamenesAlumnoPage, canActivate: [ AuthcentroGuard ]},
       { path: 'asignaturas/info-asignatura/examenes/hacer-examen', component: HacerExamenAlumnoPage, canActivate: [ AuthcentroGuard ]},
       { path: 'asignaturas/info-asignatura/examenes/notas', component: MisNotasAlumnoPage, canActivate: [ AuthcentroGuard ]},

@@ -22,7 +22,9 @@ export class EditarPerfilProfesorPage implements OnInit {
               private profesorService: ProfesorService,
               private authService: AuthService) { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  ionViewWillEnter(){
     this.cargarProfesor();
   }
 

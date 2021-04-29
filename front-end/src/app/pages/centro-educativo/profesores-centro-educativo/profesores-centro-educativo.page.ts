@@ -3,6 +3,7 @@ import { Profesor } from 'src/app/models/profesor.model';
 import { CentroeducativoService } from '../../../services/centroeducativo.service';
 import { ProfesorService } from '../../../services/profesor.service';
 import Swal from 'sweetalert2';
+import { MisClases } from '../../../models/misclases.model';
 
 @Component({
   selector: 'app-profesores-centro-educativo',
@@ -15,7 +16,7 @@ export class ProfesoresCentroEducativoPage implements OnInit {
   public filtro: string = '';
   public listaProfesores: Profesor[] = [];
   public listaDesplegable: Profesor[] = [];
-  public listaClasesProfesor: Array<String> = new Array<String>();
+  public listaClasesProfesor: MisClases[] = [];
   public listaAsignaturasEnUso: Array<String> = new Array<String>();
 
   constructor(public centroeducativoService: CentroeducativoService,
@@ -89,9 +90,13 @@ export class ProfesoresCentroEducativoPage implements OnInit {
     this.centroeducativoService.cargarClasesProfesor(uidCentro, uidProfesor)
       .subscribe( res => {
         this.listaClasesProfesor = [];
-        this.listaAsignaturasEnUso = res['asignaturas'];
-        for(let i = 0; i <  this.listaAsignaturasEnUso.length; i = i + 2){
-          this.listaClasesProfesor.push(this.listaAsignaturasEnUso[i]);
+        this.listaAsignaturasEnUso = res['infoClases'];
+        // for(let i = 0; i <  this.listaAsignaturasEnUso.length; i = i + 2){
+        //   this.listaClasesProfesor.push(this.listaAsignaturasEnUso[i]);
+        // }
+        for(let i = 0; i < this.listaAsignaturasEnUso.length; i++){
+          let clases = {nombre: this.listaAsignaturasEnUso[i][0], asignatura: this.listaAsignaturasEnUso[i][1], uidClase: this.listaAsignaturasEnUso[i][2]};
+          this.listaClasesProfesor.push(clases);
         }
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';

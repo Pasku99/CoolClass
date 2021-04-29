@@ -3,6 +3,7 @@ import { AuthService } from '../../../services/auth.service';
 import { AlumnoService } from '../../../services/alumno.service';
 import Swal from 'sweetalert2';
 import { Clase } from 'src/app/models/clase.model';
+import { Alumno } from '../../../models/alumno.model';
 
 @Component({
   selector: 'app-perfil-alumno',
@@ -14,9 +15,10 @@ export class PerfilAlumnoPage implements OnInit {
   public clase: string = '';
   public filtro: string = '';
   public listaClases: Clase[] = [];
+  public alumno: Alumno;
 
   constructor(private authService: AuthService,
-              private alumnoService: AlumnoService) { }
+              public alumnoService: AlumnoService) { }
 
   ngOnInit() {
   }
@@ -37,6 +39,7 @@ export class PerfilAlumnoPage implements OnInit {
     };
     this.alumnoService.escogerClase(data)
       .subscribe(res => {
+        this.alumnoService.establecerClase(res['nuevaClase'], this.clase);
         Swal.fire({
           icon: 'success',
           title: 'Clase cambiada con éxito',

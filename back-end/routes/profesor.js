@@ -4,7 +4,7 @@ Ruta base: /api/profesores
 
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { obtenerProfesores, crearProfesor, escogerClasesProfesor, obtenerClasesCentro, obtenerAsignaturas, escogerAsignaturasProfesor, eliminarClaseAsignaturaProfesor, obtenerClasesProfesor, actualizarProfesor } = require('../controllers/profesor');
+const { obtenerProfesores, crearProfesor, escogerClasesProfesor, obtenerClasesCentro, obtenerAsignaturas, escogerAsignaturasProfesor, eliminarClaseAsignaturaProfesor, obtenerClasesProfesor, actualizarProfesor, obtenerAlumnos } = require('../controllers/profesor');
 const { validarCampos } = require('../middleware/validar-campos');
 const { validarJWT } = require('../middleware/validar-jwt');
 
@@ -13,7 +13,7 @@ const router = Router();
 router.get('/', [
     validarJWT,
     // Campos opcionales, si vienen los validamos
-    check('id', 'El id de centro debe ser válido').optional().isMongoId(),
+    check('id', 'El id de profesor debe ser válido').optional().isMongoId(),
     validarCampos,
 ], obtenerProfesores);
 
@@ -49,6 +49,10 @@ router.get('/clases/:idcentro/:idprofesor', [
 router.get('/clasesprofesor/:idcentro/:idprofesor', [
     validarJWT,
 ], obtenerClasesProfesor);
+
+router.get('/:id/alumnos', [
+    validarJWT,
+], obtenerAlumnos);
 
 router.post('/escogerasignaturas', [
     validarJWT,

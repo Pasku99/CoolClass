@@ -12,10 +12,13 @@ export class MisClasesProfesorPage implements OnInit {
 
   public items: any = [];
   public filtro: string = '';
-  public listaClasesProfesor: MisClases[] = [];
+  // public listaClasesProfesor: MisClases[] = [];
+  public listaClasesProfesor:Array<string> = new Array<string>();
+  public listaClasesProfesorObjeto:MisClases[] = [];
   public listaDesplegable: MisClases[] = [];
   public listaAsignaturasEnUso: Array<string> = new Array<string>();
   public listaAsignaturasEnUsoProf: Asignatura[] = [];
+  public uidClases: Array<string> = new Array<string>();
 
   constructor(private profesorService: ProfesorService) {
     this.items = [
@@ -35,7 +38,7 @@ export class MisClasesProfesorPage implements OnInit {
     if (item.expanded) {
       item.expanded = false;
     } else {
-      this.listaClasesProfesor.map(listItem => {
+      this.listaClasesProfesorObjeto.map(listItem => {
         if (item == listItem) {
           listItem.expanded = !listItem.expanded;
         } else {
@@ -46,10 +49,7 @@ export class MisClasesProfesorPage implements OnInit {
     }
   }
 
-  ngOnInit() {
-    // this.cargarClases(this.profesorService.uidCentro, this.profesorService.uid, this.filtro);
-    // console.log('Entramos');
-  }
+  ngOnInit() { }
 
   ionViewWillEnter(){
     this.cargarClases(this.profesorService.uidCentro, this.profesorService.uid, this.filtro);
@@ -58,40 +58,19 @@ export class MisClasesProfesorPage implements OnInit {
   cargarClases(uidCentro, uidProfesor, filtro){
     this.profesorService.cargarClasesProfesor(uidCentro, uidProfesor, filtro)
       .subscribe(res =>{
-        this.listaClasesProfesor = [];
-        this.listaAsignaturasEnUsoProf = [];
+        this.listaClasesProfesor = res['infoClases'];
+        this.listaClasesProfesorObjeto = [];
         this.listaDesplegable = [];
-        this.listaAsignaturasEnUso = res['asignaturas'];
-        for(let i = 0; i <  this.listaAsignaturasEnUso.length; i = i + 2){
-          let clases = {nombre: this.listaAsignaturasEnUso[i], expanded: false};
+
+        for(let i = 0; i < this.listaClasesProfesor.length; i++){
+          let clases = {nombre: this.listaClasesProfesor[i][0], asignatura: this.listaClasesProfesor[i][1], uidClase: this.listaClasesProfesor[i][2], expanded: false};
+          this.listaClasesProfesorObjeto.push(clases);
+        }
+
+        for(let i = 0; i < this.listaClasesProfesor.length; i++){
+          let clases = {nombre: this.listaClasesProfesor[i][0], asignatura: this.listaClasesProfesor[i][1], uidClase: this.listaClasesProfesor[i][2], expanded: false};
           this.listaDesplegable.push(clases);
         }
-        for(let i = 0; i <  this.listaAsignaturasEnUso.length; i = i + 2){
-          let clases = {nombre: this.listaAsignaturasEnUso[i], expanded: false};
-          this.listaClasesProfesor.push(clases);
-        }
-        for(let i = 1; i <  this.listaAsignaturasEnUso.length; i = i + 2){
-          let asignaturas = {nombre: this.listaAsignaturasEnUso[i], expanded: false};
-          this.listaAsignaturasEnUsoProf.push(asignaturas);
-        }
-        // Ordenar alfabeticamente los arrays
-        this.listaDesplegable = this.listaDesplegable.sort(function(a, b) {
-          if (a.nombre < b.nombre) { return -1; }
-          if (a.nombre > b.nombre) { return 1; }
-          return 0;
-        });
-
-        this.listaClasesProfesor = this.listaClasesProfesor.sort(function(a, b) {
-          if (a.nombre < b.nombre) { return -1; }
-          if (a.nombre > b.nombre) { return 1; }
-          return 0;
-        });
-
-        this.listaAsignaturasEnUsoProf = this.listaAsignaturasEnUsoProf.sort(function(a, b) {
-          if (a.nombre < b.nombre) { return -1; }
-          if (a.nombre > b.nombre) { return 1; }
-          return 0;
-        });
       }, (err) =>{
 
       });
@@ -100,16 +79,12 @@ export class MisClasesProfesorPage implements OnInit {
   cargarClasesFiltro(uidCentro, uidProfesor, filtro){
     this.profesorService.cargarClasesProfesor(uidCentro, uidProfesor, filtro)
       .subscribe(res =>{
-        this.listaClasesProfesor = [];
-        this.listaAsignaturasEnUsoProf = [];
-        this.listaAsignaturasEnUso = res['asignaturas'];
-        for(let i = 0; i <  this.listaAsignaturasEnUso.length; i = i + 2){
-          let clases = {nombre: this.listaAsignaturasEnUso[i], expanded: false};
-          this.listaClasesProfesor.push(clases);
-        }
-        for(let i = 1; i <  this.listaAsignaturasEnUso.length; i = i + 2){
-          let asignaturas = {nombre: this.listaAsignaturasEnUso[i], expanded: false};
-          this.listaAsignaturasEnUsoProf.push(asignaturas);
+        this.listaClasesProfesor = res['infoClases'];
+        this.listaClasesProfesorObjeto = [];
+
+        for(let i = 0; i < this.listaClasesProfesor.length; i++){
+          let clases = {nombre: this.listaClasesProfesor[i][0], asignatura: this.listaClasesProfesor[i][1], uidClase: this.listaClasesProfesor[i][2], expanded: false};
+          this.listaClasesProfesorObjeto.push(clases);
         }
       }, (err) =>{
 

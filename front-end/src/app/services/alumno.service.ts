@@ -49,12 +49,36 @@ export class AlumnoService {
     return this.http.post(`${environment.base_url}/alumnos`, data, this.cabecerasVacia);
   }
 
+  cargarAlumno( uid: string ){
+    return this.http.get(`${environment.base_url}/alumnos/?id=${uid}`, this.cabeceras);
+  }
+
+  actualizarAlumno( uid: string, data ){
+    return this.http.put(`${environment.base_url}/alumnos/${uid}`, data, this.cabeceras);
+  }
+
   escogerClase (data) {
     return this.http.post(`${environment.base_url}/alumnos/escogerClase`, data, this.cabeceras);
   }
 
+  establecerClase( uidClase: string, nombreClase: string ): void {
+    this.authService.alumno.uidClase = uidClase;
+    this.authService.alumno.nombreClase = nombreClase;
+  }
+
   cargarClasesCentro(uidCentro: string, filtro?: string, idAlumno?: string,){
     return this.http.get(`${environment.base_url}/centroeducativo/${uidCentro}/clases/?nombre=${filtro}&idAlumno=${idAlumno}`, this.cabeceras);
+  }
+
+  cargarAsignaturasAlumno(uidAlumno: string, uidClase: string, filtro?: string) {
+    if(!filtro){
+      filtro = '';
+    }
+    return this.http.get(`${environment.base_url}/alumnos/obtenerclase/?id=${uidAlumno}&idClase=${uidClase}&asignatura=${filtro}`, this.cabeceras);
+  }
+
+  cargarProfesor(uidAlumno: string, uidProfesor: string) {
+    return this.http.get(`${environment.base_url}/alumnos/${uidAlumno}/profesor/?id=${uidProfesor}`, this.cabeceras);
   }
 
   loginProfesor( formData: loginForm) {
@@ -107,7 +131,7 @@ export class AlumnoService {
       return this.http.get(`${environment.base_url}/login/tokenalumno`, {
         headers: {'x-token': result}
       }).subscribe(res => {
-        this.alumno = new Alumno(res['uid'], res['nombre'], res['email'], res['rol'], res['uidCentro'], res['uidClase'] ,res['token']);
+        this.alumno = new Alumno(res['uid'], res['nombre'], res['email'], res['rol'], res['uidCentro'], res['uidClase'], res['nombreClase'], res['token']);
       });
     });
   }
@@ -140,6 +164,10 @@ export class AlumnoService {
 
   get nombre(): string{
     return this.authService.alumno.nombre;
+  }
+
+  get nombreClase(): string{
+    return this.authService.alumno.nombreClase;
   }
 
   get email(): string{

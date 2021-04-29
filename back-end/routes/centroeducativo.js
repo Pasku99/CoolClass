@@ -4,7 +4,7 @@ Ruta base: /api/centroeducativo
 
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { crearCentro, obtenerCentros, obtenerClases, crearClase, actualizarCentro, generarCodigoProfesor, generarCodigoAlumno, obtenerProfesores } = require('../controllers/centroeducativo');
+const { crearCentro, obtenerCentros, obtenerClases, crearClase, actualizarCentro, generarCodigoProfesor, generarCodigoAlumno, obtenerProfesores, obtenerProfesoresClase } = require('../controllers/centroeducativo');
 const { validarCampos } = require('../middleware/validar-campos');
 const { validarJWT } = require('../middleware/validar-jwt');
 
@@ -54,6 +54,13 @@ router.get('/:id/clases', [
     // check('uidCentro', 'El argumento debe ser válido').not().isEmpty().trim(),
     // validarCampos,
 ], obtenerClases);
+
+router.get('/:idCentro/:idClase', [
+    validarJWT,
+    // check('nombre', 'El argumento username es obligatorio').not().isEmpty().trim(),
+    // check('uidCentro', 'El argumento debe ser válido').not().isEmpty().trim(),
+    // validarCampos,
+], obtenerProfesoresClase);
 
 router.post('/clases', [
     validarJWT,

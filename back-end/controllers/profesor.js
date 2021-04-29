@@ -29,7 +29,7 @@ const obtenerProfesores = async(req, res) => {
     const id = req.query.id || '';
 
     try {
-        // Se comprueba que sea rol admin para poder listar
+        // Se comprueba que sea rol admin para poder listar o el propio usuario del token
         const token = req.header('x-token');
         if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === id))) {
             return res.status(400).json({
@@ -261,7 +261,9 @@ const actualizarProfesor = async(req, res = response) => {
 const obtenerClasesCentro = async(req, res = response) => {
     const uidProfesor = req.params.idprofesor;
     const uidCentro = req.params.idcentro;
+    const filtro = req.query.nombre;
     let arrayNombres = [];
+    let arrayClases = [];
 
     try {
         const token = req.header('x-token');
@@ -287,12 +289,42 @@ const obtenerClasesCentro = async(req, res = response) => {
         }
         for (let i = 0; i < clases.length; i++) {
             arrayNombres.push(clases[i].nombre);
+            arrayNombres.push(clases[i]._id);
+            arrayClases.push(arrayNombres);
+            arrayNombres = [];
         }
+
+        let encontrado = false;
+        if (filtro != '') {
+            for (let i = 0; i < arrayClases.length; i++) {
+                for (let j = 0; j < arrayClases[i].length; j++) {
+                    if (filtro == arrayClases[i][j]) {
+                        arrayNombres.push(arrayClases[i][0]);
+                        arrayNombres.push(arrayClases[i][1]);
+                        arrayClases.push(arrayNombres);
+                        arrayNombres = [];
+                        arrayClases.splice(0, arrayClases.length - 1);
+                        encontrado = true;
+                        break;
+                    }
+                }
+                if (encontrado) {
+                    break;
+                }
+            }
+        }
+
+        arrayClases = arrayClases.sort(function(a, b) {
+            if (a[0] < b[0]) { return -1; }
+            if (a[0] > b[0]) { return 1; }
+            return 0;
+        });
+
         res.json({
             ok: true,
             msg: 'getClasesCentro',
             clases,
-            nombresCentro: arrayNombres,
+            infoClases: arrayClases,
         });
 
     } catch (error) {
@@ -309,6 +341,9 @@ const obtenerClasesProfesor = async(req, res = response) => {
     const uidCentro = req.params.idcentro;
     let arrayNombresNoProfesor = [];
     let asignaturasProfesor = [];
+    let arrayClases = [];
+    let infoClases = [];
+    let infoClasesNoProfesor = [];
     const filtro = req.query.nombre || '';
     try {
         const token = req.header('x-token');
@@ -342,8 +377,12 @@ const obtenerClasesProfesor = async(req, res = response) => {
                 for (let z = 0; z < clases[i].arrayAsignaturasProfesores[j].length; z++) {
                     if (clases[i].arrayAsignaturasProfesores[j][z + 1] == uidProfesor) {
                         noc = true;
+                        // arrayClases.push(clases[i]._id);
                         asignaturasProfesor.push(clases[i].nombre);
                         asignaturasProfesor.push(clases[i].arrayAsignaturasProfesores[j][z]);
+                        asignaturasProfesor.push(clases[i]._id);
+                        infoClases.push(asignaturasProfesor);
+                        asignaturasProfesor = [];
                         break;
                     } else {
                         noc = false;
@@ -353,56 +392,87 @@ const obtenerClasesProfesor = async(req, res = response) => {
             if (noc == false) {
                 asignaturasProfesor.push(clases[i].nombre);
                 asignaturasProfesor.push('');
+                asignaturasProfesor.push(clases[i]._id);
+                infoClases.push(asignaturasProfesor);
+                asignaturasProfesor = [];
             }
         }
 
         let esta = false;
-        for (let i = 0; i < asignaturasProfesor.length; i++) {
-            if (asignaturasProfesor[i + 1] == asignaturasProfesor.length) {
-                break;
-            }
-            if (asignaturasProfesor[i + 1] == '') {
-                for (let x = 0; x < clases.length; x++) {
-                    esta = false;
-                    if (clases[x].nombre == asignaturasProfesor[i]) {
-                        if (clases[x].arrayProfesores != undefined || clases[x].arrayProfesores != null) {
-                            if (clases[x].arrayProfesores == '') {
+        if (infoClases != []) {
+            for (let i = 0; i < infoClases.length; i++) {
+                for (let j = 0; j < 2; j++) {
+                    if (infoClases[i][j] == '') {
+                        for (let x = 0; x < clases.length; x++) {
+                            esta = false;
+                            if (clases[x].nombre == infoClases[i][0]) {
+                                if (clases[x].arrayProfesores != undefined || clases[x].arrayProfesores != null) {
+                                    if (clases[x].arrayProfesores == '') {
 
-                            } else {
-                                for (let j = 0; j < clases[x].arrayProfesores.length; j++) {
-                                    if (clases[x].arrayProfesores[j] == uidProfesor) {
-                                        esta = true;
-                                        break;
                                     } else {
+                                        for (let j = 0; j < clases[x].arrayProfesores.length; j++) {
+                                            if (clases[x].arrayProfesores[j] == uidProfesor) {
+                                                esta = true;
+                                                break;
+                                            } else {
 
+                                            }
+                                        }
+                                    }
+                                    if (!esta) {
+                                        arrayNombresNoProfesor.push(infoClases[i][0]);
+                                        arrayNombresNoProfesor.push(infoClases[i][1]);
+                                        arrayNombresNoProfesor.push(infoClases[i][2]);
+                                        infoClasesNoProfesor.push(arrayNombresNoProfesor);
+                                        arrayNombresNoProfesor = [];
+                                        infoClases.splice(i, 1);
                                     }
                                 }
                             }
-                            if (!esta) {
-                                arrayNombresNoProfesor.push(asignaturasProfesor[i]);
-                                arrayNombresNoProfesor.push(asignaturasProfesor[i + 1]);
-                                asignaturasProfesor.splice(i, 2);
-                            }
                         }
                     }
+
                 }
             }
         }
+
+        let encontrado = false;
         if (filtro != '') {
-            for (let i = 0; i < asignaturasProfesor.length; i = i + 2) {
-                if (filtro == asignaturasProfesor[i]) {
-                    asignaturasProfesor.push(asignaturasProfesor[i]);
-                    asignaturasProfesor.push(asignaturasProfesor[i + 1]);
-                    asignaturasProfesor.splice(0, asignaturasProfesor.length - 2);
+            for (let i = 0; i < infoClases.length; i++) {
+                for (let j = 0; j < infoClases[i].length; j++) {
+                    if (filtro == infoClases[i][j]) {
+                        asignaturasProfesor.push(infoClases[i][0]);
+                        asignaturasProfesor.push(infoClases[i][1]);
+                        asignaturasProfesor.push(infoClases[i][2]);
+                        infoClases.push(asignaturasProfesor);
+                        asignaturasProfesor = [];
+                        infoClases.splice(0, infoClases.length - 1);
+                        encontrado = true;
+                        break;
+                    }
+                }
+                if (encontrado) {
+                    break;
                 }
             }
         }
+        // Se ordenan alfabéticamente ambos arrays
+        infoClasesNoProfesor = infoClasesNoProfesor.sort(function(a, b) {
+            if (a[0] < b[0]) { return -1; }
+            if (a[0] > b[0]) { return 1; }
+            return 0;
+        });
+        infoClases = infoClases.sort(function(a, b) {
+            if (a[0] < b[0]) { return -1; }
+            if (a[0] > b[0]) { return 1; }
+            return 0;
+        });
         res.json({
             ok: true,
             msg: 'getClasesCentro',
             clases,
-            asignaturas: asignaturasProfesor,
-            clasesNoProfesor: arrayNombresNoProfesor
+            infoClasesNoProfesor: infoClasesNoProfesor,
+            infoClases: infoClases
         });
 
     } catch (error) {
@@ -613,4 +683,55 @@ const eliminarClaseAsignaturaProfesor = async(req, res = response) => {
     }
 }
 
-module.exports = { crearProfesor, obtenerProfesores, obtenerClasesCentro, escogerAsignaturasProfesor, obtenerAsignaturas, escogerClasesProfesor, eliminarClaseAsignaturaProfesor, obtenerClasesProfesor, actualizarProfesor }
+const obtenerAlumnos = async(req, res = response) => {
+    const uidProfesor = req.params.id;
+    const uidClase = req.query.idClase;
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para obtener los alumnos',
+            });
+        }
+
+        const profesor = await Profesor.findById(uidProfesor);
+        if (!profesor) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar profesor',
+            });
+        }
+
+        const clase = await Clase.findById(uidClase);
+        if (!clase) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar clase',
+            });
+        }
+
+        const alumnos = await Alumno.find({ uidClase: uidClase });
+        if (!alumnos) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar alumnos de la clase',
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'obtenerAlumnos',
+            alumnos,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error obteniendo alumnos'
+        });
+    }
+}
+
+module.exports = { crearProfesor, obtenerProfesores, obtenerClasesCentro, escogerAsignaturasProfesor, obtenerAsignaturas, escogerClasesProfesor, eliminarClaseAsignaturaProfesor, obtenerClasesProfesor, actualizarProfesor, obtenerAlumnos }

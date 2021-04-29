@@ -549,4 +549,61 @@ const obtenerProfesores = async(req, res) => {
     }
 }
 
-module.exports = { crearCentro, obtenerCentros, obtenerClases, crearClase, actualizarCentro, generarCodigoProfesor, generarCodigoAlumno, obtenerProfesores }
+const obtenerProfesoresClase = async(req, res = response) => {
+    const uidCentro = req.params.idCentro;
+    const uidClase = req.params.idClase;
+    const filtro = req.query.nombre;
+    let profesores = [];
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidCentro))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para listar profesores',
+            });
+        }
+
+        const clase = await Clase.findById(uidClase);
+        if (!clase) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar la clase',
+            });
+        }
+        for (let i = 0; i < clase.arrayProfesores.length; i++) {
+            let profesoresEncontrados = await Profesor.findById(clase.arrayProfesores[i]);
+            if (!profesoresEncontrados) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Error al encontrar profesores',
+                });
+            }
+            profesores.push(profesoresEncontrados);
+        }
+
+        if (filtro != '') {
+            for (let i = 0; i < profesores.length; i++) {
+                if (filtro == profesores[i].nombre) {
+                    profesores.push(profesores[i]);
+                    profesores.splice(0, profesores.length - 1);
+                    break;
+                }
+            }
+        }
+
+        res.json({
+            ok: true,
+            msg: 'getProfesoresClase',
+            profesores,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error obteniendo profesores de la clase'
+        });
+    }
+}
+
+module.exports = { crearCentro, obtenerCentros, obtenerClases, crearClase, actualizarCentro, generarCodigoProfesor, generarCodigoAlumno, obtenerProfesores, obtenerProfesoresClase }
