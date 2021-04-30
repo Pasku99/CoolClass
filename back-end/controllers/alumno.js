@@ -326,8 +326,8 @@ const escogerClase = async(req, res = response) => {
 }
 
 const obtenerAsignaturas = async(req, res = response) => {
-    const uid = req.query.id;
-    const uidClase = req.query.idClase;
+    const uid = req.params.idAlumno;
+    const uidClase = req.params.idClase;
     const filtro = req.query.asignatura;
     let asignaturasDisponibles = [];
     let profesoresDisponibles = [];
@@ -416,4 +416,47 @@ const obtenerProfesor = async(req, res = response) => {
     }
 }
 
-module.exports = { obtenerAlumnos, crearAlumno, escogerClase, obtenerAsignaturas, obtenerProfesor, actualizarAlumno }
+const obtenerAlumnosClase = async(req, res = response) => {
+    const uidCentro = req.params.idCentro;
+    const uidClase = req.params.idClase;
+    const filtro = req.query.nombre;
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidCentro))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para obtener clases',
+            });
+        }
+
+        if (filtro) {
+            [alumnos] = await Promise.all([
+                Alumno.find({ uidClase: uidClase, nombre: filtro }),
+            ]);
+            total = 1;
+        }
+        // Si no ha llegado ID, hacemos el get /
+        else {
+            [alumnos, total] = await Promise.all([
+                Alumno.find({ uidClase: uidClase }),
+                Alumno.countDocuments({ uidClase: uidClase })
+            ]);
+        }
+
+        res.json({
+            ok: true,
+            msg: 'Alumnos obtenidos con éxito',
+            alumnos,
+            total
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error obteniendo alumnos'
+        });
+    }
+}
+
+module.exports = { obtenerAlumnos, crearAlumno, escogerClase, obtenerAsignaturas, obtenerProfesor, actualizarAlumno, obtenerAlumnosClase }

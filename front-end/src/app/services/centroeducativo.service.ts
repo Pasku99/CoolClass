@@ -79,6 +79,13 @@ export class CentroeducativoService {
     return this.http.get(`${environment.base_url}/centroeducativo/${uidCentro}/${uidClase}/?nombre=${filtro}`, this.cabeceras);
   }
 
+  cargarAlumnosClase( uidCentro: string, uidClase: string, filtro?: string ) {
+    if(!filtro){
+      filtro = '';
+    }
+    return this.http.get(`${environment.base_url}/alumnos/${uidCentro}/${uidClase}/?nombre=${filtro}`, this.cabeceras);
+  }
+
   actualizarCentro( uid: string, data ){
     return this.http.put(`${environment.base_url}/centroeducativo/${uid}`, data, this.cabeceras);
   }

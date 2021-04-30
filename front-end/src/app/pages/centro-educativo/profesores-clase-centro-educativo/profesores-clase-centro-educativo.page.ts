@@ -20,8 +20,6 @@ export class ProfesoresClaseCentroEducativoPage implements OnInit {
   public listaDesplegable: Profesor[] = [];
   public filtro: string = '';
   public clase: Clase;
-  public listaClasesProfesor: MisClases[] = [];
-  public cargado: Promise<boolean>;
 
   constructor(private centroeducativoService: CentroeducativoService,
               private route: ActivatedRoute) {

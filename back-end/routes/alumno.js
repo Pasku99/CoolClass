@@ -4,7 +4,7 @@ Ruta base: /api/alumnos
 
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { obtenerAlumnos, crearAlumno, escogerClase, obtenerAsignaturas, obtenerProfesor, actualizarAlumno } = require('../controllers/alumno');
+const { obtenerAlumnos, crearAlumno, escogerClase, obtenerAsignaturas, obtenerProfesor, actualizarAlumno, obtenerAlumnosClase } = require('../controllers/alumno');
 const { validarCampos } = require('../middleware/validar-campos');
 const { validarJWT } = require('../middleware/validar-jwt');
 
@@ -39,7 +39,7 @@ router.post('/escogerclase', [
     check('nombreClase', 'El argumento nombreClase es obligatorio').not().isEmpty(),
 ], escogerClase);
 
-router.get('/obtenerclase', [
+router.get('/obtenerclase/:idAlumno/:idClase', [
     validarJWT,
     // Campos opcionales, si vienen los validamos
     check('id', 'El id de clase debe ser válido').optional().isMongoId(),
@@ -52,5 +52,13 @@ router.get('/:id/profesor', [
     check('id', 'El id de clase debe ser válido').optional().isMongoId(),
     validarCampos,
 ], obtenerProfesor);
+
+router.get('/:idCentro/:idClase', [
+    validarJWT,
+    // Campos opcionales, si vienen los validamos
+    check('idCentro', 'El id de centro debe ser válido').optional().isMongoId(),
+    check('idClase', 'El id de clase debe ser válido').optional().isMongoId(),
+    validarCampos,
+], obtenerAlumnosClase);
 
 module.exports = router;

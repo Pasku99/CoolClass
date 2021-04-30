@@ -74,7 +74,7 @@ export class AlumnoService {
     if(!filtro){
       filtro = '';
     }
-    return this.http.get(`${environment.base_url}/alumnos/obtenerclase/?id=${uidAlumno}&idClase=${uidClase}&asignatura=${filtro}`, this.cabeceras);
+    return this.http.get(`${environment.base_url}/alumnos/obtenerclase/${uidAlumno}/${uidClase}/?asignatura=${filtro}`, this.cabeceras);
   }
 
   cargarProfesor(uidAlumno: string, uidProfesor: string) {

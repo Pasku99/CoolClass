@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlumnoService } from '../../../services/alumno.service';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-mis-asignaturas-alumno',
@@ -12,11 +13,13 @@ export class MisAsignaturasAlumnoPage implements OnInit {
   public listaAsignaturas : Array<String> = new Array<String>();
   public listaAsignaturasMayus : Array<String> = new Array<String>();
 
-  constructor(private alumnoService: AlumnoService) { }
+  constructor(private alumnoService: AlumnoService,
+              private authService: AuthService) { }
 
   ngOnInit() { }
 
   ionViewWillEnter(){
+    console.log(this.authService.alumno)
     this.cargarAsignaturas();
   }
 
