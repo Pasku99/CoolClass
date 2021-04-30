@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CentroeducativoService } from '../../../services/centroeducativo.service';
 import { ActivatedRoute } from '@angular/router';
 import { Profesor } from '../../../models/profesor.model';
+import Swal from 'sweetalert2';
+import { Clase } from 'src/app/models/clase.model';
+import { MisClases } from '../../../models/misclases.model';
+import { ProfesorClase } from '../../../models/profesorclase.model';
 
 @Component({
   selector: 'app-profesores-clase-centro-educativo',
@@ -12,9 +16,12 @@ export class ProfesoresClaseCentroEducativoPage implements OnInit {
 
   public items: any = [];
   public uidClase: string = '';
-  public profesores: Profesor[] = [];
+  public profesores: ProfesorClase[] = [];
   public listaDesplegable: Profesor[] = [];
   public filtro: string = '';
+  public clase: Clase;
+  public listaClasesProfesor: MisClases[] = [];
+  public cargado: Promise<boolean>;
 
   constructor(private centroeducativoService: CentroeducativoService,
               private route: ActivatedRoute) {
@@ -50,7 +57,8 @@ export class ProfesoresClaseCentroEducativoPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.uidClase = this.route.snapshot.params['idClase']
+    this.uidClase = this.route.snapshot.params['idClase'];
+    this.cargarClase();
     this.cargarProfesoresClase(this.centroeducativoService.uid, this.uidClase);
   }
 
@@ -60,7 +68,9 @@ export class ProfesoresClaseCentroEducativoPage implements OnInit {
         this.profesores = res['profesores'];
         this.listaDesplegable = res['profesores'];
       }, (err => {
-
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
       }));
   }
 
@@ -69,7 +79,9 @@ export class ProfesoresClaseCentroEducativoPage implements OnInit {
       .subscribe( res => {
         this.profesores = res['profesores'];
       }, (err => {
-
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
       }));
   }
 
@@ -82,5 +94,27 @@ export class ProfesoresClaseCentroEducativoPage implements OnInit {
       this.cargarProfesoresClaseFiltro(this.centroeducativoService.uid, this.uidClase, this.filtro);
     }
   }
+
+  cargarClase(){
+    this.centroeducativoService.cargarClasesUid(this.centroeducativoService.uid, this.uidClase)
+      .subscribe(res => {
+        this.clase = res['arrayClases'];
+      }, (err => {
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
+      }));
+  }
+
+  // cargarAsignatura(idProfesor){
+  //   this.centroeducativoService.cargarClasesProfesor(this.centroeducativoService.uid, idProfesor, this.clase[0].nombre)
+  //     .subscribe(res => {
+  //       this.listaClasesProfesor = res['infoClases'];
+  //     }, (err => {
+  //       const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+  //       Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+  //       return;
+  //     }));
+  // }
 
 }

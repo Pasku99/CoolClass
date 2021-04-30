@@ -383,10 +383,12 @@ const generarCodigoAlumno = async(req, res) => {
 }
 
 const obtenerClases = async(req, res) => {
+    const idClase = req.query.idClase || '';
     const id = req.params.id;
     const filtro = req.query.nombre || '';
     const idAlumno = req.query.idAlumno || '';
     let arrayClases = [];
+    let clases;
     try {
         // Se comprueba que sea rol admin para poder listar
         const token = req.header('x-token');
@@ -404,14 +406,24 @@ const obtenerClases = async(req, res) => {
                 msg: 'Error al buscar centro',
             });
         }
-
-        const clases = await Clase.find({ uidCentro: id });
-        if (!clases) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'Error al buscar clases',
-            });
+        if (idClase) {
+            clases = await Clase.find({ uidCentro: id, _id: idClase });
+            if (!clases) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Error al buscar clases',
+                });
+            }
+        } else {
+            clases = await Clase.find({ uidCentro: id });
+            if (!clases) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Error al buscar clases',
+                });
+            }
         }
+
         let total;
         if (filtro != '') {
             for (let i = 0; i < clases.length; i++) {
@@ -554,6 +566,7 @@ const obtenerProfesoresClase = async(req, res = response) => {
     const uidClase = req.params.idClase;
     const filtro = req.query.nombre;
     let profesores = [];
+    let arrayInfo = [];
     try {
         const token = req.header('x-token');
         if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidCentro))) {
@@ -562,6 +575,34 @@ const obtenerProfesoresClase = async(req, res = response) => {
                 msg: 'No tiene permisos para listar profesores',
             });
         }
+
+        // const clase = await Clase.findById(uidClase);
+        // if (!clase) {
+        //     return res.status(400).json({
+        //         ok: false,
+        //         msg: 'Error al encontrar la clase',
+        //     });
+        // }
+        // for (let i = 0; i < clase.arrayProfesores.length; i++) {
+        //     let profesoresEncontrados = await Profesor.findById(clase.arrayProfesores[i]);
+        //     if (!profesoresEncontrados) {
+        //         return res.status(400).json({
+        //             ok: false,
+        //             msg: 'Error al encontrar profesores',
+        //         });
+        //     }
+        //     profesores.push(profesoresEncontrados);
+        // }
+
+        // if (filtro != '') {
+        //     for (let i = 0; i < profesores.length; i++) {
+        //         if (filtro == profesores[i].nombre) {
+        //             profesores.push(profesores[i]);
+        //             profesores.splice(0, profesores.length - 1);
+        //             break;
+        //         }
+        //     }
+        // }
 
         const clase = await Clase.findById(uidClase);
         if (!clase) {
@@ -578,18 +619,35 @@ const obtenerProfesoresClase = async(req, res = response) => {
                     msg: 'Error al encontrar profesores',
                 });
             }
-            profesores.push(profesoresEncontrados);
+            for (let i = 0; i < clase.arrayAsignaturasProfesores.length; i++) {
+                for (let j = 0; j < clase.arrayAsignaturasProfesores.length; j++) {
+                    if (clase.arrayAsignaturasProfesores[i][j + 1] != undefined || clase.arrayAsignaturasProfesores[i][j + 1] != null) {
+                        if (clase.arrayAsignaturasProfesores[i][j + 1] == profesoresEncontrados._id) {
+                            arrayInfo = [];
+                            arrayInfo.push(profesoresEncontrados._id, profesoresEncontrados.nombre, clase.arrayAsignaturasProfesores[i][j]);
+                            profesores.push(arrayInfo);
+                        }
+                    }
+                }
+            }
         }
 
         if (filtro != '') {
             for (let i = 0; i < profesores.length; i++) {
-                if (filtro == profesores[i].nombre) {
+                if (filtro == profesores[i][1]) {
                     profesores.push(profesores[i]);
                     profesores.splice(0, profesores.length - 1);
                     break;
                 }
             }
         }
+
+        profesores = profesores.sort(function(a, b) {
+            if (a[1] < b[1]) { return -1; }
+            if (a[1] > b[1]) { return 1; }
+            return 0;
+        });
+
 
         res.json({
             ok: true,

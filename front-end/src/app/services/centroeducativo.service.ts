@@ -59,6 +59,10 @@ export class CentroeducativoService {
     return this.http.get(`${environment.base_url}/centroeducativo/${uid}/clases/?nombre=${filtro}`, this.cabeceras);
   }
 
+  cargarClasesUid ( uid: string, filtro?: string): Observable<object> {
+    return this.http.get(`${environment.base_url}/centroeducativo/${uid}/clases/?idClase=${filtro}`, this.cabeceras);
+  }
+
   cargarCentro ( uid: string ) {
     return this.http.get(`${environment.base_url}/centroeducativo/?id=${uid}`, this.cabeceras);
   }

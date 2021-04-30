@@ -4,11 +4,11 @@ import { environment } from '../../environments/environment';
 
 const base_url: string = environment.base_url;
 
-export class MisClases {
+export class ProfesorClase {
 
-    constructor( public nombre?: string,
+    constructor( public uidProfesor?: string,
+                 public nombre?: string,
                  public asignatura?: string,
-                 public uidClase?: string,
                  public expanded?: boolean,
                 ) {}
 
