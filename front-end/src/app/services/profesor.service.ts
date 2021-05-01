@@ -77,6 +77,20 @@ export class ProfesorService {
     return this.http.put(`${environment.base_url}/profesores/eliminarclaseprofesor`, data, this.cabeceras);
   }
 
+  cargarAlumnosClase( uidCentro: string, uidClase: string, uidProfesor?: string, filtro?: string ) {
+    if(!filtro){
+      filtro = '';
+    }
+    if(!uidProfesor){
+      uidProfesor = '';
+    }
+    return this.http.get(`${environment.base_url}/alumnos/${uidCentro}/${uidClase}/?nombre=${filtro}&idProfesor=${uidProfesor}`, this.cabeceras);
+  }
+
+  cargarClasesUid ( uid: string, uidProfesor?: string, filtro?: string): Observable<object> {
+    return this.http.get(`${environment.base_url}/centroeducativo/${uid}/clases/?idClase=${filtro}&idProfesor=${uidProfesor}`, this.cabeceras);
+  }
+
   loginProfesor( formData: loginForm) {
     return this.http.post(`${environment.base_url}/login/profesor`, formData)
     .pipe(

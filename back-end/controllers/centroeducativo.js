@@ -387,12 +387,13 @@ const obtenerClases = async(req, res) => {
     const id = req.params.id;
     const filtro = req.query.nombre || '';
     const idAlumno = req.query.idAlumno || '';
+    const idProfesor = req.query.idProfesor || '';
     let arrayClases = [];
     let clases;
     try {
         // Se comprueba que sea rol admin para poder listar
         const token = req.header('x-token');
-        if (!((infoToken(token).rol === 'ROL_CENTRO') || (infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === id) || (infoToken(token).uid === idAlumno))) {
+        if (!((infoToken(token).rol === 'ROL_CENTRO') || (infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === id) || (infoToken(token).uid === idAlumno) || (infoToken(token).uid === idProfesor))) {
             return res.status(400).json({
                 ok: false,
                 msg: 'No tiene permisos para listar clases',

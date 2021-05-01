@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-notas-alumnos-profesor',
@@ -8,8 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class NotasAlumnosProfesorPage implements OnInit {
 
   public items: any = [];
+  public uidClase: string = '';
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
     this.items = [
       { expanded: false },
       { expanded: false },
@@ -39,6 +41,10 @@ export class NotasAlumnosProfesorPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+    this.uidClase = this.route.snapshot.params['idClase'];
   }
 
 }

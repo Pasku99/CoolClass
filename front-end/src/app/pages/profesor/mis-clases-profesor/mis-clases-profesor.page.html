@@ -28,7 +28,7 @@
                     </ion-col>
                     <ion-col size="9">
                         <ion-card-header>
-                            <ion-card-title style="color: black; font-size: 24px;">{{clase.nombre}}</ion-card-title>
+                            <ion-card-title style="color: black; font-size: 24px;">{{clase.nombre}} ({{clase.asignatura}})</ion-card-title>
                         </ion-card-header>
                     </ion-col>
                 </ion-row>
@@ -44,7 +44,7 @@
                                         <h2 style="color: black">Mis alumnos</h2>
                                     </ion-col>
                                     <ion-col size="4.5">
-                                        <ion-icon name="accessibility" style="width: 2rem; height: 2rem; margin-top: 0rem;  color: #004DFF;" routerLink="/tabs-profesor/clases/alumnos"></ion-icon>
+                                        <ion-icon name="accessibility" style="width: 2rem; height: 2rem; margin-top: 0rem;  color: #004DFF;" [routerLink]="['/tabs-profesor/clases/alumnos', clase.uidClase]"></ion-icon>
                                     </ion-col>
                                 </ion-row>
                                 <ion-row>
