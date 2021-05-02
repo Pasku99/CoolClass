@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Asignatura } from 'src/app/models/asignatura.model';
 import { MisClases } from 'src/app/models/misclases.model';
 import { ProfesorService } from '../../../services/profesor.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-mis-clases-profesor',
@@ -72,7 +73,9 @@ export class MisClasesProfesorPage implements OnInit {
           this.listaDesplegable.push(clases);
         }
       }, (err) =>{
-
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
       });
   }
 
@@ -87,7 +90,9 @@ export class MisClasesProfesorPage implements OnInit {
           this.listaClasesProfesorObjeto.push(clases);
         }
       }, (err) =>{
-
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
       });
   }
 

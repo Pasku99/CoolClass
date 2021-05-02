@@ -91,6 +91,14 @@ export class ProfesorService {
     return this.http.get(`${environment.base_url}/centroeducativo/${uid}/clases/?idClase=${filtro}&idProfesor=${uidProfesor}`, this.cabeceras);
   }
 
+  cargarExamenesClaseProfesor( uidProfesor: string, uidClase: string){
+    return this.http.get(`${environment.base_url}/examenes/examenesprofesor/${uidProfesor}/${uidClase}`, this.cabeceras);
+  }
+
+  cargarNotasExamen( uidExamen: string, uidProfesor: string){
+    return this.http.get(`${environment.base_url}/examenes/notas/${uidExamen}/?idProfesor=${uidProfesor}`, this.cabeceras);
+  }
+
   loginProfesor( formData: loginForm) {
     return this.http.post(`${environment.base_url}/login/profesor`, formData)
     .pipe(

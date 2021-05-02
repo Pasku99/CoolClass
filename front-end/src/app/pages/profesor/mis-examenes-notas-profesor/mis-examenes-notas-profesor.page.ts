@@ -2,20 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { ProfesorService } from '../../../services/profesor.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
-import { Examen } from 'src/app/models/examen.model';
+import { ExamenResuelto } from '../../../models/examenresuelto.model';
 
 @Component({
-  selector: 'app-mis-examenes-profesor',
-  templateUrl: './mis-examenes-profesor.page.html',
-  styleUrls: ['./mis-examenes-profesor.page.scss'],
+  selector: 'app-mis-examenes-notas-profesor',
+  templateUrl: './mis-examenes-notas-profesor.page.html',
+  styleUrls: ['./mis-examenes-notas-profesor.page.scss'],
 })
-export class MisExamenesProfesorPage implements OnInit {
+export class MisExamenesNotasProfesorPage implements OnInit {
 
   public items: any = [];
   public uidClase: string = '';
-  public examenesClase: Examen[] = [];
-  public asignatura: string = '';
+  public uidExamen: string = '';
+  public nombreExamen: string = '';
   public nombreClase: string = '';
+  public examenesAlumno: ExamenResuelto[] = [];
 
   constructor(private profesorService: ProfesorService,
               private route: ActivatedRoute) {
@@ -36,7 +37,7 @@ export class MisExamenesProfesorPage implements OnInit {
     if (item.expanded) {
       item.expanded = false;
     } else {
-      this.examenesClase.map(listItem => {
+      this.examenesAlumno.map(listItem => {
         if (item == listItem) {
           listItem.expanded = !listItem.expanded;
         } else {
@@ -52,20 +53,21 @@ export class MisExamenesProfesorPage implements OnInit {
 
   ionViewWillEnter() {
     this.uidClase = this.route.snapshot.params['idClase'];
-    this.cargarExamenesProfesor();
+    this.uidExamen = this.route.snapshot.params['idExamen'];
+    this.cargarExamenesResueltos();
   }
 
-  cargarExamenesProfesor(){
-    this.profesorService.cargarExamenesClaseProfesor(this.profesorService.uid, this.uidClase)
+  cargarExamenesResueltos(){
+    this.profesorService.cargarNotasExamen(this.uidExamen, this.profesorService.uid)
       .subscribe(res => {
-        this.examenesClase = res['examenesProfesor'];
-        this.asignatura = this.examenesClase[0].asignatura;
-        this.nombreClase = this.examenesClase[0].nombreClase;
+        this.examenesAlumno = res['examenesResueltos'];
+        this.nombreExamen = this.examenesAlumno[0].nombreExamen;
+        this.nombreClase = this.examenesAlumno[0].nombreClase;
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
         return;
-      }));
+      }))
   }
 
 }

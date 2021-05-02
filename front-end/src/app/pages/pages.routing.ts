@@ -45,6 +45,7 @@ import { AjustesAlumnoPage } from './alumno/ajustes-alumno/ajustes-alumno.page';
 import { AuthcentroGuard } from '../guards/authcentro.guard';
 import { NoauthCentroGuard } from '../guards/noauthcentro.guard';
 import { AuthprofesorGuard } from '../guards/authprofesor.guard';
+import { MisExamenesNotasProfesorPage } from './profesor/mis-examenes-notas-profesor/mis-examenes-notas-profesor.page';
 
 const routes: Routes = [
   { path: 'registro', component: BlankLayoutComponent,
@@ -55,6 +56,7 @@ const routes: Routes = [
       { path: 'profesor/escoger-clases/escoger-asignaturas', component: EscogerAsignaturasProfesorPage},
       { path: 'alumno', component: RegistroAlumnoPage},
       { path: 'alumno/escoger-clase', component: EscogerClaseAlumnoPage},
+      { path: '**', redirectTo: ''}
     ]
   },
   { path: 'tabs-centro-educativo', component: TabsCentroEducativoComponent, canActivate: [ AuthcentroGuard ],
@@ -79,13 +81,15 @@ const routes: Routes = [
       { path: 'clases/alumnos/:idClase', component: MisAlumnosProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases/alumnos/:idClase/notas', component: NotasAlumnosProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases/alumnos/notas/comprobar-examen', component: ComprobarExamenProfesorPage, canActivate: [ AuthcentroGuard ]},
-      { path: 'clases/examenes', component: MisExamenesProfesorPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'clases/examenes/:idClase', component: MisExamenesProfesorPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'clases/examenes/:idClase/:idExamen/notas', component: MisExamenesNotasProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases/crear-examen', component: CrearExamenProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'perfil', component: PerfilProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'perfil/editar-perfil', component: EditarPerfilProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'perfil/configuracion-clases', component: EscogerClasesConfigProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'perfil/configuracion-clases/asignaturas', component: EscogerAsignaturasConfigProfesorPage, canActivate: [ AuthcentroGuard ]},
-      { path: 'perfil/ajustes', component: AjustesProfesorPage, canActivate: [ AuthcentroGuard ]}
+      { path: 'perfil/ajustes', component: AjustesProfesorPage, canActivate: [ AuthcentroGuard ]},
+      { path: '**', redirectTo: 'principal'}
     ]
   },
   { path: 'tabs-alumno', component: TabsAlumnoComponent, canActivate: [ AuthcentroGuard ],
@@ -100,6 +104,7 @@ const routes: Routes = [
       { path: 'perfil', component: PerfilAlumnoPage, canActivate: [ AuthcentroGuard ]},
       { path: 'perfil/editar-perfil', component: EditarPerfilAlumnoPage, canActivate: [ AuthcentroGuard ]},
       { path: 'perfil/ajustes', component: AjustesAlumnoPage, canActivate: [ AuthcentroGuard ]},
+      { path: '**', redirectTo: 'principal'}
     ]
   }
 ];

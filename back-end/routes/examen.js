@@ -4,7 +4,7 @@ Ruta base: /api/examenes
 
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { crearExamen, obtenerExamenes, crearExamenResuelto, obtenerExamenResueltos, obtenerExamenesAlumnosCentro } = require('../controllers/examen');
+const { crearExamen, obtenerExamenes, crearExamenResuelto, obtenerExamenResueltos, obtenerExamenesAlumnosCentro, obtenerExamenesClaseProfesor, obtenerNotasExamen } = require('../controllers/examen');
 const { validarCampos } = require('../middleware/validar-campos');
 const { validarJWT } = require('../middleware/validar-jwt');
 
@@ -52,6 +52,21 @@ router.get('/examenesresueltos/:idAlumno', [
     check('idAlumno', 'El id de alumno debe ser válido').optional().isMongoId(),
     validarCampos,
 ], obtenerExamenesAlumnosCentro);
+
+router.get('/examenesprofesor/:idProfesor/:idClase', [
+    validarJWT,
+    // Campos opcionales, si vienen los validamos
+    check('idProfesor', 'El id de profesor debe ser válido').optional().isMongoId(),
+    check('idClase', 'El id de clase debe ser válido').optional().isMongoId(),
+    validarCampos,
+], obtenerExamenesClaseProfesor);
+
+router.get('/notas/:idExamen', [
+    validarJWT,
+    // Campos opcionales, si vienen los validamos
+    check('idExamen', 'El id de examen debe ser válido').optional().isMongoId(),
+    validarCampos,
+], obtenerNotasExamen);
 
 
 module.exports = router;
