@@ -1,6 +1,17 @@
 const { Schema, model } = require('mongoose');
 
-const ExamenSchema = Schema({
+const ExamenResueltoSchema = Schema({
+    uidAlumno: {
+        type: String,
+        require: true,
+    },
+    nombreAlumno: {
+        type: String,
+    },
+    uidExamen: {
+        type: String,
+        require: true,
+    },
     uidProfesor: {
         type: String,
         require: true,
@@ -20,27 +31,19 @@ const ExamenSchema = Schema({
         type: String,
         require: true,
     },
-    preguntas: {
+    respuestas: {
         type: [String],
     },
-    respuestas: {
-        type: [
-            [String]
-        ],
-    },
-    fechaComienzo: {
-        type: Date,
-    },
-    fechaFinal: {
-        type: Date,
+    nota: {
+        type: Number
     }
-}, { collection: 'examen' });
+}, { collection: 'examen-resuelto' });
 
-ExamenSchema.method('toJSON', function() {
+ExamenResueltoSchema.method('toJSON', function() {
     const { __v, _id, password, ...object } = this.toObject();
 
     object.uid = _id;
     return object;
 })
 
-module.exports = model('Examen', ExamenSchema);
+module.exports = model('ExamenResuelto', ExamenResueltoSchema);

@@ -60,6 +60,9 @@ export class CentroeducativoService {
   }
 
   cargarClasesUid ( uid: string, filtro?: string): Observable<object> {
+    if(!filtro){
+      filtro = '';
+    }
     return this.http.get(`${environment.base_url}/centroeducativo/${uid}/clases/?idClase=${filtro}`, this.cabeceras);
   }
 
@@ -69,6 +72,16 @@ export class CentroeducativoService {
 
   cargarProfesores( uid: string, filtro?: string ) {
     return this.http.get(`${environment.base_url}/centroeducativo/profesores/${uid}/?nombre=${filtro}`, this.cabeceras);
+  }
+
+  cargarAlumno(uidAlumno?: string, uidCentro?: string) {
+    if(!uidAlumno){
+      uidAlumno = '';
+    }
+    if(!uidCentro){
+      uidCentro = '';
+    }
+    return this.http.get(`${environment.base_url}/alumnos/?id=${uidAlumno}&idCentro=${uidCentro}`, this.cabeceras);
   }
 
   cargarClasesProfesor( uidCentro: string, uidProfesor: string, filtro?: string ){
@@ -84,6 +97,10 @@ export class CentroeducativoService {
       filtro = '';
     }
     return this.http.get(`${environment.base_url}/alumnos/${uidCentro}/${uidClase}/?nombre=${filtro}`, this.cabeceras);
+  }
+
+  cargarExamenesResueltos( uidAlumno: string, uidCentro?: string){
+    return this.http.get(`${environment.base_url}/examenes/examenesresueltos/${uidAlumno}/?idCentro=${uidCentro}`, this.cabeceras);
   }
 
   actualizarCentro( uid: string, data ){

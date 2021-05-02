@@ -109,7 +109,9 @@ export class ClasesCentroEducativoPage implements OnInit {
         this.listaDesplegable = res['arrayClases'];
         this.listaClases = res['arrayClases'];
       }, (err) =>{
-
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
       });
   }
 
@@ -119,7 +121,9 @@ export class ClasesCentroEducativoPage implements OnInit {
       .subscribe(res =>{
         this.listaClases = res['arrayClases'];
       }, (err) =>{
-
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
       });
   }
 

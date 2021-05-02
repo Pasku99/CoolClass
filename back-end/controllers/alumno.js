@@ -23,14 +23,15 @@ const obtenerAlumnos = async(req, res) => {
     }
     // Obtenemos el ID del profesor por si quiere buscar solo un profesor
     const id = req.query.id || '';
+    const idCentro = req.query.idCentro || '';
 
     try {
         // Se comprueba que sea rol admin para poder listar
         const token = req.header('x-token');
-        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === id))) {
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === id) || (infoToken(token).uid === idCentro))) {
             return res.status(400).json({
                 ok: false,
-                msg: 'No tiene permisos para listar profesores',
+                msg: 'No tiene permisos para listar alumnos',
             });
         }
 
