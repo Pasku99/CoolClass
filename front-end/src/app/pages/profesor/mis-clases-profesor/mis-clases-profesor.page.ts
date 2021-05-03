@@ -3,6 +3,7 @@ import { Asignatura } from 'src/app/models/asignatura.model';
 import { MisClases } from 'src/app/models/misclases.model';
 import { ProfesorService } from '../../../services/profesor.service';
 import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mis-clases-profesor',
@@ -21,7 +22,8 @@ export class MisClasesProfesorPage implements OnInit {
   public listaAsignaturasEnUsoProf: Asignatura[] = [];
   public uidClases: Array<string> = new Array<string>();
 
-  constructor(private profesorService: ProfesorService) {
+  constructor(private profesorService: ProfesorService,
+              private route: ActivatedRoute) {
     this.items = [
       { expanded: false },
       { expanded: false },

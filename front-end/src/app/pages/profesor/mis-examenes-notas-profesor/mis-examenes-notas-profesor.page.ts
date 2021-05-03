@@ -3,6 +3,8 @@ import { ProfesorService } from '../../../services/profesor.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ExamenResuelto } from '../../../models/examenresuelto.model';
+import { Clase } from '../../../models/clase.model';
+import { Examen } from '../../../models/examen.model';
 
 @Component({
   selector: 'app-mis-examenes-notas-profesor',
@@ -16,7 +18,9 @@ export class MisExamenesNotasProfesorPage implements OnInit {
   public uidExamen: string = '';
   public nombreExamen: string = '';
   public nombreClase: string = '';
+  public examen: Examen = new Examen('');
   public examenesAlumno: ExamenResuelto[] = [];
+  public clase: Clase = new Clase('');
 
   constructor(private profesorService: ProfesorService,
               private route: ActivatedRoute) {
@@ -55,14 +59,39 @@ export class MisExamenesNotasProfesorPage implements OnInit {
     this.uidClase = this.route.snapshot.params['idClase'];
     this.uidExamen = this.route.snapshot.params['idExamen'];
     this.cargarExamenesResueltos();
+    this.cargarClaseProfesor();
+    this.cargarExamen();
   }
 
   cargarExamenesResueltos(){
     this.profesorService.cargarNotasExamen(this.uidExamen, this.profesorService.uid)
       .subscribe(res => {
         this.examenesAlumno = res['examenesResueltos'];
-        this.nombreExamen = this.examenesAlumno[0].nombreExamen;
-        this.nombreClase = this.examenesAlumno[0].nombreClase;
+        // this.nombreExamen = this.examenesAlumno[0].nombreExamen;
+      }, (err => {
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
+      }))
+  }
+
+  cargarClaseProfesor(){
+    this.profesorService.cargarClaseProfesor(this.profesorService.uid, this.uidClase)
+      .subscribe(res => {
+        this.clase = res['clase'];
+        // this.nombreClase = this.clase.nombre;
+      }, (err => {
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
+      }));
+  }
+
+  cargarExamen(){
+    this.profesorService.cargarExamen(this.uidExamen, this.profesorService.uid)
+      .subscribe(res => {
+        this.examen = res['examenes'];
+        this.nombreExamen = this.examen.nombreExamen;
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});

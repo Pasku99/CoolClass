@@ -29,11 +29,12 @@ const obtenerExamenes = async(req, res) => {
     }
     // Obtenemos el ID del profesor por si quiere buscar solo un profesor
     const id = req.query.id || '';
+    const idProfesor = req.query.idProfesor || '';
 
     try {
         // Se comprueba que sea rol admin para poder listar
         const token = req.header('x-token');
-        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === id))) {
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === id) || (infoToken(token).uid === idProfesor))) {
             return res.status(400).json({
                 ok: false,
                 msg: 'No tiene permisos para listar exámenes',
@@ -103,6 +104,31 @@ const crearExamen = async(req, res = response) => {
             return res.status(400).json({
                 ok: false,
                 msg: 'Error al encontrar clase correspondiente'
+            });
+        }
+
+        let fechaActualC = new Date();
+        let fechaIngresadaC = new Date(fechaComienzo);
+        if (fechaIngresadaC < fechaActualC) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'La fecha de comienzo no puede ser menor a la fecha actual'
+            });
+        }
+
+        let fechaActualF = new Date();
+        let fechaIngresadaF = new Date(fechaFinal);
+        if (fechaIngresadaF < fechaActualF) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'La fecha de final no puede ser menor a la fecha actual'
+            });
+        }
+
+        if (nombreExamen == '') {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Ha de ponerle un título al examen'
             });
         }
 

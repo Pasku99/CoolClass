@@ -734,4 +734,38 @@ const obtenerAlumnos = async(req, res = response) => {
     }
 }
 
-module.exports = { crearProfesor, obtenerProfesores, obtenerClasesCentro, escogerAsignaturasProfesor, obtenerAsignaturas, escogerClasesProfesor, eliminarClaseAsignaturaProfesor, obtenerClasesProfesor, actualizarProfesor, obtenerAlumnos }
+const obtenerClase = async(req, res = response) => {
+    const uidProfesor = req.params.idProfesor;
+    const uidClase = req.params.idClase;
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para obtener los alumnos',
+            });
+        }
+
+        const clase = await Clase.findById(uidClase);
+        if (!clase) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar la clase'
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'getClase',
+            clase
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error obteniendo clases'
+        });
+    }
+}
+
+module.exports = { crearProfesor, obtenerProfesores, obtenerClasesCentro, escogerAsignaturasProfesor, obtenerAsignaturas, escogerClasesProfesor, eliminarClaseAsignaturaProfesor, obtenerClasesProfesor, actualizarProfesor, obtenerAlumnos, obtenerClase }
