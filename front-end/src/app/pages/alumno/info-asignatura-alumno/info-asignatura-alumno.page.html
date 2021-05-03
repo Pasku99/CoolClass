@@ -17,7 +17,7 @@
                 </ion-col>
             </ion-row>
             <ion-row>
-                <ion-col size="12" align-self-center routerLink="/tabs-alumno/asignaturas/info-asignatura/examenes">
+                <ion-col size="12" align-self-center *ngIf="this.filtroAsignatura != ''" [routerLink]="['/tabs-alumno/asignaturas/info-asignatura', this.filtroAsignatura, 'examenes']">
                     <h2 style="text-align: center; color: #004dff; font-weight: bold;">Próximos exámenes</h2>
                 </ion-col>
             </ion-row>

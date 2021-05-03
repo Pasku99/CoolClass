@@ -19,7 +19,6 @@ export class MisAsignaturasAlumnoPage implements OnInit {
   ngOnInit() { }
 
   ionViewWillEnter(){
-    console.log(this.authService.alumno)
     this.cargarAsignaturas();
   }
 

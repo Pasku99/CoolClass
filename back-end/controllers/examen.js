@@ -505,4 +505,65 @@ const obtenerNotasExamen = async(req, res = response) => {
     }
 }
 
-module.exports = { obtenerExamenes, crearExamen, obtenerExamenResueltos, crearExamenResuelto, obtenerExamenesAlumnosCentro, obtenerExamenesClaseProfesor, obtenerNotasExamen }
+const obtenerProximosExamenesAlumno = async(req, res = response) => {
+    const uidAlumno = req.params.idAlumno;
+    const uidProfesor = req.params.idProfesor;
+    const uidClase = req.params.idClase;
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidAlumno))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para listar los exámenes próximos',
+            });
+        }
+
+        const profesor = await Profesor.findById(uidProfesor);
+        if (!profesor) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar profesor correspondiente'
+            });
+        }
+
+        const clase = await Clase.findById(uidClase);
+        if (!clase) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar clase correspondiente'
+            });
+        }
+
+        const alumno = await Alumno.findById(uidAlumno);
+        if (!alumno) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar clase correspondiente'
+            });
+        }
+
+        let fechaInicio = new Date();
+        const proximosexamenesAlumno = await Examen.find({ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaComienzo: { $gte: fechaInicio } }).sort({ fecha: 'asc' });
+        if (!proximosexamenesAlumno) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar proximos examenes del alumno'
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'getExamenesProfesor',
+            proximosExamenes: proximosexamenesAlumno,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error obteniendo proximos examenes del alumno'
+        });
+    }
+}
+
+module.exports = { obtenerExamenes, crearExamen, obtenerExamenResueltos, crearExamenResuelto, obtenerExamenesAlumnosCentro, obtenerExamenesClaseProfesor, obtenerNotasExamen, obtenerProximosExamenesAlumno }
