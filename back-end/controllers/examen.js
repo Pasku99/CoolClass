@@ -107,6 +107,13 @@ const crearExamen = async(req, res = response) => {
             });
         }
 
+        if (preguntas.length < 4) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'El examen ha de tener mínimo 4 preguntas'
+            });
+        }
+
         let fechaActualC = new Date();
         let fechaIngresadaC = new Date(fechaComienzo);
         if (fechaIngresadaC < fechaActualC) {

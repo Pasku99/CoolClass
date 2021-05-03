@@ -23,7 +23,7 @@ router.post('/', [
     check('uidClase', 'El argumento uidClase es obligatorio').not().isEmpty().trim(),
     check('asignatura', 'El argumento asignatura es obligatorio').not().isEmpty(),
     // check('nombreExamen', 'El argumento nombreExamen es obligatorio').not().isEmpty(),
-    check('preguntas', 'El argumento preguntas es obligatorio').not().isEmpty(),
+    // check('preguntas', 'El argumento preguntas es obligatorio').not().isEmpty(),
     check('fechaComienzo', 'El argumento fechaComienzo es obligatorio').not().isEmpty(),
     check('fechaFinal', 'El argumento fechaFinal es obligatorio').not().isEmpty(),
     validarCampos,

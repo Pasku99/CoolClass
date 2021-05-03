@@ -74,11 +74,12 @@ export class CrearExamenProfesorPage implements OnInit {
         return { pregunta: pregunta, respuesta1: respuesta1, respuesta2: respuesta2, respuesta3: respuesta3, respuesta4: respuesta4 }
       }
     }).then((result) => {
-      console.log(this.fechaComienzo)
-      this.arrayPreguntas.push(result.value.pregunta);
-      this.respuestas = [];
-      this.respuestas.push(result.value.respuesta1, result.value.respuesta2, result.value.respuesta3, result.value.respuesta4);
-      this.arrayRespuestas.push(this.respuestas);
+      if(result.value){
+        this.arrayPreguntas.push(result.value.pregunta);
+        this.respuestas = [];
+        this.respuestas.push(result.value.respuesta1, result.value.respuesta2, result.value.respuesta3, result.value.respuesta4);
+        this.arrayRespuestas.push(this.respuestas);
+      }
     })
   }
 
@@ -129,10 +130,12 @@ export class CrearExamenProfesorPage implements OnInit {
         return { pregunta: pregunta, respuesta1: respuesta1, respuesta2: respuesta2, respuesta3: respuesta3, respuesta4: respuesta4 }
       }
     }).then((result) => {
-      this.arrayPreguntas[i] = result.value.pregunta;
-      this.respuestas = [];
-      this.respuestas.push(result.value.respuesta1, result.value.respuesta2, result.value.respuesta3, result.value.respuesta4);
-      this.arrayRespuestas[i] = this.respuestas;
+      if(result.value){
+        this.arrayPreguntas[i] = result.value.pregunta;
+        this.respuestas = [];
+        this.respuestas.push(result.value.respuesta1, result.value.respuesta2, result.value.respuesta3, result.value.respuesta4);
+        this.arrayRespuestas[i] = this.respuestas;
+      }
     })
   }
 
