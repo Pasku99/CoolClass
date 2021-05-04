@@ -13,7 +13,7 @@
             </ion-row>
             <ion-row>
                 <ion-col size="12" align-self-center class="ion-no-padding">
-                    <h2 style="text-align: center; margin-top: 4rem;">Profesor: Pascual Sánchez</h2>
+                    <h2 style="text-align: center; margin-top: 4rem;" *ngIf="this.nombreProfesor != ''">Profesor: {{this.nombreProfesor}}</h2>
                 </ion-col>
             </ion-row>
             <ion-row class="ion-no-padding">
@@ -28,7 +28,7 @@
             </ion-row>
             <ion-row>
                 <ion-col size="12" align-self-center class="ion-no-padding" style="margin-top: -6rem;">
-                    <ion-card (click)="expandItem(item)" *ngFor="let item of items">
+                    <ion-card (click)="expandItem(examen)" *ngFor="let examen of this.examenesResueltos">
                         <ion-row>
                             <ion-col size="3">
                                 <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;"></ion-icon>
@@ -41,12 +41,12 @@
 
                             </ion-col>
                             <ion-col size="4.5">
-                                <p style="color: black; font-size: 16px;">Tema 4 - Polinomios</p>
+                                <p style="color: black; font-size: 16px;">{{examen.nombreExamen}}</p>
                             </ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col size="12">
-                                <app-accordion-list expandHeight="150px" [expanded]="item.expanded">
+                                <app-accordion-list expandHeight="150px" [expanded]="examen.expanded">
                                     <ion-row>
                                         <ion-col size="3">
 
@@ -55,7 +55,7 @@
                                             <p style="color: black; font-size: 16px; font-weight: bold;">Puntuación</p>
                                         </ion-col>
                                         <ion-col size="4.5">
-                                            <p style="color: black; font-size: 16px;">8.8/10</p>
+                                            <p style="color: black; font-size: 16px;">{{examen.nota}}/10</p>
                                         </ion-col>
                                     </ion-row>
                                     <ion-row>

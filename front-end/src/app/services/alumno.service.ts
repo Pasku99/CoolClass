@@ -81,8 +81,20 @@ export class AlumnoService {
     return this.http.get(`${environment.base_url}/alumnos/${uidAlumno}/profesor/?id=${uidProfesor}`, this.cabeceras);
   }
 
-  loginProfesor( formData: loginForm) {
-    return this.http.post(`${environment.base_url}/login/profesor`, formData)
+  cargarProximosExamenesAlumno(uidAlumno: string, uidProfesor: string, uidClase: string){
+    return this.http.get(`${environment.base_url}/examenes/examenesalumno/${uidAlumno}/${uidProfesor}/${uidClase}`, this.cabeceras);
+  }
+
+  cargarNotasAsignaturaAlumno(uidProfesor:string, uidAlumno: string){
+    return this.http.get(`${environment.base_url}/examenes/notas/${uidProfesor}/${uidAlumno}`, this.cabeceras);
+  }
+
+  cargarExamenAlumno(uidExamen: string, uidAlumno: string, uidCentro: string){
+    return this.http.get(`${environment.base_url}/examenes/examen/${uidExamen}/?idAlumno=${uidAlumno}&idCentro=${uidCentro}`, this.cabeceras);
+  }
+
+  loginAlumno( formData: loginForm) {
+    return this.http.post(`${environment.base_url}/login/alumno`, formData)
     .pipe(
       tap(res => {
         this.storage.set(TOKEN_KEY, res['token']);
