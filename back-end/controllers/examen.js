@@ -14,6 +14,7 @@ const Clase = require('../models/clase');
 var ObjectId = require('mongodb').ObjectID;
 const Alumno = require('../models/alumno');
 const { pasarFechaDDMMYYYY } = require('../helpers/pasarFechaDDMMYYYY');
+const { arrayAleatorio } = require('../helpers/arrayAleatorio');
 
 const sleep = (ms) => {
     return new Promise((resolve) => {
@@ -618,16 +619,13 @@ const obtenerExamenesAsignaturaAlumno = async(req, res = response) => {
 }
 
 const obtenerExamenAlumno = async(req, res) => {
-    // Para búsqueda por texto
-    const texto = req.query.texto;
-    let textoBusqueda = '';
-    if (texto) {
-        textoBusqueda = new RegExp(texto, 'i');
-    }
-    // Obtenemos el ID del profesor por si quiere buscar solo un profesor
+
     const uidExamen = req.params.idExamen;
     const uidAlumno = req.query.idAlumno || '';
     const uidCentro = req.query.idCentro || '';
+    let respuestas = [];
+    let respuestasAleatorias = [];
+    let preguntas = [];
 
     try {
         // Se comprueba que sea rol admin para poder listar
@@ -647,17 +645,27 @@ const obtenerExamenAlumno = async(req, res) => {
             });
         }
 
-        // for (let i = 0; i < examen.respuestas.length; i++) {
-        //     for (let j = 0; j < examen.respuestas[i].length; i++) {
+        let nombreExamen = examen.nombreExamen;
 
-        //     }
-        // }
-        // await examen.save();
+        for (let i = 0; i < examen.preguntas.length; i++) {
+            preguntas.push(examen.preguntas[i]);
+        }
+
+        for (let i = 0; i < examen.respuestas.length; i++) {
+            for (let j = 0; j < examen.respuestas[i].length; j++) {
+                respuestas.push(examen.respuestas[i][j]);
+            }
+            arrayAleatorio(respuestas);
+            respuestasAleatorias.push(respuestas);
+            respuestas = [];
+        }
 
         res.json({
             ok: true,
             msg: 'getExamen',
-            examen,
+            nombreExamen,
+            preguntas,
+            respuestasAleatorias,
         });
 
     } catch (error) {

@@ -14,29 +14,29 @@
     <ion-grid>
         <ion-row class="fila0">
             <ion-col size="12">
-                <h3 style="text-align: center;">PREGUNTA 1</h3>
+                <h3 style="text-align: center;">PREGUNTA {{this.contador+1}}</h3>
             </ion-col>
         </ion-row>
         <ion-row class="fila1">
             <ion-col size="12">
-                <p style="color: black; font-size: 1.1rem; text-align: center;">Resuelve la siguiente ecuación: 3x + 4 = 0</p>
+                <p style="color: black; font-size: 1.1rem; text-align: center;">{{this.pregunta}}</p>
             </ion-col>
         </ion-row>
         <ion-row class="fila2">
             <ion-col size="6">
-                <ion-card style="background-color: #00ff7f;" (click)="mensajeConfirmacion();">
+                <ion-card style="background-color: #00ff7f;" (click)="respuesta(this.respuesta1)">
                     <ion-card-header style="text-align: center;">
                         <ion-card-title style="font-size: 1.1rem;">
-                            x = 4/3
+                            {{this.respuesta1}}
                         </ion-card-title>
                     </ion-card-header>
                 </ion-card>
             </ion-col>
             <ion-col size="6">
-                <ion-card style="background-color: #73C2FB;">
+                <ion-card style="background-color: #73C2FB;" (click)="respuesta(this.respuesta2)">
                     <ion-card-header style="text-align: center;">
                         <ion-card-title style="font-size: 1.1rem;">
-                            x = 1/3
+                            {{this.respuesta2}}
                         </ion-card-title>
                     </ion-card-header>
                 </ion-card>
@@ -44,26 +44,26 @@
         </ion-row>
         <ion-row class="fila3">
             <ion-col size="6">
-                <ion-card style="background-color: #73C2FB;">
+                <ion-card style="background-color: #73C2FB;" (click)="respuesta(this.respuesta3)">
                     <ion-card-header style="text-align: center;">
                         <ion-card-title style="font-size: 1.1rem;">
-                            x = -1
+                            {{this.respuesta3}}
                         </ion-card-title>
                     </ion-card-header>
                 </ion-card>
             </ion-col>
             <ion-col size="6">
-                <ion-card style="background-color: #00ff7f;">
+                <ion-card style="background-color: #00ff7f;" (click)="respuesta(this.respuesta4)">
                     <ion-card-header style="text-align: center;">
                         <ion-card-title style="font-size: 1.1rem;">
-                            x = 3
+                            {{this.respuesta4}}
                         </ion-card-title>
                     </ion-card-header>
                 </ion-card>
             </ion-col>
         </ion-row>
         <ion-row class="fila4">
-            <ion-col size="12">
+            <ion-col size="12" (click)="respuesta('No responder')">
                 <ion-button size="large">No responder</ion-button>
             </ion-col>
         </ion-row>
