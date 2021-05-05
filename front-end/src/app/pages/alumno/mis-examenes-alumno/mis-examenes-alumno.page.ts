@@ -80,12 +80,11 @@ export class MisExamenesAlumnoPage implements OnInit {
   }
 
   hacerExamen(fechaInicio, fechaFinal, uidExamen){
+
     let fechaActual = new Date();
-    // let fechaActual = new Date();
+    fechaActual.setHours(fechaActual.getHours() + 2);
     let fechaNow = fechaActual.toISOString();
-    // console.log(fechaNow)
-    // console.log(fechaInicio)
-    // console.log(fechaFinal)
+
     if(Date.parse(fechaNow) >= Date.parse(fechaInicio) && Date.parse(fechaNow) <= Date.parse(fechaFinal)){
       this.router.navigateByUrl('/tabs-alumno/asignaturas/info-asignatura/examenes/hacer-examen/' + uidExamen);
     } else {

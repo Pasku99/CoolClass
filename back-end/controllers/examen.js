@@ -109,10 +109,10 @@ const crearExamen = async(req, res = response) => {
             });
         }
 
-        if (preguntas.length < 4) {
+        if (preguntas.length < 2) {
             return res.status(400).json({
                 ok: false,
-                msg: 'El examen ha de tener mínimo 4 preguntas'
+                msg: 'El examen ha de tener mínimo 2 preguntas'
             });
         }
 
@@ -170,6 +170,8 @@ const crearExamen = async(req, res = response) => {
         const {...object } = req.body;
         const examen = new Examen(object);
         examen.nombreClase = clase.nombre;
+        examen.fechaComienzo.setHours(examen.fechaComienzo.getHours() + 2);
+        examen.fechaFinal.setHours(examen.fechaFinal.getHours() + 2);
 
         const examenGuardado = await examen.save();
         if (!examenGuardado) {
@@ -545,6 +547,7 @@ const obtenerProximosExamenesAlumno = async(req, res = response) => {
         }
 
         let fechaInicio = new Date();
+        fechaInicio.setHours(fechaInicio.getHours() + 2);
         const proximosexamenesAlumno = await Examen.find({ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaFinal: { $gte: fechaInicio } }).sort({ fecha: 'asc' });
         if (!proximosexamenesAlumno) {
             return res.status(400).json({
