@@ -19,7 +19,7 @@
         </ion-row>
         <ion-row class="fila1">
             <ion-col size="12">
-                <p style="color: black; font-size: 1.1rem; text-align: center;">{{this.pregunta}}</p>
+                <p style="color: black; font-size: 1.1rem; text-align: center;">{{this.pregunta}} <b *ngIf="this.respuestaMarcadaNoResponder">(no respondida)</b></p>
             </ion-col>
         </ion-row>
         <ion-row class="fila2">
@@ -27,18 +27,22 @@
                 <ion-card style="background-color: #00ff7f;" (click)="respuesta(this.respuesta1)">
                     <ion-card-header style="text-align: center;">
                         <ion-card-title style="font-size: 1.1rem;">
-                            {{this.respuesta1}}
+                            <ion-icon name="checkmark-sharp" style="width: 2rem; height: 2rem; display: inline-block; vertical-align: middle;"></ion-icon>
+                            <span style="display: inline-block; vertical-align: middle;">{{this.respuesta1}}</span>
                         </ion-card-title>
                     </ion-card-header>
+                    <ion-card-content style="text-align: center; color: black; font-weight: bold;" *ngIf="this.respuestaMarcada1">Respondida</ion-card-content>
                 </ion-card>
             </ion-col>
             <ion-col size="6">
                 <ion-card style="background-color: #73C2FB;" (click)="respuesta(this.respuesta2)">
                     <ion-card-header style="text-align: center;">
                         <ion-card-title style="font-size: 1.1rem;">
-                            {{this.respuesta2}}
+                            <ion-icon name="close-sharp" style="width: 2rem; height: 2rem; color: red; display: inline-block; vertical-align: middle;"></ion-icon>
+                            <span style="display: inline-block; vertical-align: middle;">{{this.respuesta2}}</span>
                         </ion-card-title>
                     </ion-card-header>
+                    <ion-card-content style="text-align: center; color: black; font-weight: bold;" *ngIf="this.respuestaMarcada2">Respondida</ion-card-content>
                 </ion-card>
             </ion-col>
         </ion-row>
@@ -47,18 +51,22 @@
                 <ion-card style="background-color: #73C2FB;" (click)="respuesta(this.respuesta3)">
                     <ion-card-header style="text-align: center;">
                         <ion-card-title style="font-size: 1.1rem;">
-                            {{this.respuesta3}}
+                            <ion-icon name="close-sharp" style="width: 2rem; height: 2rem; color: red; display: inline-block; vertical-align: middle;"></ion-icon>
+                            <span style="display: inline-block; vertical-align: middle;">{{this.respuesta3}}</span>
                         </ion-card-title>
                     </ion-card-header>
+                    <ion-card-content style="text-align: center; color: black; font-weight: bold;" *ngIf="this.respuestaMarcada3">Respondida</ion-card-content>
                 </ion-card>
             </ion-col>
             <ion-col size="6">
                 <ion-card style="background-color: #00ff7f;" (click)="respuesta(this.respuesta4)">
                     <ion-card-header style="text-align: center;">
                         <ion-card-title style="font-size: 1.1rem;">
-                            {{this.respuesta4}}
+                            <ion-icon name="close-sharp" style="width: 2rem; height: 2rem; color: red; display: inline-block; vertical-align: middle;"></ion-icon>
+                            <span style="display: inline-block; vertical-align: middle;">{{this.respuesta4}}</span>
                         </ion-card-title>
                     </ion-card-header>
+                    <ion-card-content style="text-align: center; color: black; font-weight: bold;" *ngIf="this.respuestaMarcada4">Respondida</ion-card-content>
                 </ion-card>
             </ion-col>
         </ion-row>

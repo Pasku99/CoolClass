@@ -27,6 +27,11 @@ export class ComprobarExamenProfesorPage implements OnInit {
   public respuesta2: string = '';
   public respuesta3: string = '';
   public respuesta4: string = '';
+  public respuestaMarcada1: boolean = false;
+  public respuestaMarcada2: boolean = false;
+  public respuestaMarcada3: boolean = false;
+  public respuestaMarcada4: boolean = false;
+  public respuestaMarcadaNoResponder: boolean = false;
   public examenesResueltos: ExamenResuelto[] = [];
 
 
@@ -63,25 +68,19 @@ export class ComprobarExamenProfesorPage implements OnInit {
   cargarExamen(){
     this.profesorService.cargarExamenResueltoAlumno(this.profesorService.uid, this.uidAlumno, this.uidExamenResuelto)
       .subscribe(res => {
-        this.arrayRespuestasAlumno = res['examenesResueltos'][0].respuestas;
-        // this.alumnoService.cargarExamenAlumno(res['examenesResueltos'][0].uidExamen, this.alumnoService.uid, this.alumnoService.uidCentro)
-        //   .subscribe(res => {
-        //     this.nombreExamen = res['nombreExamen'];
-        //     this.arrayPreguntas = res['preguntas'];
-        //     this.arrayRespuestas = res['respuestasAleatorias'];
-        //     this.pregunta=this.arrayPreguntas[0];
-        //     this.respuesta1 = this.arrayRespuestas[0][0];
-        //     this.respuesta2 = this.arrayRespuestas[0][1];
-        //     this.respuesta3 = this.arrayRespuestas[0][2];
-        //     this.respuesta4 = this.arrayRespuestas[0][3];
-        //     for(let i = 0; i < this.arrayPreguntas.length; i++){
-        //       this.respondidas.push('');
-        //     }
-        //   }, (err => {
-        //     const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
-        //     Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
-        //     return;
-        //   }));
+        this.arrayRespuestasAlumno = res['examenesResueltos'].respuestasCorrectas;
+        this.nombreExamen = res['examenesResueltos'].nombreExamen;
+        this.arrayPreguntas = res['examenesResueltos'].preguntas;
+        this.arrayRespuestas = res['examenesResueltos'].respuestas;
+        this.pregunta=this.arrayPreguntas[0];
+        this.respuesta1 = this.arrayRespuestas[0][0];
+        this.respuesta2 = this.arrayRespuestas[0][1];
+        this.respuesta3 = this.arrayRespuestas[0][2];
+        this.respuesta4 = this.arrayRespuestas[0][3];
+        this.comprobarRespuestas(0);
+        for(let i = 0; i < this.arrayPreguntas.length; i++){
+          this.respondidas.push('');
+        }
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
@@ -110,6 +109,7 @@ export class ComprobarExamenProfesorPage implements OnInit {
       this.respuesta2 = this.arrayRespuestas[this.contador][1];
       this.respuesta3 = this.arrayRespuestas[this.contador][2];
       this.respuesta4 = this.arrayRespuestas[this.contador][3];
+      this.comprobarRespuestas(this.contador);
     }else{
       this.pregunta = "EXAMEN ACABADO";
     }
@@ -129,6 +129,40 @@ export class ComprobarExamenProfesorPage implements OnInit {
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
         return;
       }))
+  }
+
+  comprobarRespuestas(i){
+    if(this.respuesta1 === this.arrayRespuestasAlumno[i]){
+      this.respuestaMarcada1 = true;
+      this.respuestaMarcada2 = false;
+      this.respuestaMarcada3 = false;
+      this.respuestaMarcada4 = false;
+      this.respuestaMarcadaNoResponder = false;
+    } else if(this.respuesta2 == this.arrayRespuestasAlumno[i]){
+      this.respuestaMarcada1 = false;
+      this.respuestaMarcada2 = true;
+      this.respuestaMarcada3 = false;
+      this.respuestaMarcada4 = false;
+      this.respuestaMarcadaNoResponder = false;
+    } else if(this.respuesta3 == this.arrayRespuestasAlumno[i]){
+      this.respuestaMarcada1 = false;
+      this.respuestaMarcada2 = false;
+      this.respuestaMarcada3 = true;
+      this.respuestaMarcada4 = false;
+      this.respuestaMarcadaNoResponder = false;
+    } else if(this.respuesta4 == this.arrayRespuestasAlumno[i]){
+      this.respuestaMarcada1 = false;
+      this.respuestaMarcada2 = false;
+      this.respuestaMarcada3 = false;
+      this.respuestaMarcada4 = true;
+      this.respuestaMarcadaNoResponder = false;
+    } else if(this.arrayRespuestasAlumno[i] == 'No responder'){
+      this.respuestaMarcada1 = false;
+      this.respuestaMarcada2 = false;
+      this.respuestaMarcada3 = false;
+      this.respuestaMarcada4 = false;
+      this.respuestaMarcadaNoResponder = true;
+    }
   }
 
 }
