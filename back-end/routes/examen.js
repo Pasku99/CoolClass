@@ -42,7 +42,7 @@ router.post('/examenresuelto', [
     check('uidExamen', 'El argumento uidExamen es obligatorio').not().isEmpty(),
     check('uidProfesor', 'El argumento uidProfesor es obligatorio').not().isEmpty().trim(),
     check('uidClase', 'El argumento uidClase es obligatorio').not().isEmpty().trim(),
-    check('respuestas', 'El argumento respuestas es obligatorio').not().isEmpty(),
+    check('respuestasCorrectas', 'El argumento respuestas es obligatorio').not().isEmpty(),
     validarCampos,
 ], crearExamenResuelto);
 

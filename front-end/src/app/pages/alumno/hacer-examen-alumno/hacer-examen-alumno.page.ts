@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Examen } from '../../../models/examen.model';
 import { AlumnoService } from '../../../services/alumno.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-hacer-examen-alumno',
@@ -24,20 +24,23 @@ export class HacerExamenAlumnoPage implements OnInit {
   public respuesta2: string = '';
   public respuesta3: string = '';
   public respuesta4: string = '';
+  public uidProfesor: string = '';
 
 
   constructor(private alumnoService: AlumnoService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
   }
 
   ionViewWillEnter() {
+    this.uidProfesor = this.route.snapshot.params['idProfesor'];
     this.uidExamen = this.route.snapshot.params['idExamen'];
     this.cargarExamen();
   }
 
-  mensajeConfirmacion(){
+  mensajeConfirmacion(valor){
     Swal.fire({
       title: '¿Estás seguro/a?',
       showCancelButton: true,
@@ -49,7 +52,7 @@ export class HacerExamenAlumnoPage implements OnInit {
       heightAuto: false,
     }).then((result) => {
       if (result.value) {
-
+        this.respuesta(valor);
       }
     });
   }
@@ -97,18 +100,36 @@ export class HacerExamenAlumnoPage implements OnInit {
       this.respuesta3 = this.arrayRespuestas[this.contador][2];
       this.respuesta4 = this.arrayRespuestas[this.contador][3];
     }else{
-      console.log(this.respondidas);
-      this.pregunta = "EXAMEN ACABADO";
-      // document.getElementById("imagen_si").style.display = "none";
-      // document.getElementById("imagen_no").style.display = "none";
-      // document.getElementById("imagen_pregunta").style.display = "none";
-      // document.getElementById("salir_boton").style.display = "none";
-      // const div = document.querySelector("#prueba");
-      // div.innerHTML = " <img src=\"/assets/images/cuestionario-iconos/cheque.png\" class=\"imagen_logo\" style=\"max-width: 8rem; \" alt=\"logo_cuestionario_moony\">";
-      // document.getElementById("div_boton").style.float = "none";
-      // this.hecho = true;
+      const data = {
+        uidAlumno : this.alumnoService.uid,
+        uidExamen: this.uidExamen,
+        uidProfesor: this.uidProfesor,
+        uidClase: this.alumnoService.uidClase,
+        respuestasCorrectas: this.respondidas
+      };
+      this.alumnoService.enviarExamenResuelto(data)
+        .subscribe(res => {
+          Swal.fire({
+            title: 'Examen finalizado',
+            text: 'Podrá consultar su nota cuando acabe',
+            showCancelButton: false,
+            confirmButtonText: 'Vale',
+            confirmButtonColor: '#004dff',
+            allowOutsideClick: false,
+            heightAuto: false,
+          }).then((result) => {
+            if (result.value) {
+              this.router.navigateByUrl('/tabs-alumno/asignaturas/info-asignatura/' + res['examenResuelto'].asignatura);
+            }
+          });
+        }, (err => {
+          const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+          Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+          return;
+        }))
     }
   }
+
   respuesta(valor) :void{
     this.respondidas[this.contador] = valor;
     this.next();

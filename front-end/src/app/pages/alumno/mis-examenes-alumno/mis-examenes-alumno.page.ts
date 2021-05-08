@@ -86,7 +86,7 @@ export class MisExamenesAlumnoPage implements OnInit {
     let fechaNow = fechaActual.toISOString();
 
     if(Date.parse(fechaNow) >= Date.parse(fechaInicio) && Date.parse(fechaNow) <= Date.parse(fechaFinal)){
-      this.router.navigateByUrl('/tabs-alumno/asignaturas/info-asignatura/examenes/hacer-examen/' + uidExamen);
+      this.router.navigateByUrl('/tabs-alumno/asignaturas/info-asignatura/examenes/hacer-examen/'+ this.uidProfesor +  '/' + uidExamen);
     } else {
       Swal.fire({
         icon: 'error',

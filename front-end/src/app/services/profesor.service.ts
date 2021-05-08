@@ -128,6 +128,10 @@ export class ProfesorService {
     return this.http.get(`${environment.base_url}/examenes/notasalumno/${uidProfesor}/${uidAlumno}`, this.cabeceras);
   }
 
+  cargarExamenResueltoAlumno(uidProfesor: string, uidAlumno:string, uidExamenResuelto: string){
+    return this.http.get(`${environment.base_url}/examenes/notasalumno/${uidProfesor}/${uidAlumno}/?idExamen=${uidExamenResuelto}`, this.cabeceras);
+  }
+
   loginProfesor( formData: loginForm) {
     return this.http.post(`${environment.base_url}/login/profesor`, formData)
     .pipe(

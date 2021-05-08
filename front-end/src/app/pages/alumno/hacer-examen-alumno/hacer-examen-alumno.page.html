@@ -24,7 +24,7 @@
         </ion-row>
         <ion-row class="fila2">
             <ion-col size="6">
-                <ion-card style="background-color: #00ff7f;" (click)="respuesta(this.respuesta1)">
+                <ion-card style="background-color: #00ff7f;" (click)="mensajeConfirmacion(this.respuesta1)">
                     <ion-card-header style="text-align: center;">
                         <ion-card-title style="font-size: 1.1rem;">
                             {{this.respuesta1}}
@@ -33,7 +33,7 @@
                 </ion-card>
             </ion-col>
             <ion-col size="6">
-                <ion-card style="background-color: #73C2FB;" (click)="respuesta(this.respuesta2)">
+                <ion-card style="background-color: #73C2FB;" (click)="mensajeConfirmacion(this.respuesta2)">
                     <ion-card-header style="text-align: center;">
                         <ion-card-title style="font-size: 1.1rem;">
                             {{this.respuesta2}}
@@ -44,7 +44,7 @@
         </ion-row>
         <ion-row class="fila3">
             <ion-col size="6">
-                <ion-card style="background-color: #73C2FB;" (click)="respuesta(this.respuesta3)">
+                <ion-card style="background-color: #73C2FB;" (click)="mensajeConfirmacion(this.respuesta3)">
                     <ion-card-header style="text-align: center;">
                         <ion-card-title style="font-size: 1.1rem;">
                             {{this.respuesta3}}
@@ -53,7 +53,7 @@
                 </ion-card>
             </ion-col>
             <ion-col size="6">
-                <ion-card style="background-color: #00ff7f;" (click)="respuesta(this.respuesta4)">
+                <ion-card style="background-color: #00ff7f;" (click)="mensajeConfirmacion(this.respuesta4)">
                     <ion-card-header style="text-align: center;">
                         <ion-card-title style="font-size: 1.1rem;">
                             {{this.respuesta4}}
@@ -63,7 +63,7 @@
             </ion-col>
         </ion-row>
         <ion-row class="fila4">
-            <ion-col size="12" (click)="respuesta('No responder')">
+            <ion-col size="12" (click)="mensajeConfirmacion('No responder')">
                 <ion-button size="large">No responder</ion-button>
             </ion-col>
         </ion-row>

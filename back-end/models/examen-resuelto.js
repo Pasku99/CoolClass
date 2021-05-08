@@ -31,7 +31,15 @@ const ExamenResueltoSchema = Schema({
         type: String,
         require: true,
     },
+    preguntas: {
+        type: [String],
+    },
     respuestas: {
+        type: [
+            [String]
+        ],
+    },
+    respuestasCorrectas: {
         type: [String],
     },
     nota: {

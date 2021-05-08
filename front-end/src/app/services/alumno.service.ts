@@ -93,6 +93,10 @@ export class AlumnoService {
     return this.http.get(`${environment.base_url}/examenes/examen/${uidExamen}/?idAlumno=${uidAlumno}&idCentro=${uidCentro}`, this.cabeceras);
   }
 
+  enviarExamenResuelto(data){
+    return this.http.post(`${environment.base_url}/examenes/examenresuelto`, data, this.cabeceras);
+  }
+
   loginAlumno( formData: loginForm) {
     return this.http.post(`${environment.base_url}/login/alumno`, formData)
     .pipe(

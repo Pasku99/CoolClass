@@ -64,7 +64,7 @@
                                     <b style="color: black; font-size: 16px; ">Ver examen</b>
                                 </ion-col>
                                 <ion-col size="4.5">
-                                    <ion-icon name="bookmark" style="width: 2rem; height: 2rem; color: #004DFF; margin-left: -0.4rem; margin-top: -0.2rem;" routerLink="/tabs-profesor/clases/alumnos/notas/comprobar-examen"></ion-icon>
+                                    <ion-icon name="bookmark" style="width: 2rem; height: 2rem; color: #004DFF; margin-left: -0.4rem; margin-top: -0.2rem;" [routerLink]="['/tabs-profesor/clases/alumnos/notas', examen.uidAlumno, examen.uid, 'comprobar-examen']"></ion-icon>
                                 </ion-col>
                             </ion-row>
                         </app-accordion-list>

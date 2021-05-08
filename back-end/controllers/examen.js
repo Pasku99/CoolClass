@@ -255,10 +255,10 @@ const obtenerExamenResueltos = async(req, res) => {
 }
 
 const crearExamenResuelto = async(req, res = response) => {
-    const { uidAlumno, uidExamen, uidProfesor, uidClase, respuestas } = req.body;
+    const { uidAlumno, uidExamen, uidProfesor, uidClase, respuestasCorrectas } = req.body;
     try {
         const token = req.header('x-token');
-        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidAlumno))) {
             return res.status(400).json({
                 ok: false,
                 msg: 'No tiene permisos para crear examen resuelto',
@@ -323,7 +323,7 @@ const crearExamenResuelto = async(req, res = response) => {
             });
         }
 
-        if (respuestas.length != examen.preguntas.length) {
+        if (respuestasCorrectas.length != examen.preguntas.length) {
             return res.status(400).json({
                 ok: false,
                 msg: 'Has de incluir respuestas para ' + examen.preguntas.length + ' preguntas. Ni más ni menos.'
@@ -332,14 +332,16 @@ const crearExamenResuelto = async(req, res = response) => {
 
         let nota = 0;
         for (let i = 0; i < examen.respuestas.length; i++) {
-            if (respuestas[i] == examen.respuestas[i][0]) {
+            if (respuestasCorrectas[i] == examen.respuestas[i][0]) {
                 nota++;
-            } else if (respuestas[i] == 'No responder') {
+            } else if (respuestasCorrectas[i] == 'No responder') {
 
             } else {
                 nota -= 0.33;
             }
         }
+
+        nota = (nota * 10) / examen.preguntas.length;
 
         const {...object } = req.body;
         const examenResuelto = new ExamenResuelto(object);
@@ -348,6 +350,8 @@ const crearExamenResuelto = async(req, res = response) => {
         examenResuelto.asignatura = examen.asignatura;
         examenResuelto.nombreExamen = examen.nombreExamen;
         examenResuelto.nombreAlumno = alumno.nombre;
+        examenResuelto.preguntas = examen.preguntas;
+        examenResuelto.respuestas = examen.respuestas;
 
         const examenResueltoGuardado = await examenResuelto.save();
         if (!examenResueltoGuardado) {
@@ -683,6 +687,7 @@ const obtenerExamenAlumno = async(req, res) => {
 const obtenerExamenesResueltosAlumno = async(req, res) => {
     const uidProfesor = req.params.idProfesor;
     const uidAlumno = req.params.idAlumno;
+    const uidExamen = req.query.idExamen;
 
     try {
         // Se comprueba que sea rol admin para poder listar
@@ -694,18 +699,24 @@ const obtenerExamenesResueltosAlumno = async(req, res) => {
             });
         }
 
-        const examenesResueltos = await ExamenResuelto.find({ uidProfesor: uidProfesor, uidAlumno: uidAlumno });
-        if (!examenesResueltos) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'Error al buscar exámenes resueltos',
-            });
+        let examenesResueltos, total;
+        if (uidExamen) {
+            [examenesResueltos] = await Promise.all([
+                ExamenResuelto.findOne({ _id: uidExamen, uidAlumno: uidAlumno }),
+            ]);
+            total = 1;
+        } else {
+            [examenesResueltos, total] = await Promise.all([
+                ExamenResuelto.find({ uidProfesor: uidProfesor, uidAlumno: uidAlumno }),
+                ExamenResuelto.countDocuments({ uidProfesor: uidProfesor, uidAlumno: uidAlumno })
+            ]);
         }
 
         res.json({
             ok: true,
             msg: 'getExamenesResueltosAlumno',
             examenesResueltos,
+            total
         });
 
     } catch (error) {
