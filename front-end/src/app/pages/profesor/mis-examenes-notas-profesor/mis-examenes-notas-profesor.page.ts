@@ -67,7 +67,6 @@ export class MisExamenesNotasProfesorPage implements OnInit {
     this.profesorService.cargarNotasExamen(this.uidExamen, this.profesorService.uid)
       .subscribe(res => {
         this.examenesAlumno = res['examenesResueltos'];
-        // this.nombreExamen = this.examenesAlumno[0].nombreExamen;
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
@@ -79,7 +78,6 @@ export class MisExamenesNotasProfesorPage implements OnInit {
     this.profesorService.cargarClaseProfesor(this.profesorService.uid, this.uidClase)
       .subscribe(res => {
         this.clase = res['clase'];
-        // this.nombreClase = this.clase.nombre;
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});

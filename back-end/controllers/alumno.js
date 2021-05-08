@@ -421,6 +421,7 @@ const obtenerAlumnosClase = async(req, res = response) => {
     const uidCentro = req.params.idCentro;
     const uidClase = req.params.idClase;
     const filtro = req.query.nombre;
+    const uidAlumno = req.query.idAlumno;
     const uidProfesor = req.query.idProfesor;
     try {
         const token = req.header('x-token');
@@ -434,6 +435,11 @@ const obtenerAlumnosClase = async(req, res = response) => {
         if (filtro) {
             [alumnos] = await Promise.all([
                 Alumno.find({ uidClase: uidClase, nombre: filtro }),
+            ]);
+            total = 1;
+        } else if (uidAlumno) {
+            [alumnos] = await Promise.all([
+                Alumno.findById(uidAlumno),
             ]);
             total = 1;
         }

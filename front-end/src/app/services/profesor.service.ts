@@ -87,6 +87,19 @@ export class ProfesorService {
     return this.http.get(`${environment.base_url}/alumnos/${uidCentro}/${uidClase}/?nombre=${filtro}&idProfesor=${uidProfesor}`, this.cabeceras);
   }
 
+  cargarAlumno( uidCentro: string, uidClase: string, uidProfesor?: string, filtro?: string, uidAlumno?: string ) {
+    if(!filtro){
+      filtro = '';
+    }
+    if(!uidProfesor){
+      uidProfesor = '';
+    }
+    if(!uidAlumno){
+      uidAlumno = '';
+    }
+    return this.http.get(`${environment.base_url}/alumnos/${uidCentro}/${uidClase}/?idAlumno=${uidAlumno}&idProfesor=${uidProfesor}`, this.cabeceras);
+  }
+
   cargarClasesUid ( uid: string, uidProfesor?: string, filtro?: string): Observable<object> {
     return this.http.get(`${environment.base_url}/centroeducativo/${uid}/clases/?idClase=${filtro}&idProfesor=${uidProfesor}`, this.cabeceras);
   }
@@ -109,6 +122,10 @@ export class ProfesorService {
 
   crearExamen(data) {
     return this.http.post(`${environment.base_url}/examenes`, data, this.cabeceras);
+  }
+
+  cargarExamenesResueltosAlumno(uidProfesor: string, uidAlumno:string){
+    return this.http.get(`${environment.base_url}/examenes/notasalumno/${uidProfesor}/${uidAlumno}`, this.cabeceras);
   }
 
   loginProfesor( formData: loginForm) {

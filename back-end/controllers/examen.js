@@ -680,4 +680,41 @@ const obtenerExamenAlumno = async(req, res) => {
     }
 }
 
-module.exports = { obtenerExamenes, crearExamen, obtenerExamenResueltos, crearExamenResuelto, obtenerExamenesAlumnosCentro, obtenerExamenesClaseProfesor, obtenerNotasExamen, obtenerProximosExamenesAlumno, obtenerExamenesAsignaturaAlumno, obtenerExamenAlumno }
+const obtenerExamenesResueltosAlumno = async(req, res) => {
+    const uidProfesor = req.params.idProfesor;
+    const uidAlumno = req.params.idAlumno;
+
+    try {
+        // Se comprueba que sea rol admin para poder listar
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para listar exámenes',
+            });
+        }
+
+        const examenesResueltos = await ExamenResuelto.find({ uidProfesor: uidProfesor, uidAlumno: uidAlumno });
+        if (!examenesResueltos) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar exámenes resueltos',
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'getExamenesResueltosAlumno',
+            examenesResueltos,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error obteniendo examenes resueltos'
+        });
+    }
+}
+
+module.exports = { obtenerExamenes, crearExamen, obtenerExamenResueltos, crearExamenResuelto, obtenerExamenesAlumnosCentro, obtenerExamenesClaseProfesor, obtenerNotasExamen, obtenerProximosExamenesAlumno, obtenerExamenesAsignaturaAlumno, obtenerExamenAlumno, obtenerExamenesResueltosAlumno }

@@ -43,13 +43,7 @@ export class EscogerClasesConfigProfesorPage implements OnInit {
   cargarClasesCentro() {
     this.profesorService.cargarClasesProfesor(this.profesorService.uidCentro, this.profesorService.uid)
       .subscribe( res => {
-        // this.listaClasesNombres = [];
-        // this.listaClases = res['clasesNoProfesor'];
-        // for(let i = 0; i <  this.listaClases.length; i = i + 2){
-        //   this.listaClasesNombres.push(this.listaClases[i]);
-        // }
         this.listaClases = res['infoClasesNoProfesor'];
-        console.log(this.listaClases);
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
@@ -60,15 +54,6 @@ export class EscogerClasesConfigProfesorPage implements OnInit {
   cargarClasesProfesor(){
     this.profesorService.cargarClasesProfesor(this.profesorService.uidCentro, this.profesorService.uid)
       .subscribe( res => {
-        // this.listaClasesProfesor = [];
-        // this.listaAsignaturasEnUsoProf = [];
-        // this.listaAsignaturasEnUso = res['asignaturas'];
-        // for(let i = 0; i <  this.listaAsignaturasEnUso.length; i = i + 2){
-        //   this.listaClasesProfesor.push(this.listaAsignaturasEnUso[i]);
-        // }
-        // for(let i = 1; i <  this.listaAsignaturasEnUso.length; i = i + 2){
-        //   this.listaAsignaturasEnUsoProf.push(this.listaAsignaturasEnUso[i]);
-        // }
         this.listaClasesProfesor = res['infoClases'];
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';

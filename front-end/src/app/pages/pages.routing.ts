@@ -79,7 +79,7 @@ const routes: Routes = [
       { path: 'principal', component: PantallaPrincipalProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases', component: MisClasesProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases/alumnos/:idClase', component: MisAlumnosProfesorPage, canActivate: [ AuthcentroGuard ]},
-      { path: 'clases/alumnos/:idClase/notas', component: NotasAlumnosProfesorPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'clases/alumnos/:idClase/:idAlumno/notas', component: NotasAlumnosProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases/alumnos/notas/comprobar-examen', component: ComprobarExamenProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases/examenes/:idClase', component: MisExamenesProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases/examenes/:idClase/:idExamen/notas', component: MisExamenesNotasProfesorPage, canActivate: [ AuthcentroGuard ]},

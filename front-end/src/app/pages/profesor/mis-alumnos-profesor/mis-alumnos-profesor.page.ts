@@ -18,6 +18,7 @@ export class MisAlumnosProfesorPage implements OnInit {
   public listaDesplegable: Alumno[] = [];
   public filtro: string = '';
   public clase: Clase;
+  public nombreClase: string = '';
 
   constructor(private profesorService: ProfesorService,
               private route: ActivatedRoute) {
@@ -70,8 +71,8 @@ export class MisAlumnosProfesorPage implements OnInit {
       }));
   }
 
-  cargarAlumnosClaseFiltro(uidCentro, uidClase, uidProfesor, nombreProf){
-    this.profesorService.cargarAlumnosClase(uidCentro, uidClase, uidProfesor, nombreProf)
+  cargarAlumnosClaseFiltro(uidCentro, uidClase, uidProfesor, nombreAlumno){
+    this.profesorService.cargarAlumnosClase(uidCentro, uidClase, uidProfesor, nombreAlumno)
       .subscribe( res => {
         this.alumnos = res['alumnos'];
       }, (err => {
@@ -95,6 +96,7 @@ export class MisAlumnosProfesorPage implements OnInit {
     this.profesorService.cargarClasesUid(this.profesorService.uidCentro, this.profesorService.uid, this.uidClase)
       .subscribe(res => {
         this.clase = res['arrayClases'];
+        this.nombreClase = this.clase[0].nombre;
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
