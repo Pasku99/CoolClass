@@ -132,12 +132,18 @@ export class ProfesorService {
     return this.http.get(`${environment.base_url}/examenes/notasalumno/${uidProfesor}/${uidAlumno}/?idExamen=${uidExamenResuelto}`, this.cabeceras);
   }
 
-  cargarUltimosExamenes(uidProfesor: string){
-    return this.http.get(`${environment.base_url}/examenes/ultimosexamenes/${uidProfesor}`, this.cabeceras);
+  cargarUltimosExamenes(uidProfesor: string, uidClase?: string){
+    if(!uidClase){
+      uidClase = '';
+    }
+    return this.http.get(`${environment.base_url}/examenes/ultimosexamenes/${uidProfesor}/?idClase=${uidClase}`, this.cabeceras);
   }
 
-  cargarProximosExamenes(uidProfesor: string){
-    return this.http.get(`${environment.base_url}/examenes/proximosexamenes/${uidProfesor}`, this.cabeceras);
+  cargarProximosExamenes(uidProfesor: string, uidClase?: string){
+    if(!uidClase){
+      uidClase = '';
+    }
+    return this.http.get(`${environment.base_url}/examenes/proximosexamenes/${uidProfesor}/?idClase=${uidClase}`, this.cabeceras);
   }
 
   loginProfesor( formData: loginForm) {

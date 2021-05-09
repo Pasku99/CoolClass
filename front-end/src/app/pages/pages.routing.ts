@@ -46,6 +46,7 @@ import { AuthcentroGuard } from '../guards/authcentro.guard';
 import { NoauthCentroGuard } from '../guards/noauthcentro.guard';
 import { AuthprofesorGuard } from '../guards/authprofesor.guard';
 import { MisExamenesNotasProfesorPage } from './profesor/mis-examenes-notas-profesor/mis-examenes-notas-profesor.page';
+import { ExamenesRealizadosPage } from './profesor/examenes-realizados/examenes-realizados.page';
 
 const routes: Routes = [
   { path: 'registro', component: BlankLayoutComponent,
@@ -81,7 +82,8 @@ const routes: Routes = [
       { path: 'clases/alumnos/:idClase', component: MisAlumnosProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases/alumnos/:idClase/:idAlumno/notas', component: NotasAlumnosProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases/alumnos/notas/:idAlumno/:idExamenResuelto/comprobar-examen', component: ComprobarExamenProfesorPage, canActivate: [ AuthcentroGuard ]},
-      { path: 'clases/examenes/:idClase', component: MisExamenesProfesorPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'clases/proximos-examenes/:idClase', component: MisExamenesProfesorPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'clases/examenes-realizados/:idClase', component: ExamenesRealizadosPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases/examenes/:idClase/:idExamen/notas', component: MisExamenesNotasProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases/crear-examen/:idClase/:asignatura', component: CrearExamenProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'perfil', component: PerfilProfesorPage, canActivate: [ AuthcentroGuard ]},

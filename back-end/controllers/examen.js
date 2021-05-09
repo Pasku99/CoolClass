@@ -730,6 +730,7 @@ const obtenerExamenesResueltosAlumno = async(req, res) => {
 
 const obtenerUltimosExamenesProfesor = async(req, res = response) => {
     const uidProfesor = req.params.idProfesor;
+    const uidClase = req.query.idClase;
     try {
         const token = req.header('x-token');
         if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
@@ -739,20 +740,25 @@ const obtenerUltimosExamenesProfesor = async(req, res = response) => {
             });
         }
 
-        // Buscar examenes cuya fecha final sea menor a la actual
         let fechaActual = new Date();
-        const ultimosExamenes = await Examen.find({ uidProfesor: uidProfesor, fechaFinal: { $lt: fechaActual } }).sort({ fecha: 'asc' }).limit(6);
-        if (!ultimosExamenes) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'Error al buscar últimos exámenes',
-            });
+        let ultimosExamenes, total;
+        if (uidClase) {
+            [ultimosExamenes, total] = await Promise.all([
+                Examen.find({ uidProfesor: uidProfesor, uidClase: uidClase, fechaFinal: { $lt: fechaActual } }).sort({ fechaComienzo: 'asc' }),
+                Examen.countDocuments({ uidProfesor: uidProfesor, uidClase: uidClase, fechaFinal: { $lt: fechaActual } }).sort({ fechaComienzo: 'asc' })
+            ]);
+        } else {
+            [ultimosExamenes, total] = await Promise.all([
+                Examen.find({ uidProfesor: uidProfesor, fechaFinal: { $lt: fechaActual } }).sort({ fecha: 'asc' }).limit(6),
+                Examen.countDocuments({ uidProfesor: uidProfesor, fechaComienzo: { $gte: fechaActual } }).sort({ fechaComienzo: 'asc' }).limit(6)
+            ]);
         }
 
         res.json({
             ok: true,
             msg: 'getUltimosExamenes',
             ultimosExamenes,
+            total
         });
 
     } catch (error) {
@@ -766,6 +772,7 @@ const obtenerUltimosExamenesProfesor = async(req, res = response) => {
 
 const obtenerProximosExamenesProfesor = async(req, res = response) => {
     const uidProfesor = req.params.idProfesor;
+    const uidClase = req.query.idClase;
     try {
         const token = req.header('x-token');
         if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
@@ -775,20 +782,25 @@ const obtenerProximosExamenesProfesor = async(req, res = response) => {
             });
         }
 
-        // Buscar examenes cuya fecha final sea menor a la actual
         let fechaActual = new Date();
-        const proximosExamenes = await Examen.find({ uidProfesor: uidProfesor, fechaComienzo: { $gte: fechaActual } }).sort({ fecha: 'asc' }).limit(6);
-        if (!proximosExamenes) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'Error al buscar próximos exámenes',
-            });
+        let proximosExamenes, total;
+        if (uidClase) {
+            [proximosExamenes, total] = await Promise.all([
+                Examen.find({ uidProfesor: uidProfesor, uidClase: uidClase, fechaComienzo: { $gte: fechaActual } }).sort({ fechaComienzo: 'asc' }),
+                Examen.countDocuments({ uidProfesor: uidProfesor, uidClase: uidClase, fechaComienzo: { $gte: fechaActual } }).sort({ fechaComienzo: 'asc' })
+            ]);
+        } else {
+            [proximosExamenes, total] = await Promise.all([
+                Examen.find({ uidProfesor: uidProfesor, fechaComienzo: { $gte: fechaActual } }).sort({ fechaComienzo: 'asc' }).limit(6),
+                Examen.countDocuments({ uidProfesor: uidProfesor, fechaComienzo: { $gte: fechaActual } }).sort({ fechaComienzo: 'asc' }).limit(6)
+            ]);
         }
 
         res.json({
             ok: true,
             msg: 'getProximosExamenes',
             proximosExamenes,
+            total
         });
 
     } catch (error) {

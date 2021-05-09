@@ -45,6 +45,7 @@ import { PerfilAlumnoPage } from './alumno/perfil-alumno/perfil-alumno.page';
 import { EditarPerfilAlumnoPage } from './alumno/editar-perfil-alumno/editar-perfil-alumno.page';
 import { AjustesAlumnoPage } from './alumno/ajustes-alumno/ajustes-alumno.page';
 import { MisExamenesNotasProfesorPage } from './profesor/mis-examenes-notas-profesor/mis-examenes-notas-profesor.page';
+import { ExamenesRealizadosPage } from './profesor/examenes-realizados/examenes-realizados.page';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { MisExamenesNotasProfesorPage } from './profesor/mis-examenes-notas-prof
     PerfilAlumnoPage,
     EditarPerfilAlumnoPage,
     AjustesAlumnoPage,
-    MisExamenesNotasProfesorPage
+    MisExamenesNotasProfesorPage,
+    ExamenesRealizadosPage
   ],
   exports: [
     RegistroCentroEducativoPage,
@@ -129,7 +131,8 @@ import { MisExamenesNotasProfesorPage } from './profesor/mis-examenes-notas-prof
     PerfilAlumnoPage,
     EditarPerfilAlumnoPage,
     AjustesAlumnoPage,
-    MisExamenesNotasProfesorPage
+    MisExamenesNotasProfesorPage,
+    ExamenesRealizadosPage
   ],
   imports: [
     IonicModule,

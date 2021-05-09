@@ -15,12 +15,12 @@
     <ion-row>
         <ion-col size="12">
             <h3 style="text-align: center;" *ngIf="this.asignatura!=''">Asignatura: {{this.asignatura}}</h3>
-            <h4 style="text-align: center;">Próximos exámenes</h4>
+            <h4 style="text-align: center;">Mis exámenes</h4>
         </ion-col>
     </ion-row>
     <ion-row>
         <ion-col size="12">
-            <ion-card (click)="expandItem(examen)" *ngFor="let examen of this.proximosExamenes">
+            <ion-card (click)="expandItem(examen)" *ngFor="let examen of this.ultimosExamenes">
                 <ion-row>
                     <ion-col size="3">
                         <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;"></ion-icon>

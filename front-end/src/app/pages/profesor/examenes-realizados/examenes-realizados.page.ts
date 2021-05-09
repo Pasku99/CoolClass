@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+import { Examen } from '../../../models/examen.model';
 import { ProfesorService } from '../../../services/profesor.service';
 import { ActivatedRoute } from '@angular/router';
-import Swal from 'sweetalert2';
-import { Examen } from 'src/app/models/examen.model';
 import { Clase } from '../../../models/clase.model';
 
 @Component({
-  selector: 'app-mis-examenes-profesor',
-  templateUrl: './mis-examenes-profesor.page.html',
-  styleUrls: ['./mis-examenes-profesor.page.scss'],
+  selector: 'app-examenes-realizados',
+  templateUrl: './examenes-realizados.page.html',
+  styleUrls: ['./examenes-realizados.page.scss'],
 })
-export class MisExamenesProfesorPage implements OnInit {
+export class ExamenesRealizadosPage implements OnInit {
 
   public items: any = [];
   public uidClase: string = '';
@@ -18,6 +18,7 @@ export class MisExamenesProfesorPage implements OnInit {
   public asignatura: string = '';
   public nombreClase: string = '';
   public proximosExamenes: Examen[] = [];
+  public ultimosExamenes: Examen[] = [];
   public clase: Clase = new Clase('');
 
   constructor(private profesorService: ProfesorService,
@@ -55,26 +56,14 @@ export class MisExamenesProfesorPage implements OnInit {
 
   ionViewWillEnter() {
     this.uidClase = this.route.snapshot.params['idClase'];
-    this.cargarProximosExamenes();
+    this.cargarExamenesRealizados();
     this.cargarClase();
   }
 
-  // cargarExamenesProfesor(){
-  //   this.profesorService.cargarExamenesClaseProfesor(this.profesorService.uid, this.uidClase)
-  //     .subscribe(res => {
-  //       this.examenesClase = res['examenesProfesor'];
-        // this.asignatura = this.examenesClase[0].asignatura;
-        // this.nombreClase = this.examenesClase[0].nombreClase;
-  //     }, (err => {
-  //       const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
-  //       Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
-  //       return;
-  //     }));
-  // }
-  cargarProximosExamenes(){
-    this.profesorService.cargarProximosExamenes(this.profesorService.uid, this.uidClase)
+  cargarExamenesRealizados(){
+    this.profesorService.cargarUltimosExamenes(this.profesorService.uid, this.uidClase)
       .subscribe(res => {
-        this.proximosExamenes = res['proximosExamenes'];
+        this.ultimosExamenes = res['ultimosExamenes'];
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});

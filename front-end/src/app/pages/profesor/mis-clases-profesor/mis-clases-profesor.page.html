@@ -35,7 +35,7 @@
                 <ion-row>
                     <ion-col size="12">
                         <ion-card-content>
-                            <app-accordion-list expandHeight="150px" [expanded]="clase.expanded">
+                            <app-accordion-list expandHeight="20rem" [expanded]="clase.expanded">
                                 <ion-row>
                                     <ion-col size="3">
 
@@ -52,10 +52,21 @@
 
                                     </ion-col>
                                     <ion-col size="4.5 ">
-                                        <h2 style="color: black ">Mis exámenes</h2>
+                                        <h2 style="color: black ">Próximos exámenes</h2>
                                     </ion-col>
                                     <ion-col size="4.5 ">
-                                        <ion-icon name="book" style="width: 2rem; height: 2rem; margin-top: 0rem;  color: #004DFF;" [routerLink]="['/tabs-profesor/clases/examenes', clase.uidClase]"></ion-icon>
+                                        <ion-icon name="book" style="width: 2rem; height: 2rem; margin-top: 0rem;  color: #004DFF;" [routerLink]="['/tabs-profesor/clases/proximos-examenes', clase.uidClase]"></ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col size="3 ">
+
+                                    </ion-col>
+                                    <ion-col size="4.5 ">
+                                        <h2 style="color: black ">Últimos exámenes</h2>
+                                    </ion-col>
+                                    <ion-col size="4.5 ">
+                                        <ion-icon name="book" style="width: 2rem; height: 2rem; margin-top: 0rem;  color: #004DFF;" [routerLink]="['/tabs-profesor/clases/examenes-realizados', clase.uidClase]"></ion-icon>
                                     </ion-col>
                                 </ion-row>
                                 <ion-row>
