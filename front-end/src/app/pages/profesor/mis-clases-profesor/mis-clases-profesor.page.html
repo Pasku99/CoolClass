@@ -55,7 +55,7 @@
                                         <h2 style="color: black ">Próximos exámenes</h2>
                                     </ion-col>
                                     <ion-col size="4.5 ">
-                                        <ion-icon name="book" style="width: 2rem; height: 2rem; margin-top: 0rem;  color: #004DFF;" [routerLink]="['/tabs-profesor/clases/proximos-examenes', clase.uidClase]"></ion-icon>
+                                        <ion-icon name="book" style="width: 2rem; height: 2rem; margin-top: 0rem;  color: #004DFF;" [routerLink]="['/tabs-profesor/clases/proximos-examenes', clase.uidClase, clase.asignatura]"></ion-icon>
                                     </ion-col>
                                 </ion-row>
                                 <ion-row>
@@ -63,10 +63,10 @@
 
                                     </ion-col>
                                     <ion-col size="4.5 ">
-                                        <h2 style="color: black ">Últimos exámenes</h2>
+                                        <h2 style="color: black ">Exámenes realizados</h2>
                                     </ion-col>
                                     <ion-col size="4.5 ">
-                                        <ion-icon name="book" style="width: 2rem; height: 2rem; margin-top: 0rem;  color: #004DFF;" [routerLink]="['/tabs-profesor/clases/examenes-realizados', clase.uidClase]"></ion-icon>
+                                        <ion-icon name="book" style="width: 2rem; height: 2rem; margin-top: 0rem;  color: #004DFF;" [routerLink]="['/tabs-profesor/clases/examenes-realizados', clase.uidClase, clase.asignatura]"></ion-icon>
                                     </ion-col>
                                 </ion-row>
                                 <ion-row>

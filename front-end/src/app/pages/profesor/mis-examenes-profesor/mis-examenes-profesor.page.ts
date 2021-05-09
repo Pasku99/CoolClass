@@ -55,22 +55,11 @@ export class MisExamenesProfesorPage implements OnInit {
 
   ionViewWillEnter() {
     this.uidClase = this.route.snapshot.params['idClase'];
+    this.asignatura = this.route.snapshot.params['asignatura'];
     this.cargarProximosExamenes();
     this.cargarClase();
   }
 
-  // cargarExamenesProfesor(){
-  //   this.profesorService.cargarExamenesClaseProfesor(this.profesorService.uid, this.uidClase)
-  //     .subscribe(res => {
-  //       this.examenesClase = res['examenesProfesor'];
-        // this.asignatura = this.examenesClase[0].asignatura;
-        // this.nombreClase = this.examenesClase[0].nombreClase;
-  //     }, (err => {
-  //       const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
-  //       Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
-  //       return;
-  //     }));
-  // }
   cargarProximosExamenes(){
     this.profesorService.cargarProximosExamenes(this.profesorService.uid, this.uidClase)
       .subscribe(res => {

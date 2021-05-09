@@ -21,6 +21,7 @@ export class MisExamenesNotasProfesorPage implements OnInit {
   public examen: Examen = new Examen('');
   public examenesAlumno: ExamenResuelto[] = [];
   public clase: Clase = new Clase('');
+  public asignatura: string = '';
 
   constructor(private profesorService: ProfesorService,
               private route: ActivatedRoute) {
@@ -58,9 +59,11 @@ export class MisExamenesNotasProfesorPage implements OnInit {
   ionViewWillEnter() {
     this.uidClase = this.route.snapshot.params['idClase'];
     this.uidExamen = this.route.snapshot.params['idExamen'];
+    this.asignatura = this.route.snapshot.params['asignatura'];
     this.cargarExamenesResueltos();
     this.cargarClaseProfesor();
     this.cargarExamen();
+    this.cargarClase();
   }
 
   cargarExamenesResueltos(){
@@ -95,6 +98,18 @@ export class MisExamenesNotasProfesorPage implements OnInit {
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
         return;
       }))
+  }
+
+  cargarClase(){
+    this.profesorService.cargarClasesUid(this.profesorService.uidCentro, this.profesorService.uid, this.uidClase)
+      .subscribe(res => {
+        this.clase = res['arrayClases'];
+        this.nombreClase = this.clase[0].nombre;
+      }, (err => {
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
+      }));
   }
 
 }

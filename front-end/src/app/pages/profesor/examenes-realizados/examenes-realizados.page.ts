@@ -17,7 +17,6 @@ export class ExamenesRealizadosPage implements OnInit {
   public examenesClase: Examen[] = [];
   public asignatura: string = '';
   public nombreClase: string = '';
-  public proximosExamenes: Examen[] = [];
   public ultimosExamenes: Examen[] = [];
   public clase: Clase = new Clase('');
 
@@ -40,7 +39,7 @@ export class ExamenesRealizadosPage implements OnInit {
     if (item.expanded) {
       item.expanded = false;
     } else {
-      this.proximosExamenes.map(listItem => {
+      this.ultimosExamenes.map(listItem => {
         if (item == listItem) {
           listItem.expanded = !listItem.expanded;
         } else {
@@ -56,6 +55,7 @@ export class ExamenesRealizadosPage implements OnInit {
 
   ionViewWillEnter() {
     this.uidClase = this.route.snapshot.params['idClase'];
+    this.asignatura = this.route.snapshot.params['asignatura'];
     this.cargarExamenesRealizados();
     this.cargarClase();
   }

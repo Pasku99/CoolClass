@@ -8,7 +8,7 @@
             </ion-col>
         </ion-row>
     </ion-toolbar>
-    <ion-img class="back" src="../../../../assets/ionicons/arrow-back-outline.svg" style="width: 2.5rem; height: 2.5rem; margin-left: 1.5rem; margin-top: 0.5rem;" [routerLink]="['/tabs-profesor/clases/examenes', this.uidClase]"></ion-img>
+    <ion-img class="back" src="../../../../assets/ionicons/arrow-back-outline.svg" style="width: 2.5rem; height: 2.5rem; margin-left: 1.5rem; margin-top: 0.5rem;" *ngIf="this.asignatura != ''" [routerLink]="['/tabs-profesor/clases/examenes-realizados', this.uidClase, this.asignatura]"></ion-img>
 </ion-header>
 
 <ion-content>
@@ -70,7 +70,7 @@
                                     <p style="color: black; font-size: 16px; font-weight: bold;">Ver examen</p>
                                 </ion-col>
                                 <ion-col size="4.5">
-                                    <ion-icon name="eye" style="width: 2rem; height: 2rem; margin-top: 0.55rem; margin-left: 0; color: #004DFF;" routerLink="/tabs-profesor/clases/alumnos/notas/comprobar-examen"></ion-icon>
+                                    <ion-icon name="eye" style="width: 2rem; height: 2rem; margin-top: 0.55rem; margin-left: 0; color: #004DFF;" [routerLink]="['/tabs-profesor/clases/alumnos/notas', examen.uidAlumno, examen.uid, 'comprobar-examen']"></ion-icon>
                                 </ion-col>
                             </ion-row>
                         </app-accordion-list>
