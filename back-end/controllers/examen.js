@@ -728,4 +728,76 @@ const obtenerExamenesResueltosAlumno = async(req, res) => {
     }
 }
 
-module.exports = { obtenerExamenes, crearExamen, obtenerExamenResueltos, crearExamenResuelto, obtenerExamenesAlumnosCentro, obtenerExamenesClaseProfesor, obtenerNotasExamen, obtenerProximosExamenesAlumno, obtenerExamenesAsignaturaAlumno, obtenerExamenAlumno, obtenerExamenesResueltosAlumno }
+const obtenerUltimosExamenesProfesor = async(req, res = response) => {
+    const uidProfesor = req.params.idProfesor;
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para obtener los últimos exámenes',
+            });
+        }
+
+        // Buscar examenes cuya fecha final sea menor a la actual
+        let fechaActual = new Date();
+        const ultimosExamenes = await Examen.find({ uidProfesor: uidProfesor, fechaFinal: { $lt: fechaActual } }).sort({ fecha: 'asc' }).limit(6);
+        if (!ultimosExamenes) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar últimos exámenes',
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'getUltimosExamenes',
+            ultimosExamenes,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error obteniendo últimos exámenes del profesor'
+        });
+    }
+}
+
+const obtenerProximosExamenesProfesor = async(req, res = response) => {
+    const uidProfesor = req.params.idProfesor;
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para obtener los próximos exámenes',
+            });
+        }
+
+        // Buscar examenes cuya fecha final sea menor a la actual
+        let fechaActual = new Date();
+        const proximosExamenes = await Examen.find({ uidProfesor: uidProfesor, fechaComienzo: { $gte: fechaActual } }).sort({ fecha: 'asc' }).limit(6);
+        if (!proximosExamenes) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar próximos exámenes',
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'getProximosExamenes',
+            proximosExamenes,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error obteniendo próximos exámenes del profesor'
+        });
+    }
+}
+
+module.exports = { obtenerExamenes, crearExamen, obtenerExamenResueltos, crearExamenResuelto, obtenerExamenesAlumnosCentro, obtenerExamenesClaseProfesor, obtenerNotasExamen, obtenerProximosExamenesAlumno, obtenerExamenesAsignaturaAlumno, obtenerExamenAlumno, obtenerExamenesResueltosAlumno, obtenerUltimosExamenesProfesor, obtenerProximosExamenesProfesor }

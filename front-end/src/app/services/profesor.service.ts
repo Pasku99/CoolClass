@@ -132,6 +132,14 @@ export class ProfesorService {
     return this.http.get(`${environment.base_url}/examenes/notasalumno/${uidProfesor}/${uidAlumno}/?idExamen=${uidExamenResuelto}`, this.cabeceras);
   }
 
+  cargarUltimosExamenes(uidProfesor: string){
+    return this.http.get(`${environment.base_url}/examenes/ultimosexamenes/${uidProfesor}`, this.cabeceras);
+  }
+
+  cargarProximosExamenes(uidProfesor: string){
+    return this.http.get(`${environment.base_url}/examenes/proximosexamenes/${uidProfesor}`, this.cabeceras);
+  }
+
   loginProfesor( formData: loginForm) {
     return this.http.post(`${environment.base_url}/login/profesor`, formData)
     .pipe(
