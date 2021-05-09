@@ -89,20 +89,24 @@ export class ComprobarExamenProfesorPage implements OnInit {
   }
 
   next() :void {
-    for(let i = 0; i< this.respondidas.length; i++){
-      if(this.respondidas[i] == ''){
-        this.acabado = false;
-        break;
-      }else{
-        this.acabado = true;
-      }
+    if(this.contador == this.arrayPreguntas.length-1){
+      this.contador = this.arrayPreguntas.length-1;
+    }else{
+      this.contador=this.contador+1;
     }
+    this.pregunta = this.arrayPreguntas[this.contador];
+    this.respuesta1 = this.arrayRespuestas[this.contador][0];
+    this.respuesta2 = this.arrayRespuestas[this.contador][1];
+    this.respuesta3 = this.arrayRespuestas[this.contador][2];
+    this.respuesta4 = this.arrayRespuestas[this.contador][3];
+    this.comprobarRespuestas(this.contador);
+  }
 
-    if(!this.acabado){
-      if(this.contador == this.arrayPreguntas.length-1){
+  previous() :void {
+      if(this.contador == 0){
         this.contador=0;
       }else{
-        this.contador=this.contador+1;
+        this.contador=this.contador-1;
       }
       this.pregunta = this.arrayPreguntas[this.contador];
       this.respuesta1 = this.arrayRespuestas[this.contador][0];
@@ -110,14 +114,16 @@ export class ComprobarExamenProfesorPage implements OnInit {
       this.respuesta3 = this.arrayRespuestas[this.contador][2];
       this.respuesta4 = this.arrayRespuestas[this.contador][3];
       this.comprobarRespuestas(this.contador);
-    }else{
-      this.pregunta = "EXAMEN ACABADO";
-    }
   }
 
-  respuesta(valor) :void{
+  respuestaSiguiente(valor) :void{
     this.respondidas[this.contador] = valor;
     this.next();
+  }
+
+  respuestaAnterior(valor) :void{
+    this.respondidas[this.contador] = valor;
+    this.previous();
   }
 
   cargarExamenesResueltosAlumno(){

@@ -12,9 +12,19 @@
 
 <ion-content>
     <ion-grid>
-        <ion-row class="fila0">
-            <ion-col size="12">
+        <ion-row class="fila0" style="text-align: center;">
+            <ion-col size="3">
+                <ion-item class="ion-no-border" lines="none" style="text-align: center; margin: auto;">
+                    <ion-icon name="arrow-back-outline" style="width: 2rem; height: 2rem; color: black; display: inline-block; vertical-align: middle;" (click)="previous();"></ion-icon>
+                </ion-item>
+            </ion-col>
+            <ion-col size="6">
                 <h3 style="text-align: center;">PREGUNTA {{this.contador+1}}</h3>
+            </ion-col>
+            <ion-col size="3">
+                <ion-item class="ion-no-border" lines="none" style="text-align: center; margin: auto;">
+                    <ion-icon name="arrow-forward-outline" style="width: 2rem; height: 2rem; color: black; display: inline-block; vertical-align: middle;" (click)="next();"></ion-icon>
+                </ion-item>
             </ion-col>
         </ion-row>
         <ion-row class="fila1">
@@ -22,7 +32,7 @@
                 <p style="color: black; font-size: 1.1rem; text-align: center;">{{this.pregunta}} <b *ngIf="this.respuestaMarcadaNoResponder">(no respondida)</b></p>
             </ion-col>
         </ion-row>
-        <ion-row class="fila2">
+        <!-- <ion-row class="fila2">
             <ion-col size="6">
                 <ion-card style="background-color: #00ff7f;" (click)="respuesta(this.respuesta1)">
                     <ion-card-header style="text-align: center;">
@@ -69,9 +79,61 @@
                     <ion-card-content style="text-align: center; color: black; font-weight: bold;" *ngIf="this.respuestaMarcada4">Respondida</ion-card-content>
                 </ion-card>
             </ion-col>
+        </ion-row> -->
+        <ion-row>
+            <ion-col size="12" style="display: flex; justify-content: center">
+                <ion-card style="background-color: #00ff7f;">
+                    <ion-card-header style="text-align: center;">
+                        <ion-card-title style="font-size: 1.1rem;">
+                            <span style="display: inline-block; vertical-align: middle;"><ion-icon name="checkmark-sharp" style="width: 2rem; height: 2rem; display: inline-block; vertical-align: middle;"></ion-icon>{{this.respuesta1}}</span>
+                        </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content class="respondida" style="text-align: center; color: black; font-weight: bold;" *ngIf="this.respuestaMarcada1">Respondida</ion-card-content>
+                    <ion-card-content style="text-align: center; color: black; font-weight: bold;" *ngIf="!this.respuestaMarcada1"></ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" style="display: flex; justify-content: center">
+                <ion-card style="background-color: #73C2FB;">
+                    <ion-card-header style="text-align: center;">
+                        <ion-card-title style="font-size: 1.1rem;">
+                            <span style="display: inline-block; vertical-align: middle;"><ion-icon name="close-sharp" style="width: 2rem; height: 2rem; color: red; display: inline-block; vertical-align: middle;"></ion-icon>{{this.respuesta2}}</span>
+                        </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content class="respondida" style="text-align: center; color: black; font-weight: bold;" *ngIf="this.respuestaMarcada2">Respondida</ion-card-content>
+                    <ion-card-content style="text-align: center; color: black; font-weight: bold;" *ngIf="!this.respuestaMarcada2"></ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" style="display: flex; justify-content: center">
+                <ion-card style="background-color: #73C2FB;">
+                    <ion-card-header style="text-align: center;">
+                        <ion-card-title style="font-size: 1.1rem;">
+                            <span style="display: inline-block; vertical-align: middle;"><ion-icon name="close-sharp" style="width: 2rem; height: 2rem; color: red; display: inline-block; vertical-align: middle;"></ion-icon>{{this.respuesta3}}</span>
+                        </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content class="respondida" style="text-align: center; color: black; font-weight: bold;" *ngIf="this.respuestaMarcada3">Respondida</ion-card-content>
+                    <ion-card-content style="text-align: center; color: black; font-weight: bold;" *ngIf="!this.respuestaMarcada3"></ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" style="display: flex; justify-content: center">
+                <ion-card style="background-color: #00ff7f;">
+                    <ion-card-header style="text-align: center;">
+                        <ion-card-title style="font-size: 1.1rem;">
+                            <span style="display: inline-block; vertical-align: middle;"><ion-icon name="close-sharp" style="width: 2rem; height: 2rem; color: red; display: inline-block; vertical-align: middle;"></ion-icon>{{this.respuesta4}}</span>
+                        </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content class="respondida" style="text-align: center; color: black; font-weight: bold;" *ngIf="this.respuestaMarcada4">Respondida</ion-card-content>
+                    <ion-card-content style="text-align: center; color: black; font-weight: bold;" *ngIf="!this.respuestaMarcada4"></ion-card-content>
+                </ion-card>
+            </ion-col>
         </ion-row>
         <ion-row class="fila4">
-            <ion-col size="12" (click)="respuesta('No responder')">
+            <ion-col size="12">
                 <ion-button size="large">No responder</ion-button>
             </ion-col>
         </ion-row>

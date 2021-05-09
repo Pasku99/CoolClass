@@ -14,26 +14,21 @@ ion-grid {
     height: 100%;
 }
 
-.fila0 {
-    height: 15%;
-}
-
-.fila1 {
-    height: 15%;
-}
-
-.fila2 {
-    height: 30%;
-}
-
-.fila3 {
-    height: 30%;
-}
-
-.fila4 {
-    height: 10%;
-}
-
+// .fila0 {
+//     height: 15%;
+// }
+// .fila1 {
+//     height: 15%;
+// }
+// .fila2 {
+//     height: 30%;
+// }
+// .fila3 {
+//     height: 30%;
+// }
+// .fila4 {
+//     height: 10%;
+// }
 ion-button {
     display: flex;
     align-items: center;
@@ -52,34 +47,40 @@ ion-button {
         width: 80%;
     }
     ion-card-header {
-        top: 30%;
+        top: 20%;
     }
     ion-card-content {
-        margin-top: 30%;
+        margin-top: 15%;
         font-size: 1.1rem;
     }
     .respuesta {
         margin-right: 2rem;
         margin-left: 2rem;
     }
+    .respondida {
+        margin-bottom: 5%;
+    }
 }
 
 @media (max-height: 700px) {
     ion-card {
-        height: 7rem;
-        width: 7rem;
+        height: 80%;
+        width: 80%;
     }
     ion-card-header {
-        top: 25%;
+        top: 15%;
     }
     ion-card-content {
-        margin-top: 20%;
-        font-size: 0.8rem;
+        margin-top: 15%;
+        font-size: 1.1rem;
     }
     .respuesta {
         margin-top: -0.2rem;
         margin-right: 1rem;
         margin-left: 1rem;
+    }
+    .respondida {
+        margin-bottom: 5%;
     }
 }
 
