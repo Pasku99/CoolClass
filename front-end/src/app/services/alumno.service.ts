@@ -97,6 +97,20 @@ export class AlumnoService {
     return this.http.post(`${environment.base_url}/examenes/examenresuelto`, data, this.cabeceras);
   }
 
+  cargarUltimosExamenesAlumno(uidAlumno: string, filtro?:string){
+    if(!filtro){
+      filtro = '';
+    }
+    return this.http.get(`${environment.base_url}/examenes/ultimosexamenesalumno/${uidAlumno}/?limitado=${filtro}`, this.cabeceras);
+  }
+
+  cargarTodosProximosExamenesAlumno(uidAlumno: string, uidClase: string, filtro?:string){
+    if(!filtro){
+      filtro = '';
+    }
+    return this.http.get(`${environment.base_url}/examenes/proximosexamenesalumno/${uidClase}/${uidAlumno}/?limitado=${filtro}`, this.cabeceras);
+  }
+
   loginAlumno( formData: loginForm) {
     return this.http.post(`${environment.base_url}/login/alumno`, formData)
     .pipe(

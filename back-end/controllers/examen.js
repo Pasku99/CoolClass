@@ -585,6 +585,7 @@ const obtenerProximosExamenesAlumno = async(req, res = response) => {
 const obtenerExamenesAsignaturaAlumno = async(req, res = response) => {
     const uidAlumno = req.params.idAlumno;
     const uidProfesor = req.params.idProfesor;
+    const limitado = req.query.limitado;
     try {
         const token = req.header('x-token');
         if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidAlumno))) {
@@ -613,7 +614,7 @@ const obtenerExamenesAsignaturaAlumno = async(req, res = response) => {
         res.json({
             ok: true,
             msg: 'getExamenesAlumno',
-            examenesAlumno,
+            examenesAlumno
         });
 
     } catch (error) {
@@ -741,6 +742,7 @@ const obtenerUltimosExamenesProfesor = async(req, res = response) => {
         }
 
         let fechaActual = new Date();
+        fechaActual.setHours(fechaActual.getHours() + 2);
         let ultimosExamenes, total;
         if (uidClase) {
             [ultimosExamenes, total] = await Promise.all([
@@ -783,6 +785,7 @@ const obtenerProximosExamenesProfesor = async(req, res = response) => {
         }
 
         let fechaActual = new Date();
+        fechaActual.setHours(fechaActual.getHours() + 2);
         let proximosExamenes, total;
         if (uidClase) {
             [proximosExamenes, total] = await Promise.all([
@@ -812,4 +815,105 @@ const obtenerProximosExamenesProfesor = async(req, res = response) => {
     }
 }
 
-module.exports = { obtenerExamenes, crearExamen, obtenerExamenResueltos, crearExamenResuelto, obtenerExamenesAlumnosCentro, obtenerExamenesClaseProfesor, obtenerNotasExamen, obtenerProximosExamenesAlumno, obtenerExamenesAsignaturaAlumno, obtenerExamenAlumno, obtenerExamenesResueltosAlumno, obtenerUltimosExamenesProfesor, obtenerProximosExamenesProfesor }
+const obtenerTodosExamenesResueltosAlumno = async(req, res = response) => {
+    const uidAlumno = req.params.idAlumno;
+    const limitado = req.query.limitado;
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidAlumno))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para listar los examenes resueltos del alumno',
+            });
+        }
+
+        const alumno = await Alumno.findById(uidAlumno);
+        if (!alumno) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar alumno correspondiente'
+            });
+        }
+
+        let examenesAlumno, total;
+        if (limitado) {
+            [examenesAlumno, total] = await Promise.all([
+                ExamenResuelto.find({ uidAlumno: uidAlumno }).sort({ fechaComienzo: 'asc' }).limit(6),
+                ExamenResuelto.countDocuments({ uidAlumno: uidAlumno }).sort({ fechaComienzo: 'asc' }).limit(6)
+            ]);
+        } else {
+            [examenesAlumno, total] = await Promise.all([
+                ExamenResuelto.find({ uidAlumno: uidAlumno }).sort({ fecha: 'asc' }),
+                ExamenResuelto.countDocuments({ uidAlumno: uidAlumno }).sort({ fechaComienzo: 'asc' })
+            ]);
+        }
+
+        res.json({
+            ok: true,
+            msg: 'getExamenesAlumno',
+            examenesAlumno,
+            total
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error obteniendo examenes resueltos del alumno'
+        });
+    }
+}
+
+const obtenerTodosProximosExamenesAlumno = async(req, res = response) => {
+    const uidAlumno = req.params.idAlumno;
+    const uidClase = req.params.idClase;
+    const limitado = req.query.limitado;
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidAlumno))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para listar los próximos exámenes del alumno',
+            });
+        }
+
+        const alumno = await Alumno.findById(uidAlumno);
+        if (!alumno) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar alumno correspondiente'
+            });
+        }
+
+        let proximosExamenesAlumno, total;
+        let fechaActual = new Date();
+        fechaActual.setHours(fechaActual.getHours() + 2);
+        if (limitado) {
+            [proximosExamenesAlumno, total] = await Promise.all([
+                Examen.find({ uidClase: uidClase, fechaFinal: { $gte: fechaActual } }).sort({ fechaComienzo: 'asc' }).limit(6),
+                Examen.countDocuments({ uidClase: uidClase, fechaFinal: { $gte: fechaActual } }).sort({ fechaComienzo: 'asc' }).limit(6)
+            ]);
+        } else {
+            [proximosExamenesAlumno, total] = await Promise.all([
+                Examen.find({ uidClase: uidClase, fechaFinal: { $gte: fechaActual } }).sort({ fecha: 'asc' }),
+                Examen.countDocuments({ uidClase: uidClase, fechaFinal: { $gte: fechaActual } }).sort({ fechaComienzo: 'asc' })
+            ]);
+        }
+
+        res.json({
+            ok: true,
+            msg: 'getProximosExamenesAlumno',
+            proximosExamenesAlumno,
+            total
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error obteniendo examenes resueltos del alumno'
+        });
+    }
+}
+
+module.exports = { obtenerExamenes, crearExamen, obtenerExamenResueltos, crearExamenResuelto, obtenerExamenesAlumnosCentro, obtenerExamenesClaseProfesor, obtenerNotasExamen, obtenerProximosExamenesAlumno, obtenerExamenesAsignaturaAlumno, obtenerExamenAlumno, obtenerExamenesResueltosAlumno, obtenerUltimosExamenesProfesor, obtenerProximosExamenesProfesor, obtenerTodosExamenesResueltosAlumno, obtenerTodosProximosExamenesAlumno }

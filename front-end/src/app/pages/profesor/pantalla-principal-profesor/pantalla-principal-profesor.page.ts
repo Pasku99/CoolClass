@@ -33,10 +33,11 @@ export class PantallaPrincipalProfesorPage implements OnInit {
     this.slides.toArray()[index].slidePrev(500);
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.authService.cogerToken();
+  }
 
   ionViewWillEnter(){
-    this.authService.cogerToken();
     this.cargarClases();
     this.cargarUltimosExamenes();
     this.cargarProximosExamenes();
@@ -79,21 +80,6 @@ export class PantallaPrincipalProfesorPage implements OnInit {
         for(let i = 0; i < this.proximosExamenes.length; i++){
           let date = new Date(this.proximosExamenes[i].fechaComienzo);
           let fecha = '';
-          // if(date.getMinutes() < 10){
-          //   fecha = [ date.getMonth()+1,
-          //             date.getDate(),
-          //             date.getFullYear()].join('/') + ' ' +
-          //           [ date.getHours(),
-          //             date.getMinutes() + '0',
-          //             date.getSeconds()].join(':');
-          // } else {
-          //   fecha = [ date.getMonth()+1,
-          //             date.getDate(),
-          //             date.getFullYear()].join('/') + ' ' +
-          //           [ date.getHours(),
-          //             date.getMinutes(),
-          //             date.getSeconds()].join(':');
-          // }
           fecha = ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
           ("00" + date.getDate()).slice(-2) + "/" +
           date.getFullYear() + " " +
