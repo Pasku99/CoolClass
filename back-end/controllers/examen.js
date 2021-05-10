@@ -552,7 +552,7 @@ const obtenerProximosExamenesAlumno = async(req, res = response) => {
         }
 
         let fechaInicio = new Date();
-        fechaInicio.setHours(fechaInicio.getHours() + 2);
+        // fechaInicio.setHours(fechaInicio.getHours() + 2);
 
         let proximosexamenesAlumno, total;
         if (limitado) {
@@ -747,7 +747,7 @@ const obtenerUltimosExamenesProfesor = async(req, res = response) => {
         }
 
         let fechaActual = new Date();
-        fechaActual.setHours(fechaActual.getHours() + 2);
+        // fechaActual.setHours(fechaActual.getHours() + 2);
         let ultimosExamenes, total;
         if (uidClase) {
             [ultimosExamenes, total] = await Promise.all([
@@ -790,7 +790,7 @@ const obtenerProximosExamenesProfesor = async(req, res = response) => {
         }
 
         let fechaActual = new Date();
-        fechaActual.setHours(fechaActual.getHours() + 2);
+        // fechaActual.setHours(fechaActual.getHours() + 2);
         let proximosExamenes, total;
         if (uidClase) {
             [proximosExamenes, total] = await Promise.all([
@@ -892,7 +892,7 @@ const obtenerTodosProximosExamenesAlumno = async(req, res = response) => {
 
         let proximosExamenesAlumno, total;
         let fechaActual = new Date();
-        fechaActual.setHours(fechaActual.getHours() + 2);
+        // fechaActual.setHours(fechaActual.getHours() + 2);
         if (limitado) {
             [proximosExamenesAlumno, total] = await Promise.all([
                 Examen.find({ uidClase: uidClase, fechaFinal: { $gte: fechaActual } }).sort({ fechaComienzo: 'asc' }).limit(6),

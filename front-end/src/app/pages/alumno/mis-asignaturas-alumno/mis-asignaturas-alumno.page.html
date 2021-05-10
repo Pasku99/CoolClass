@@ -10,5 +10,10 @@
                 <ion-button class="clases" size="large" style="font-size: 1.3rem;" [routerLink]="['/tabs-alumno/asignaturas/info-asignatura', this.listaAsignaturas[i]]">{{asignatura}}</ion-button>
             </ion-col>
         </ion-row>
+        <ion-row *ngIf="this.listaAsignaturasMayus.length == 0">
+            <ion-col size="12" style="text-align: center;">
+                <h2>No hay asignaturas registradas por ningún profesor.</h2>
+            </ion-col>
+        </ion-row>
     </ion-grid>
 </ion-content>

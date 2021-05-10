@@ -16,7 +16,8 @@ export class MisExamenesAlumnoPage implements OnInit {
   public uidProfesor: string = '';
   public examenes: Examen[] = [];
   public nombreProfesor: string = '';
-  public fechas: Array<string> = new Array<string>();
+  public fechasComienzo: Array<string> = new Array<string>();
+  public fechasFinal: Array<string> = new Array<string>();
 
   constructor(private alumnoService: AlumnoService,
               private route: ActivatedRoute,
@@ -62,17 +63,31 @@ export class MisExamenesAlumnoPage implements OnInit {
     this.alumnoService.cargarProximosExamenesAlumno(this.alumnoService.uid, this.uidProfesor, this.alumnoService.uidClase)
       .subscribe(res => {
         this.examenes = res['proximosExamenes'];
-        this.fechas = [];
+        this.fechasComienzo = [];
+        this.fechasFinal = [];
         for(let i = 0; i < this.examenes.length; i++){
-          let date = new Date(this.examenes[i].fechaComienzo);
-          let fecha = '';
-          fecha = ("00" +  date.getDate()).slice(-2) + "/" +
-          ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
-          date.getFullYear() + " " +
-          ("00" + date.getHours()).slice(-2) + ":" +
-          ("00" + date.getMinutes()).slice(-2) + ":" +
-          ("00" + date.getSeconds()).slice(-2);
-          this.fechas.push(fecha);
+
+          // Fecha comienzo
+          let dateComienzo = new Date(this.examenes[i].fechaComienzo);
+          let fechaComienzo = '';
+          fechaComienzo = ("00" +  dateComienzo.getDate()).slice(-2) + "/" +
+          ("00" + (dateComienzo.getMonth() + 1)).slice(-2) + "/" +
+          dateComienzo.getFullYear() + " " +
+          ("00" + dateComienzo.getHours()).slice(-2) + ":" +
+          ("00" + dateComienzo.getMinutes()).slice(-2) + ":" +
+          ("00" + dateComienzo.getSeconds()).slice(-2);
+          this.fechasComienzo.push(fechaComienzo);
+
+          // Fecha finalizacion
+          let dateFinal = new Date(this.examenes[i].fechaFinal);
+          let fechaFinal = '';
+          fechaFinal = ("00" +  dateFinal.getDate()).slice(-2) + "/" +
+          ("00" + (dateFinal.getMonth() + 1)).slice(-2) + "/" +
+          dateFinal.getFullYear() + " " +
+          ("00" + dateFinal.getHours()).slice(-2) + ":" +
+          ("00" + dateFinal.getMinutes()).slice(-2) + ":" +
+          ("00" + dateFinal.getSeconds()).slice(-2);
+          this.fechasFinal.push(fechaFinal);
         }
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
@@ -105,11 +120,6 @@ export class MisExamenesAlumnoPage implements OnInit {
     let fechaFinalExamen = new Date(fechaFinal);
     fechaFinalExamen.setHours(fechaFinalExamen.getHours() + 2);
     let fechaFinalExamenString = fechaFinalExamen.toISOString();
-
-
-    console.log(fechaNow);
-    console.log(fechaInicioExamenString);
-    console.log(fechaFinalExamenString);
 
     if(Date.parse(fechaNow) >= Date.parse(fechaInicioExamenString) && Date.parse(fechaNow) <= Date.parse(fechaFinalExamenString)){
       this.router.navigateByUrl('/tabs-alumno/asignaturas/info-asignatura/examenes/hacer-examen/'+ this.uidProfesor +  '/' + uidExamen);
