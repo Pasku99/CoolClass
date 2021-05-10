@@ -205,3 +205,11 @@
 ion-button {
     text-transform: none;
 }
+
+.swiper-pagination-bullet {
+    --bullet-background: #000000;
+}
+
+.swiper-pagination-bullet-active {
+    --bullet-background: #ffffff;
+}

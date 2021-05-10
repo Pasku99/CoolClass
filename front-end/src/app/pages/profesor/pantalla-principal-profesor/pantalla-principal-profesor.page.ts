@@ -24,28 +24,28 @@ export class PantallaPrincipalProfesorPage implements OnInit {
 
   constructor(private authService: AuthService,
               private profesorService: ProfesorService) {
-    this.sliderOne =
-    {
-      isBeginningSlide: true,
-      isEndSlide: false,
-      slidesItems: [
-        {
-          id: 995
-        },
-        {
-          id: 925
-        },
-        {
-          id: 940
-        },
-        {
-          id: 943
-        },
-        {
-          id: 944
-        }
-      ]
-    };
+    // this.sliderOne =
+    // {
+    //   isBeginningSlide: true,
+    //   isEndSlide: false,
+    //   slidesItems: [
+    //     {
+    //       id: 995
+    //     },
+    //     {
+    //       id: 925
+    //     },
+    //     {
+    //       id: 940
+    //     },
+    //     {
+    //       id: 943
+    //     },
+    //     {
+    //       id: 944
+    //     }
+    //   ]
+    // };
   }
 
   sleep(ms) {
