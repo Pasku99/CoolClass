@@ -517,6 +517,7 @@ const obtenerProximosExamenesAlumno = async(req, res = response) => {
     const uidAlumno = req.params.idAlumno;
     const uidProfesor = req.params.idProfesor;
     const uidClase = req.params.idClase;
+    const limitado = req.query.limitado;
     try {
         const token = req.header('x-token');
         if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidAlumno))) {
@@ -552,20 +553,19 @@ const obtenerProximosExamenesAlumno = async(req, res = response) => {
 
         let fechaInicio = new Date();
         fechaInicio.setHours(fechaInicio.getHours() + 2);
-        const proximosexamenesAlumno = await Examen.find({ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaFinal: { $gte: fechaInicio } }).sort({ fecha: 'asc' });
-        if (!proximosexamenesAlumno) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'Error al encontrar proximos examenes del alumno'
-            });
-        }
 
-        // for (let i = 0; i < proximosexamenesAlumno.length; i++) {
-        //     let fecha = pasarFechaDDMMYYYY(proximosexamenesAlumno[i].fechaComienzo);
-        //     proximosexamenesAlumno[i].fechaComienzo = { fechaComienzo: fecha, ...proximosexamenesAlumno };
-        //     proximosexamenesAlumno[i].fechaComienzo.toISOString();
-        //     console.log(proximosexamenesAlumno[i].fechaComienzo)
-        // }
+        let proximosexamenesAlumno, total;
+        if (limitado) {
+            [proximosexamenesAlumno, total] = await Promise.all([
+                Examen.find({ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaFinal: { $gte: fechaInicio } }).sort({ fecha: 'asc' }).limit(6),
+                Examen.countDocuments({ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaFinal: { $gte: fechaInicio } }).sort({ fecha: 'asc' }).limit(6)
+            ]);
+        } else {
+            [proximosexamenesAlumno, total] = await Promise.all([
+                Examen.find({ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaFinal: { $gte: fechaInicio } }).sort({ fecha: 'asc' }),
+                Examen.find({ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaFinal: { $gte: fechaInicio } }).sort({ fecha: 'asc' })
+            ]);
+        }
 
         res.json({
             ok: true,
@@ -603,18 +603,23 @@ const obtenerExamenesAsignaturaAlumno = async(req, res = response) => {
             });
         }
 
-        const examenesAlumno = await ExamenResuelto.find({ uidAlumno: uidAlumno, uidProfesor: uidProfesor });
-        if (!examenesAlumno) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'Error al encontrar examenes del alumno'
-            });
+        let examenesResueltos, total;
+        if (limitado) {
+            [examenesResueltos, total] = await Promise.all([
+                ExamenResuelto.find({ uidProfesor: uidProfesor, uidAlumno: uidAlumno, }).limit(6),
+                ExamenResuelto.countDocuments({ uidProfesor: uidProfesor, uidAlumno: uidAlumno }).sort({ date: 'asc' }).limit(6)
+            ]);
+        } else {
+            [examenesResueltos, total] = await Promise.all([
+                ExamenResuelto.find({ uidProfesor: uidProfesor, uidAlumno: uidAlumno }),
+                ExamenResuelto.countDocuments({ uidProfesor: uidProfesor, uidAlumno: uidAlumno })
+            ]);
         }
 
         res.json({
             ok: true,
             msg: 'getExamenesAlumno',
-            examenesAlumno
+            examenesResueltos
         });
 
     } catch (error) {

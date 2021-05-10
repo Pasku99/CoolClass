@@ -24,35 +24,18 @@
             <ion-row>
                 <ion-col size="12" align-self-center>
                     <ion-slides>
-                        <ion-slide>
+                        <ion-slide *ngFor="let examen of this.examenes; let i = index">
                             <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
                                 <ion-icon name="chevron-back-outline" (click)="moveBehind(0)"></ion-icon>
-                                <ion-card style="background-color: #00ff7f;">
+                                <ion-card class="tarjeta1" style="background-color: #00ff7f;">
                                     <ion-card-header>
-                                        <ion-card-title style="font-size: 1.2rem; text-align:center;">Tema 4: El sintagma nominal</ion-card-title>
+                                        <ion-card-title style="font-size: 1.2rem; text-align:center;">{{examen.nombreExamen}}</ion-card-title>
                                         <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
                                             <ion-icon name="book" no-margin></ion-icon>
                                         </ion-card-subtitle>
                                     </ion-card-header>
                                     <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: -0.5rem;">
-                                        Castellano<br>05/06/2021
-                                    </ion-card-content>
-                                </ion-card>
-                                <ion-icon name="chevron-forward-outline" (click)="moveForward(0)"></ion-icon>
-                            </div>
-                        </ion-slide>
-                        <ion-slide>
-                            <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
-                                <ion-icon name="chevron-back-outline" (click)="moveBehind(0)"></ion-icon>
-                                <ion-card style="background-color: #00ff7f;">
-                                    <ion-card-header>
-                                        <ion-card-title style="font-size: 1.2rem; text-align:center;">Tema 3: Disoluciones</ion-card-title>
-                                        <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
-                                            <ion-icon name="book" no-margin></ion-icon>
-                                        </ion-card-subtitle>
-                                    </ion-card-header>
-                                    <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: -0.5rem;">
-                                        FyQ<br>05/06/2021
+                                        {{examen.asignatura}}<br>{{this.fechas[i]}}
                                     </ion-card-content>
                                 </ion-card>
                                 <ion-icon name="chevron-forward-outline" (click)="moveForward(0)"></ion-icon>
@@ -69,35 +52,18 @@
             <ion-row>
                 <ion-col size="12" align-self-center>
                     <ion-slides>
-                        <ion-slide>
+                        <ion-slide *ngFor="let examen of this.examenesResueltos">
                             <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
                                 <ion-icon name="chevron-back-outline" (click)="moveBehind(1)"></ion-icon>
-                                <ion-card style="background-color: #00ff7f;">
+                                <ion-card class="tarjeta2" style="background-color: #00ff7f;">
                                     <ion-card-header>
-                                        <ion-card-title style="font-size: 1.2rem; text-align:center;">Tema 3: Polinomios</ion-card-title>
+                                        <ion-card-title style="font-size: 1.2rem; text-align:center;">{{examen.nombreExamen}}</ion-card-title>
                                         <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
                                             <ion-icon name="book" no-margin></ion-icon>
                                         </ion-card-subtitle>
                                     </ion-card-header>
                                     <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: -0.5rem;">
-                                        Matemáticas<br>Nota: 8.5
-                                    </ion-card-content>
-                                </ion-card>
-                                <ion-icon name="chevron-forward-outline" (click)="moveForward(1)"></ion-icon>
-                            </div>
-                        </ion-slide>
-                        <ion-slide>
-                            <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
-                                <ion-icon name="chevron-back-outline" (click)="moveBehind(1)"></ion-icon>
-                                <ion-card style="background-color: #00ff7f;">
-                                    <ion-card-header>
-                                        <ion-card-title style="font-size: 1.2rem; text-align:center;">Tema 4: Disoluciones</ion-card-title>
-                                        <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
-                                            <ion-icon name="book" no-margin></ion-icon>
-                                        </ion-card-subtitle>
-                                    </ion-card-header>
-                                    <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: -0.5rem;">
-                                        Matemáticas<br>Nota: 5.75
+                                        {{examen.asignatura}}<br>Nota: {{examen.nota}}
                                     </ion-card-content>
                                 </ion-card>
                                 <ion-icon name="chevron-forward-outline" (click)="moveForward(1)"></ion-icon>

@@ -85,8 +85,11 @@ export class AlumnoService {
     return this.http.get(`${environment.base_url}/examenes/examenesalumno/${uidAlumno}/${uidProfesor}/${uidClase}`, this.cabeceras);
   }
 
-  cargarNotasAsignaturaAlumno(uidProfesor:string, uidAlumno: string){
-    return this.http.get(`${environment.base_url}/examenes/notas/${uidProfesor}/${uidAlumno}`, this.cabeceras);
+  cargarNotasAsignaturaAlumno(uidProfesor:string, uidAlumno: string, filtro?: string){
+    if(!filtro){
+      filtro = '';
+    }
+    return this.http.get(`${environment.base_url}/examenes/notas/${uidProfesor}/${uidAlumno}/?limitado=${filtro}`, this.cabeceras);
   }
 
   cargarExamenAlumno(uidExamen: string, uidAlumno: string, uidCentro: string){

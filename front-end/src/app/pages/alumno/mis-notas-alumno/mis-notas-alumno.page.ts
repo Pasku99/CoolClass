@@ -58,7 +58,7 @@ export class MisNotasAlumnoPage implements OnInit {
   cargarNotasAlumno(){
     this.alumnoService.cargarNotasAsignaturaAlumno(this.uidProfesor, this.alumnoService.uid)
       .subscribe(res => {
-        this.examenesResueltos = res['examenesAlumno'];
+        this.examenesResueltos = res['examenesResueltos'];
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
