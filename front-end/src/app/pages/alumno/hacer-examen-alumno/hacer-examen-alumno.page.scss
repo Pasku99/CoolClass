@@ -52,33 +52,17 @@ ion-button {
         width: 80%;
     }
     ion-card-header {
-        top: 30%;
-    }
-    ion-card-content {
-        font-size: 1.5rem;
-    }
-    .respuesta {
-        margin-right: 2rem;
-        margin-left: 2rem;
+        top: 0%;
     }
 }
 
 @media (max-height: 700px) {
     ion-card {
-        height: 7rem;
-        width: 7rem;
+        height: 80%;
+        width: 80%;
     }
     ion-card-header {
-        top: 25%;
-    }
-    ion-card-content {
-        font-size: 1.1rem;
-        margin-top: -0.6rem;
-    }
-    .respuesta {
-        margin-top: -0.2rem;
-        margin-right: 1rem;
-        margin-left: 1rem;
+        top: 0%;
     }
 }
 

@@ -15,6 +15,7 @@ var ObjectId = require('mongodb').ObjectID;
 const Alumno = require('../models/alumno');
 const { pasarFechaDDMMYYYY } = require('../helpers/pasarFechaDDMMYYYY');
 const { arrayAleatorio } = require('../helpers/arrayAleatorio');
+const { round } = require('../helpers/round');
 
 const sleep = (ms) => {
     return new Promise((resolve) => {
@@ -346,7 +347,7 @@ const crearExamenResuelto = async(req, res = response) => {
         const {...object } = req.body;
         const examenResuelto = new ExamenResuelto(object);
         examenResuelto.nombreClase = clase.nombre;
-        examenResuelto.nota = nota;
+        examenResuelto.nota = round(nota);
         examenResuelto.asignatura = examen.asignatura;
         examenResuelto.nombreExamen = examen.nombreExamen;
         examenResuelto.nombreAlumno = alumno.nombre;
