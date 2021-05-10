@@ -12,8 +12,10 @@ export class PantallaPrincipalCentroEducativoPage implements OnInit {
   constructor(private centroeducativoService: CentroeducativoService,
               private authService: AuthService) { }
 
-  ngOnInit() {
-    this.authService.cogerToken();
+  ngOnInit() { }
+
+  async ionViewWillEnter(){
+    await this.authService.cogerToken();
   }
 
 }

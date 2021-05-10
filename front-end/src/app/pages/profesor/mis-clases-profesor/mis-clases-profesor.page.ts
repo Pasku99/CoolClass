@@ -21,6 +21,7 @@ export class MisClasesProfesorPage implements OnInit {
   public listaAsignaturasEnUso: Array<string> = new Array<string>();
   public listaAsignaturasEnUsoProf: Asignatura[] = [];
   public uidClases: Array<string> = new Array<string>();
+  public nombreClase: string = '';
 
   constructor(private profesorService: ProfesorService,
               private route: ActivatedRoute) {
@@ -55,7 +56,13 @@ export class MisClasesProfesorPage implements OnInit {
   ngOnInit() { }
 
   ionViewWillEnter(){
-    this.cargarClases(this.profesorService.uidCentro, this.profesorService.uid, this.filtro);
+    this.nombreClase = this.route.snapshot.params['nombreClase'];
+    if(this.nombreClase){
+      this.cargarDesplegable(this.profesorService.uidCentro, this.profesorService.uid, this.filtro);
+      this.cargarClasesFiltro(this.profesorService.uidCentro, this.profesorService.uid, this.nombreClase);
+    } else {
+      this.cargarClases(this.profesorService.uidCentro, this.profesorService.uid, this.filtro);
+    }
   }
 
   cargarClases(uidCentro, uidProfesor, filtro){
@@ -97,6 +104,23 @@ export class MisClasesProfesorPage implements OnInit {
         return;
       });
   }
+
+  cargarDesplegable(uidCentro, uidProfesor, filtro){
+    this.profesorService.cargarClasesProfesor(uidCentro, uidProfesor, filtro)
+      .subscribe(res =>{
+        this.listaClasesProfesor = res['infoClases'];
+        this.listaDesplegable = [];
+        for(let i = 0; i < this.listaClasesProfesor.length; i++){
+          let clases = {nombre: this.listaClasesProfesor[i][0], asignatura: this.listaClasesProfesor[i][1], uidClase: this.listaClasesProfesor[i][2], expanded: false};
+          this.listaDesplegable.push(clases);
+        }
+      }, (err) =>{
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
+      });
+  }
+
 
   filtrarNombre($event){
     this.filtro = $event.target.value;

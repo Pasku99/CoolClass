@@ -674,12 +674,17 @@ const obtenerExamenAlumno = async(req, res) => {
             respuestas = [];
         }
 
+        let fechaComienzo = examen.fechaComienzo;
+        let fechaFinal = examen.fechaFinal;
+
         res.json({
             ok: true,
             msg: 'getExamen',
             nombreExamen,
             preguntas,
             respuestasAleatorias,
+            fechaComienzo,
+            fechaFinal
         });
 
     } catch (error) {

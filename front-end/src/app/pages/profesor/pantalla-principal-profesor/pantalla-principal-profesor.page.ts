@@ -23,37 +23,150 @@ export class PantallaPrincipalProfesorPage implements OnInit {
   public fechas: Array<string> = new Array<string>();
 
   constructor(private authService: AuthService,
-              private profesorService: ProfesorService) {}
-
-  public moveForward(index: number): void {
-    this.slides.toArray()[index].slideNext(500);
+              private profesorService: ProfesorService) {
+    this.sliderOne =
+    {
+      isBeginningSlide: true,
+      isEndSlide: false,
+      slidesItems: [
+        {
+          id: 995
+        },
+        {
+          id: 925
+        },
+        {
+          id: 940
+        },
+        {
+          id: 943
+        },
+        {
+          id: 944
+        }
+      ]
+    };
   }
 
-  public moveBehind(index: number): void {
-    this.slides.toArray()[index].slidePrev(500);
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  ngOnInit() {
-    this.authService.cogerToken();
-  }
-
-  ionViewWillEnter(){
+  async ionViewWillEnter(){
+    await this.authService.cogerToken();
+    await this.sleep(15);
     this.cargarClases();
     this.cargarUltimosExamenes();
     this.cargarProximosExamenes();
   }
+
+  ngOnInit() {  }
+
+  //  //Mover al slide siguiente
+  //  slideNext(object, slideView) {
+  //   slideView.slideNext(500).then(() => {
+  //     this.checkIfNavDisabled(object, slideView);
+  //   });
+  // }
+
+  // //Mover al slide anterior
+  // slidePrev(object, slideView) {
+  //   slideView.slidePrev(500).then(() => {
+  //     this.checkIfNavDisabled(object, slideView);
+  //   });;
+  // }
+
+  // SlideDidChange(object, slideView) {
+  //   // this.checkIfNavDisabled(object, slideView);
+  // }
+
+  // checkIfNavDisabled(object, slideView) {
+  //   this.checkisBeginning(object, slideView);
+  //   this.checkisEnd(object, slideView);
+  // }
+
+  // checkisBeginning(object, slideView) {
+  //   slideView.isBeginning().then((istrue) => {
+  //     object.isBeginningSlide = istrue;
+  //   });
+  // }
+
+  // checkisEnd(object, slideView) {
+  //   slideView.isEnd().then((istrue) => {
+  //     object.isEndSlide = istrue;
+  //   });
+  // }
+
+  @ViewChild('slideWithNav', { static: false }) slideWithNav: IonSlides;
+  @ViewChild('slideWithNav2', { static: false }) slideWithNav2: IonSlides;
+  @ViewChild('slideWithNav3', { static: false }) slideWithNav3: IonSlides;
+
+  sliderOne: any;
+  sliderTwo: any;
+  sliderThree: any;
+
+  //Configuration for each Slider
+  slideOptsOne = {
+    initialSlide: 0,
+    slidesPerView: 2,
+    autoplay: {
+      disableOnInteraction: false,
+      loop :true,
+    },
+    centeredSlides: true,
+    spaceBetween: 100
+  };
+  slideOptsTwo = {
+    initialSlide: 0,
+    slidesPerView: 2,
+    autoplay: {
+      disableOnInteraction: false,
+      loop :true,
+    },
+    centeredSlides: true,
+    spaceBetween: 20
+  };
+  slideOptsThree = {
+    initialSlide: 0,
+    slidesPerView: 2,
+    autoplay: {
+      disableOnInteraction: false,
+      loop :true,
+    },
+    centeredSlides: true,
+    spaceBetween: 20
+  };
+
+  // public moveForward(index: number): void {
+  //   this.slides.toArray()[index].slideNext(500);
+  //   console.log(this.slides.toArray()[index].isEnd())
+  // }
+
+  // public moveBehind(index: number): void {
+  //   this.slides.toArray()[index].slidePrev(500);
+  // }
+
+  // sleep(ms) {
+  //   return new Promise(resolve => setTimeout(resolve, ms));
+  // }
+
+  // async ionViewWillEnter(){
+  //   await this.authService.cogerToken();
+  //   await this.sleep(15);
+  //   this.cargarClases();
+  //   this.cargarUltimosExamenes();
+  //   this.cargarProximosExamenes();
+  // }
 
   cargarClases(){
     this.profesorService.cargarClasesProfesor(this.profesorService.uidCentro, this.profesorService.uid, this.filtro)
       .subscribe(res =>{
         this.listaClasesProfesor = res['infoClases'];
         this.listaClasesProfesorObjeto = [];
-
         for(let i = 0; i < this.listaClasesProfesor.length; i++){
           let clases = {nombre: this.listaClasesProfesor[i][0], asignatura: this.listaClasesProfesor[i][1], uidClase: this.listaClasesProfesor[i][2], expanded: false};
           this.listaClasesProfesorObjeto.push(clases);
         }
-
       }, (err) =>{
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});

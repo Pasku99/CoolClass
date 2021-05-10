@@ -79,6 +79,7 @@ const routes: Routes = [
     children: [
       { path: 'principal', component: PantallaPrincipalProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases', component: MisClasesProfesorPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'clases/:nombreClase', component: MisClasesProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases/alumnos/:idClase', component: MisAlumnosProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases/alumnos/:idClase/:idAlumno/notas', component: NotasAlumnosProfesorPage, canActivate: [ AuthcentroGuard ]},
       { path: 'clases/alumnos/notas/:idAlumno/:idExamenResuelto/comprobar-examen', component: ComprobarExamenProfesorPage, canActivate: [ AuthcentroGuard ]},

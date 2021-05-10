@@ -103,8 +103,8 @@ export class AuthService {
     alert.then(alert => alert.present());
   }
 
-  cogerToken(){
-    this.storage.get(TOKEN_KEY).then((result) => {
+  async cogerToken(){
+    await this.storage.get(TOKEN_KEY).then((result) => {
       if(result != null || result != undefined){
         return this.http.get(`${environment.base_url}/login/token`, {
           headers: {'x-token': result}

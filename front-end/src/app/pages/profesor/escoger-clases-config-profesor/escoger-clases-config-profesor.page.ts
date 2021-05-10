@@ -112,7 +112,6 @@ export class EscogerClasesConfigProfesorPage implements OnInit {
       uidProfesor : this.profesorService.uid,
       asignatura: asignatura,
     };
-    console.log(data)
     this.profesorService.eliminarClaseAsignaturaProfesor(data)
       .subscribe( res => {
         this.cargarClasesCentro();

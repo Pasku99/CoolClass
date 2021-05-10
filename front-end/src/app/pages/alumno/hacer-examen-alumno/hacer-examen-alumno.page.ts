@@ -25,7 +25,11 @@ export class HacerExamenAlumnoPage implements OnInit {
   public respuesta3: string = '';
   public respuesta4: string = '';
   public uidProfesor: string = '';
-
+  public counter = 0;
+  public fechaComienzo: Date = new Date();
+  public fechaFinal: Date = new Date();
+  private tiempoAgotado: boolean = false;
+  public tiempominsegs: string = '';
 
   constructor(private alumnoService: AlumnoService,
               private route: ActivatedRoute,
@@ -71,6 +75,13 @@ export class HacerExamenAlumnoPage implements OnInit {
         for(let i = 0; i < this.arrayPreguntas.length; i++){
           this.respondidas.push('');
         }
+        let fechaActual = new Date().toISOString();
+        this.fechaFinal = res['fechaFinal'];
+        let fechaFinalContador = new Date(this.fechaFinal).toISOString();
+        this.counter = Date.parse(fechaFinalContador) - Date.parse(fechaActual);
+        this.counter = this.counter/1000;
+        this.counter = Math.round(this.counter);
+        this.cronometro();
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
@@ -100,18 +111,24 @@ export class HacerExamenAlumnoPage implements OnInit {
       this.respuesta3 = this.arrayRespuestas[this.contador][2];
       this.respuesta4 = this.arrayRespuestas[this.contador][3];
     }else{
-      const data = {
-        uidAlumno : this.alumnoService.uid,
-        uidExamen: this.uidExamen,
-        uidProfesor: this.uidProfesor,
-        uidClase: this.alumnoService.uidClase,
-        respuestasCorrectas: this.respondidas
-      };
-      this.alumnoService.enviarExamenResuelto(data)
-        .subscribe(res => {
+      this.enviarExamen(this.tiempoAgotado);
+    }
+  }
+
+enviarExamen(tiempoAgotado){
+    const data = {
+      uidAlumno : this.alumnoService.uid,
+      uidExamen: this.uidExamen,
+      uidProfesor: this.uidProfesor,
+      uidClase: this.alumnoService.uidClase,
+      respuestasCorrectas: this.respondidas
+    };
+    this.alumnoService.enviarExamenResuelto(data)
+      .subscribe(res => {
+        if(!tiempoAgotado){
           Swal.fire({
             title: 'Examen finalizado',
-            text: 'Podrá consultar su nota cuando acabe',
+            text: 'Puede ya consultar su nota.',
             showCancelButton: false,
             confirmButtonText: 'Vale',
             confirmButtonColor: '#004dff',
@@ -122,17 +139,55 @@ export class HacerExamenAlumnoPage implements OnInit {
               this.router.navigateByUrl('/tabs-alumno/asignaturas/info-asignatura/' + res['examenResuelto'].asignatura);
             }
           });
-        }, (err => {
-          const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
-          Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
-          return;
-        }))
-    }
+        } else {
+          Swal.fire({
+            title: 'Examen finalizado. Se le acabó el tiempo.',
+            text: 'Puede ya consultar su nota.',
+            showCancelButton: false,
+            confirmButtonText: 'Vale',
+            confirmButtonColor: '#004dff',
+            allowOutsideClick: false,
+            heightAuto: false,
+          }).then((result) => {
+            if (result.value) {
+              this.router.navigateByUrl('/tabs-alumno/asignaturas/info-asignatura/' + res['examenResuelto'].asignatura);
+            }
+          });
+        }
+      }, (err => {
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
+      }))
   }
 
   respuesta(valor) :void{
     this.respondidas[this.contador] = valor;
     this.next();
+  }
+
+  cronometro(){
+    let intervalId = setInterval(() => {
+      this.counter = this.counter - 1;
+      // console.log(this.counter)
+      let minutes = Math.floor(this.counter / 60);
+      let seconds = this.counter - minutes * 60;
+      this.tiempominsegs = this.str_pad_left(minutes,'0',2)+':'+this.str_pad_left(seconds,'0',2);
+      if(this.counter === 0){
+        for(let i = 0; i < this.respondidas.length; i++){
+          if(this.respondidas[i] == ''){
+            this.respondidas[i] = 'No responder';
+          }
+        }
+        this.tiempoAgotado = true;
+        this.enviarExamen(this.tiempoAgotado);
+        clearInterval(intervalId);
+      }
+    }, 1000)
+  }
+
+  str_pad_left(string,pad,length) {
+    return (new Array(length+1).join(pad)+string).slice(-length);
   }
 
 }

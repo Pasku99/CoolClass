@@ -7,15 +7,25 @@
         </ion-row>
         <ion-row>
             <ion-col size="12" align-self-center>
-                <div class="ion-padding">
-                    <ion-slides pages>
+                <!-- <div class="ion-padding">
+                    <ion-slides slidesPerView="3" spaceBetween="0">
                         <ion-slide *ngFor="let clase of this.listaClasesProfesorObjeto">
                             <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(0)"></ion-icon>
-                            <ion-button class="clases" size="large">{{clase.nombre}}</ion-button>
+                            <ion-button class="clases" size="large" [routerLink]="['/tabs-profesor/clases', clase.nombre]">{{clase.nombre}}</ion-button>
                             <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(0)"></ion-icon>
                         </ion-slide>
+                        <ion-slide *ngIf="this.listaClasesProfesorObjeto.length == 0">
+                            <ion-button class="clases" size="large" style="font-size: 1.3rem;">No tienes clases registradas.</ion-button>
+                        </ion-slide>
                     </ion-slides>
-                </div>
+                </div> -->
+                <ion-slides pager="true" [options]="slideOptsOne" #slideWithNav>
+                    <ion-slide *ngFor="let clase of this.listaClasesProfesorObjeto">
+                        <!-- <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="slidePrev(this.listaClasesProfesorObjeto,slideWithNav)"></ion-icon> -->
+                        <ion-button class="clases" size="large" [routerLink]="['/tabs-profesor/clases', clase.nombre]">{{clase.nombre}}</ion-button>
+                        <!-- <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="slideNext(this.listaClasesProfesorObjeto,slideWithNav)"></ion-icon> -->
+                    </ion-slide>
+                </ion-slides>
             </ion-col>
         </ion-row>
         <ion-row>
@@ -25,10 +35,9 @@
         </ion-row>
         <ion-row>
             <ion-col size="12" align-self-center>
-                <ion-slides pages>
-                    <ion-slide *ngFor="let examen of this.ultimosExamenes">
+                <ion-slides pager="false" [options]="slideOptsTwo" #slideWithNav2>
+                    <!-- <ion-slide *ngFor="let examen of this.ultimosExamenes">
                         <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(1)"></ion-icon>
-                        <!-- <div style="height: 100%; display: flex; align-items: center; justify-content: center;"> -->
                         <ion-card class="tarjeta1" style="background-color: #00ff7f;">
                             <ion-card-header>
                                 <ion-card-title style="font-size: 1.2rem; text-align:center;">{{examen.nombreExamen}}</ion-card-title>
@@ -40,26 +49,36 @@
                                 {{examen.nombreClase}}
                             </ion-card-content>
                         </ion-card>
-                        <!-- </div> -->
                         <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(1)"></ion-icon>
+                    </ion-slide> -->
+                    <ion-slide *ngFor="let examen of this.ultimosExamenes">
+                        <!-- <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(1)"></ion-icon> -->
+                        <ion-card class="tarjeta1" style="background-color: #00ff7f;">
+                            <ion-card-header>
+                                <ion-card-title style="font-size: 1.2rem; text-align:center;">{{examen.nombreExamen}}</ion-card-title>
+                                <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
+                                    <ion-icon name="book" style="margin-top: 1rem;"></ion-icon>
+                                </ion-card-subtitle>
+                            </ion-card-header>
+                            <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: 1rem;">
+                                {{examen.nombreClase}}
+                            </ion-card-content>
+                        </ion-card>
+                        <!-- <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(1)"></ion-icon> -->
                     </ion-slide>
-                    <!-- <ion-slide>
-                        <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(1)"></ion-icon>
+                    <ion-slide *ngIf="this.ultimosExamenes.length == 0">
                         <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
-                            <ion-card style="background-color: #00ff7f;">
+                            <ion-card class="tarjetano1" style="background-color: #00ff7f;">
                                 <ion-card-header>
-                                    <ion-card-title style="font-size: 1.2rem; text-align:center;">Tema 4: Polinomios</ion-card-title>
+                                    <ion-card-title style="font-size: 1.2rem; text-align:center;">No tienes exámenes recientes.</ion-card-title>
                                     <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
-                                        <ion-icon name="book" no-margin></ion-icon>
                                     </ion-card-subtitle>
                                 </ion-card-header>
-                                <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: 0rem;">
-                                    Clase: 2ESO A
+                                <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: -0.5rem;">
                                 </ion-card-content>
                             </ion-card>
                         </div>
-                        <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(1)"></ion-icon>
-                    </ion-slide> -->
+                    </ion-slide>
                 </ion-slides>
             </ion-col>
         </ion-row>
@@ -70,9 +89,9 @@
         </ion-row>
         <ion-row>
             <ion-col size="12" align-self-center>
-                <ion-slides>
+                <ion-slides pager="false" [options]="slideOptsThree" #slideWithNav3>
                     <ion-slide *ngFor="let examen of this.proximosExamenes; let i = index">
-                        <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(2)"></ion-icon>
+                        <!-- <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(2)"></ion-icon> -->
                         <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
                             <ion-card class="tarjeta2" style="background-color: #00ff7f;">
                                 <ion-card-header>
@@ -86,25 +105,21 @@
                                 </ion-card-content>
                             </ion-card>
                         </div>
-                        <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(2)"></ion-icon>
+                        <!-- <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(2)"></ion-icon> -->
                     </ion-slide>
-                    <!-- <ion-slide>
-                        <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(2)"></ion-icon>
+                    <ion-slide *ngIf="this.proximosExamenes.length == 0">
                         <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
-                            <ion-card style="background-color: #00ff7f;">
+                            <ion-card class="tarjetano2" style="background-color: #00ff7f;">
                                 <ion-card-header>
-                                    <ion-card-title style="font-size: 1.2rem; text-align:center;">Tema 5: Sistemas</ion-card-title>
+                                    <ion-card-title style="font-size: 1.2rem; text-align:center;">No hay próximos exámenes</ion-card-title>
                                     <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
-                                        <ion-icon name="book" no-margin></ion-icon>
                                     </ion-card-subtitle>
                                 </ion-card-header>
                                 <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: -0.5rem;">
-                                    Clase: 3ESO B<br>Fecha: 05/06/2021
                                 </ion-card-content>
                             </ion-card>
                         </div>
-                        <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(2)"></ion-icon>
-                    </ion-slide> -->
+                    </ion-slide>
                 </ion-slides>
             </ion-col>
         </ion-row>

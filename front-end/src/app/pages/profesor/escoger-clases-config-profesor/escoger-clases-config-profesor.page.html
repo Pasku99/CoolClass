@@ -58,50 +58,41 @@
     </ion-col>
 </ion-header>
 <ion-content>
-    <div style="background-color: white; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
-        <ion-grid>
-            <ion-row>
-                <ion-col>
-                    <h3 style="text-align: center;">Escoja sus clases</h3>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col>
-                    <h4 style="text-align: center; margin-left: 1rem; margin-right: 1rem;">Podrá cambiar toda su configuración en el apartado mi perfil</h4>
-                </ion-col>
-            </ion-row>
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <h3 style="text-align: center;">Escoja sus clases</h3>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h4 style="text-align: center; margin-left: 1rem; margin-right: 1rem;">Podrá cambiar toda su configuración en el apartado mi perfil</h4>
+            </ion-col>
+        </ion-row>
 
-            <ion-row style="background-color: #00ff7f; border-radius: 1rem; margin-left: 2rem; margin-right: 2rem; margin-top: 1rem;" *ngFor="let claseProfesor of this.listaClasesProfesor; let i=index">
+        <ion-row style="background-color: #00ff7f; border-radius: 1rem; margin-left: 2rem; margin-right: 2rem; margin-top: 1rem;" *ngFor="let claseProfesor of this.listaClasesProfesor; let i=index">
 
-                <ion-col size="4">
-                    <p style="text-align: left; margin-left: 1rem; font-size: 1.1rem; font-weight: bold; margin-top: 1.5rem;">{{claseProfesor[0]}}</p>
-                </ion-col>
-                <ion-col size="6">
-                    <ion-list class="ion-no-border" lines="none" style="background-color: white; margin-top: 0.2rem;">
-                        <ion-item style="--background: white;">
-                            <ion-select placeholder={{claseProfesor[1]}} (ionChange)="cogerClase($event); escogerAsignatura(claseProfesor[0]);">
-                                <ion-select-option value="2esoa" style="color: black;" *ngFor="let asignatura of this.listaAsignaturas" [value]="asignatura">{{asignatura}}</ion-select-option>
-                            </ion-select>
-                        </ion-item>
-                    </ion-list>
-                </ion-col>
-                <ion-col size="2">
-                    <ion-icon name="close-outline" style="width: 2rem; height: 2rem; color: red; margin-left: 0; margin-top: 1.2rem;" (click)="eliminarClaseProfesor(claseProfesor[0], claseProfesor[1])"></ion-icon>
-                </ion-col>
-            </ion-row>
-            <ion-row style="background-color: white;border-top: 1px solid #004dff; margin-top: 1rem; margin-left: 1rem; margin-right: 1rem;">
-                <ion-item class="ion-no-border" lines="none" style="background-color: white !important; border-radius: 1rem; margin-top: 1rem; margin-left: 1.1rem;" *ngFor="let clase of this.listaClases; let i=index" (click)="anyadirClaseProfesor(clase[0])">
-                    <span class="text">{{clase[0]}}</span>
-                    <ion-icon name="add-outline" style="color: white"></ion-icon>
-                </ion-item>
-
-            </ion-row>
-            <ion-row style="margin-top: 2rem;">
-                <ion-col size="12" style="border-radius: 1rem;">
-                    <ion-button size="large" routerLink="/tabs-profesor/perfil/configuracion-clases/asignaturas">Guardar</ion-button>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-
-    </div>
+            <ion-col size="4">
+                <p style="text-align: left; margin-left: 1rem; font-size: 1.1rem; font-weight: bold; margin-top: 1.5rem;">{{claseProfesor[0]}}</p>
+            </ion-col>
+            <ion-col size="6">
+                <ion-list class="ion-no-border" lines="none" style="background-color: white; margin-top: 0.2rem;">
+                    <ion-item style="--background: white;">
+                        <ion-select placeholder={{claseProfesor[1]}} (ionChange)="cogerClase($event); escogerAsignatura(claseProfesor[0]);">
+                            <ion-select-option value="2esoa" style="color: black;" *ngFor="let asignatura of this.listaAsignaturas" [value]="asignatura">{{asignatura}}</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+            <ion-col size="2">
+                <ion-icon name="close-outline" style="width: 2rem; height: 2rem; color: red; margin-left: 0; margin-top: 1.2rem;" (click)="eliminarClaseProfesor(claseProfesor[0], claseProfesor[1])"></ion-icon>
+            </ion-col>
+        </ion-row>
+        <ion-row style="background-color: white;border-top: 1px solid #004dff; margin-top: 1rem; margin-left: 1rem; margin-right: 1rem;">
+            <ion-item class="ion-no-border" lines="none" style="background-color: white !important; border-radius: 1rem; margin-top: 1rem; margin-left: 1.1rem;" *ngFor="let clase of this.listaClases; let i=index" (click)="anyadirClaseProfesor(clase[0])">
+                <span class="text">{{clase[0]}}</span>
+                <ion-icon name="add-outline" style="color: white"></ion-icon>
+            </ion-item>
+        </ion-row>
+    </ion-grid>
 </ion-content>

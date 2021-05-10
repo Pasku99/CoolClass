@@ -21,7 +21,7 @@ export class PantallaPrincipalAlumnoPage implements OnInit {
   public fechas: Array<string> = new Array<string>();
 
   constructor(private authService: AuthService,
-              private alumnoService: AlumnoService) {}
+              private alumnoService: AlumnoService) { }
 
   public moveForward(index: number): void {
     this.slides.toArray()[index].slideNext(500);
@@ -33,8 +33,13 @@ export class PantallaPrincipalAlumnoPage implements OnInit {
 
   ngOnInit() {  }
 
-  ionViewWillEnter(){
-    this.authService.cogerToken();
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async ionViewWillEnter(){
+    await this.authService.cogerToken();
+    await this.sleep(5);
     this.cargarAsignaturas();
     this.cargarUltimosExamenesAlumno();
     this.cargarProximosExamenesAlumno();
