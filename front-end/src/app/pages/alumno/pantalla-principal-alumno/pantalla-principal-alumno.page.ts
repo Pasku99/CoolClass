@@ -39,7 +39,7 @@ export class PantallaPrincipalAlumnoPage implements OnInit {
 
   async ionViewWillEnter(){
     await this.authService.cogerToken();
-    await this.sleep(5);
+    await this.sleep(250);
     this.cargarAsignaturas();
     this.cargarUltimosExamenesAlumno();
     this.cargarProximosExamenesAlumno();
