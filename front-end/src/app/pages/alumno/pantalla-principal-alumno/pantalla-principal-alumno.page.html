@@ -14,6 +14,9 @@
                             <ion-button class="clases" size="large" style="font-size: 1.3rem;">{{asignatura}}</ion-button>
                             <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(0)"></ion-icon>
                         </ion-slide>
+                        <ion-slide *ngIf="this.listaAsignaturasMayus.length == 0">
+                            <ion-button class="clases" size="large" style="font-size: 1.3rem;">No hay asignaturas registradas por ningún profesor.</ion-button>
+                        </ion-slide>
                     </ion-slides>
                 </div>
             </ion-col>
@@ -40,6 +43,19 @@
                             </ion-card-content>
                         </ion-card>
                         <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(1)"></ion-icon>
+                    </ion-slide>
+                    <ion-slide *ngIf="this.examenesResueltos.length == 0">
+                        <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <ion-card class="tarjetano1" style="background-color: #00ff7f;">
+                                <ion-card-header>
+                                    <ion-card-title style="font-size: 1.2rem; text-align:center;">No hay próximos exámenes</ion-card-title>
+                                    <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
+                                    </ion-card-subtitle>
+                                </ion-card-header>
+                                <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: -0.5rem;">
+                                </ion-card-content>
+                            </ion-card>
+                        </div>
                     </ion-slide>
                 </ion-slides>
             </ion-col>
@@ -68,6 +84,19 @@
                             </ion-card>
                         </div>
                         <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(2)"></ion-icon>
+                    </ion-slide>
+                    <ion-slide *ngIf="this.proximosExamenes.length == 0">
+                        <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <ion-card class="tarjetano2" style="background-color: #00ff7f;">
+                                <ion-card-header>
+                                    <ion-card-title style="font-size: 1.2rem; text-align:center;">No hay próximos exámenes</ion-card-title>
+                                    <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
+                                    </ion-card-subtitle>
+                                </ion-card-header>
+                                <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: -0.5rem;">
+                                </ion-card-content>
+                            </ion-card>
+                        </div>
                     </ion-slide>
                 </ion-slides>
             </ion-col>

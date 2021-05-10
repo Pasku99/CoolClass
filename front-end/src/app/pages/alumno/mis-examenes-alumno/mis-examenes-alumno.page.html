@@ -4,73 +4,72 @@
     </ion-col>
 </ion-header>
 <ion-content class="ion-no-border" lines="none">
-    <div class="contenido" style="background-color: white; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
-        <ion-grid>
-            <ion-row>
-                <ion-col size="12">
-                    <ion-icon class="fotoPerfil" text-center name="person-circle" style="width: 7rem; height: 7rem; text-align: center; width:100%; display:flex; align-items:center; justify-content:center;"></ion-icon>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col size="12" align-self-center class="ion-no-padding">
-                    <h2 style="text-align: center; margin-top: 4rem;" *ngIf="this.nombreProfesor != ''">Profesor: {{this.nombreProfesor}}</h2>
-                </ion-col>
-            </ion-row>
-            <ion-row class="ion-no-padding">
-                <ion-col size="12" align-self-center class="ion-no-padding">
-                    <h2 style="text-align: center; color: #004dff; font-weight: bold; margin-bottom: 10rem;">Próximos exámenes</h2>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col size="12" align-self-center class="ion-no-padding" style="margin-top: -9rem;">
-                    <ion-searchbar placeholder="Buscar examen"></ion-searchbar>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col size="12" align-self-center class="ion-no-padding" style="margin-top: -6rem;">
-                    <ion-card (click)="expandItem(examen)" *ngFor="let examen of this.examenes">
-                        <ion-row>
-                            <ion-col size="3">
-                                <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;"></ion-icon>
-                            </ion-col>
-                            <ion-col size="4.5">
-                                <p style="color: black; font-size: 16px;"><b>Nombre</b></p>
-                            </ion-col>
-                            <ion-col size="4.5">
-                                <p style="color: black; font-size: 16px;">{{examen.nombreExamen}}</p>
-                            </ion-col>
-                        </ion-row>
-                        <ion-row>
-                            <ion-col size="12">
-                                <app-accordion-list expandHeight="150px" [expanded]="examen.expanded">
-                                    <ion-row>
-                                        <ion-col size="3">
 
-                                        </ion-col>
-                                        <ion-col size="4.5">
-                                            <p style="color: black; font-size: 16px; font-weight: bold;">Fecha</p>
-                                        </ion-col>
-                                        <ion-col size="4.5">
-                                            <p style="color: black; font-size: 16px;">{{examen.fechaComienzo}}</p>
-                                        </ion-col>
-                                    </ion-row>
-                                    <ion-row>
-                                        <ion-col size="3">
+    <ion-grid>
+        <ion-row>
+            <ion-col size="12">
+                <ion-icon class="fotoPerfil" text-center name="person-circle" style="width: 7rem; height: 7rem; text-align: center; width:100%; display:flex; align-items:center; justify-content:center;"></ion-icon>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" align-self-center class="ion-no-padding">
+                <h2 style="text-align: center; margin-top: 4rem;" *ngIf="this.nombreProfesor != ''">Profesor: {{this.nombreProfesor}}</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row class="ion-no-padding">
+            <ion-col size="12" align-self-center class="ion-no-padding">
+                <h2 style="text-align: center; color: #004dff; font-weight: bold; margin-bottom: 10rem;">Próximos exámenes</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" align-self-center class="ion-no-padding" style="margin-top: -9rem;">
+                <ion-searchbar placeholder="Buscar examen"></ion-searchbar>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" align-self-center class="ion-no-padding" style="margin-top: -6rem;">
+                <ion-card (click)="expandItem(examen)" *ngFor="let examen of this.examenes; let i = index;">
+                    <ion-row>
+                        <ion-col size="3">
+                            <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;"></ion-icon>
+                        </ion-col>
+                        <ion-col size="4.5">
+                            <p style="color: black; font-size: 16px;"><b>Nombre</b></p>
+                        </ion-col>
+                        <ion-col size="4.5">
+                            <p style="color: black; font-size: 16px;">{{examen.nombreExamen}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="12">
+                            <app-accordion-list expandHeight="150px" [expanded]="examen.expanded">
+                                <ion-row>
+                                    <ion-col size="3">
 
-                                        </ion-col>
-                                        <ion-col size="4.5">
-                                            <p style="color: black; font-size: 16px; font-weight: bold;">Hacer examen</p>
-                                        </ion-col>
-                                        <ion-col size="4.5">
-                                            <ion-icon name="create" style="width: 2rem; height: 2rem; margin-top: 0.55rem; margin-left: 0; color: #004DFF;" (click)="this.hacerExamen(examen.fechaComienzo, examen.fechaFinal, examen.uid)"></ion-icon>
-                                        </ion-col>
-                                    </ion-row>
-                                </app-accordion-list>
-                            </ion-col>
-                        </ion-row>
-                    </ion-card>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </div>
+                                    </ion-col>
+                                    <ion-col size="4.5">
+                                        <p style="color: black; font-size: 16px; font-weight: bold;">Fecha</p>
+                                    </ion-col>
+                                    <ion-col size="4.5">
+                                        <p style="color: black; font-size: 16px;">{{this.fechas[i]}}</p>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col size="3">
+
+                                    </ion-col>
+                                    <ion-col size="4.5">
+                                        <p style="color: black; font-size: 16px; font-weight: bold;">Hacer examen</p>
+                                    </ion-col>
+                                    <ion-col size="4.5">
+                                        <ion-icon name="create" style="width: 2rem; height: 2rem; margin-top: 0.55rem; margin-left: 0; color: #004DFF;" (click)="this.hacerExamen(examen.fechaComienzo, examen.fechaFinal, examen.uid)"></ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                            </app-accordion-list>
+                        </ion-col>
+                    </ion-row>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
