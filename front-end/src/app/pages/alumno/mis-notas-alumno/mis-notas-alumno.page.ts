@@ -15,6 +15,7 @@ export class MisNotasAlumnoPage implements OnInit {
   public uidProfesor: string = '';
   public examenesResueltos: ExamenResuelto[] = [];
   public nombreProfesor: string = '';
+  public nombreExamen: string = '';
 
   constructor(private alumnoService: AlumnoService,
               private route: ActivatedRoute) {
@@ -51,8 +52,13 @@ export class MisNotasAlumnoPage implements OnInit {
 
   ionViewWillEnter(){
     this.uidProfesor = this.route.snapshot.params['idProfesor'];
-    this.cargarNotasAlumno();
+    this.nombreExamen = this.route.snapshot.params['nombreExamen'];
     this.cargarProfesor();
+    if(this.nombreExamen){
+      this.cargarNotasAlumnoFiltro(this.nombreExamen);
+    } else {
+      this.cargarNotasAlumno();
+    }
   }
 
   cargarNotasAlumno(){

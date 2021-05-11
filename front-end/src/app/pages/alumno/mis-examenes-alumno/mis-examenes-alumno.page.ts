@@ -56,8 +56,13 @@ export class MisExamenesAlumnoPage implements OnInit {
 
   ionViewWillEnter(){
     this.uidProfesor = this.route.snapshot.params['idProfesor'];
-    this.cargarProximosExamenesAlumno();
+    this.nombreExamen = this.route.snapshot.params['nombreExamen'];
     this.cargarProfesor();
+    if(this.nombreExamen){
+      this.cargarProximosExamenesAlumnoFiltro(this.nombreExamen);
+    } else {
+      this.cargarProximosExamenesAlumno();
+    }
   }
 
   cargarProximosExamenesAlumno(){

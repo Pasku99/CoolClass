@@ -8,11 +8,11 @@
         <ion-row>
             <ion-col size="12" align-self-center>
                 <div class="ion-padding">
-                    <ion-slides pages>
+                    <ion-slides pager="true" [options]="slideOptsOne" #slideWithNav>
                         <ion-slide *ngFor="let asignatura of this.listaAsignaturasMayus; let i =index">
-                            <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(0)"></ion-icon>
-                            <ion-button class="clases" size="large" style="font-size: 1.3rem;">{{asignatura}}</ion-button>
-                            <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(0)"></ion-icon>
+                            <!-- <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(0)"></ion-icon> -->
+                            <ion-button class="clases" size="large" style="font-size: 1.3rem;" [routerLink]="['/tabs-alumno/asignaturas/info-asignatura', this.listaAsignaturas[i]]">{{asignatura}}</ion-button>
+                            <!-- <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(0)"></ion-icon> -->
                         </ion-slide>
                         <ion-slide *ngIf="this.listaAsignaturasMayus.length == 0">
                             <ion-button class="clases" size="large" style="font-size: 1.3rem;">No hay asignaturas registradas por ningún profesor.</ion-button>
@@ -23,15 +23,15 @@
         </ion-row>
         <ion-row>
             <ion-col size="12" align-self-center>
-                <h2 style="text-align: center; color: #004dff; font-weight: bold;">Últimos exámenes</h2>
+                <h2 style="text-align: center; color: #004dff; font-weight: bold;">Mis notas</h2>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col size="12" align-self-center>
-                <ion-slides pages>
+                <ion-slides pager="true" [options]="slideOptsTwo" #slideWithNav2>
                     <ion-slide *ngFor="let examen of this.examenesResueltos">
-                        <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(1)"></ion-icon>
-                        <ion-card class="tarjeta1" style="background-color: #00ff7f;">
+                        <!-- <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(1)"></ion-icon> -->
+                        <ion-card class="tarjeta1" style="background-color: #00ff7f;" [routerLink]="['/tabs-alumno/asignaturas/info-asignatura/examenes', examen.uidProfesor, 'notas', examen.nombreExamen]">
                             <ion-card-header>
                                 <ion-card-title style="font-size: 1.2rem; text-align:center;">{{examen.nombreExamen}}</ion-card-title>
                                 <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
@@ -42,7 +42,7 @@
                                 {{examen.asignatura}}
                             </ion-card-content>
                         </ion-card>
-                        <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(1)"></ion-icon>
+                        <!-- <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(1)"></ion-icon> -->
                     </ion-slide>
                     <ion-slide *ngIf="this.examenesResueltos.length == 0">
                         <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
@@ -67,11 +67,11 @@
         </ion-row>
         <ion-row>
             <ion-col size="12" align-self-center>
-                <ion-slides>
+                <ion-slides pager="true" [options]="slideOptsThree" #slideWithNav3>
                     <ion-slide *ngFor="let examen of this.proximosExamenes; let i = index">
-                        <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(2)"></ion-icon>
+                        <!-- <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(2)"></ion-icon> -->
                         <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
-                            <ion-card class="tarjeta2" style="background-color: #00ff7f;">
+                            <ion-card class="tarjeta2" style="background-color: #00ff7f;" [routerLink]="['/tabs-alumno/asignaturas/info-asignatura', examen.uidProfesor, examen.asignatura, examen.nombreExamen, 'examenes']">
                                 <ion-card-header>
                                     <ion-card-title style="font-size: 1.2rem; text-align:center;">{{examen.nombreExamen}}</ion-card-title>
                                     <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
@@ -83,7 +83,7 @@
                                 </ion-card-content>
                             </ion-card>
                         </div>
-                        <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(2)"></ion-icon>
+                        <!-- <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(2)"></ion-icon> -->
                     </ion-slide>
                     <ion-slide *ngIf="this.proximosExamenes.length == 0">
                         <div style="height: 100%; display: flex; align-items: center; justify-content: center;">

@@ -109,11 +109,14 @@ export class AlumnoService {
     return this.http.post(`${environment.base_url}/examenes/examenresuelto`, data, this.cabeceras);
   }
 
-  cargarUltimosExamenesAlumno(uidAlumno: string, filtro?:string){
+  cargarUltimosExamenesAlumno(uidAlumno: string, filtro?:string, nombreExamen?: string){
     if(!filtro){
       filtro = '';
     }
-    return this.http.get(`${environment.base_url}/examenes/ultimosexamenesalumno/${uidAlumno}/?limitado=${filtro}`, this.cabeceras);
+    if(!nombreExamen){
+      nombreExamen = '';
+    }
+    return this.http.get(`${environment.base_url}/examenes/ultimosexamenesalumno/${uidAlumno}/?limitado=${filtro}&nombreExamen=${nombreExamen}`, this.cabeceras);
   }
 
   cargarTodosProximosExamenesAlumno(uidAlumno: string, uidClase: string, filtro?:string){

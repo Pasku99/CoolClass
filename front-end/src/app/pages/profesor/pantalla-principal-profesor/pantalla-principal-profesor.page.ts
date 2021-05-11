@@ -52,6 +52,8 @@ export class PantallaPrincipalProfesorPage implements OnInit {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+  ngOnInit() {  }
+
   async ionViewWillEnter(){
     await this.authService.cogerToken();
     await this.sleep(250);
@@ -62,8 +64,6 @@ export class PantallaPrincipalProfesorPage implements OnInit {
     await this.startSlides();
   }
 
-  ngOnInit() {  }
-
   async startSlides(){
     this.slideWithNav.slideTo(0);
     this.slideWithNav2.slideTo(0);
@@ -71,6 +71,19 @@ export class PantallaPrincipalProfesorPage implements OnInit {
     this.slideWithNav.startAutoplay();
     this.slideWithNav2.startAutoplay();
     this.slideWithNav3.startAutoplay();
+  }
+
+  async ionViewWillLeave(){
+    await this.stopSlides();
+  }
+
+  async stopSlides(){
+    this.slideWithNav.slideTo(0);
+    this.slideWithNav2.slideTo(0);
+    this.slideWithNav3.slideTo(0);
+    this.slideWithNav.stopAutoplay();
+    this.slideWithNav2.stopAutoplay();
+    this.slideWithNav3.stopAutoplay();
   }
 
   //  //Mover al slide siguiente

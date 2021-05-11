@@ -865,6 +865,11 @@ const obtenerProximosExamenesProfesor = async(req, res = response) => {
 const obtenerTodosExamenesResueltosAlumno = async(req, res = response) => {
     const uidAlumno = req.params.idAlumno;
     const limitado = req.query.limitado;
+    const nombreExamen = req.query.nombreExamen;
+    let textoBusqueda = '';
+    if (nombreExamen) {
+        textoBusqueda = new RegExp(nombreExamen, 'i');
+    }
     try {
         const token = req.header('x-token');
         if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidAlumno))) {
@@ -883,15 +888,20 @@ const obtenerTodosExamenesResueltosAlumno = async(req, res = response) => {
         }
 
         let examenesAlumno, total;
-        if (limitado) {
+        if (limitado && !nombreExamen) {
             [examenesAlumno, total] = await Promise.all([
-                ExamenResuelto.find({ uidAlumno: uidAlumno }).sort({ fechaComienzo: 'asc' }).limit(6),
-                ExamenResuelto.countDocuments({ uidAlumno: uidAlumno }).sort({ fechaComienzo: 'asc' }).limit(6)
+                ExamenResuelto.find({ uidAlumno: uidAlumno }).sort({ fechaComienzo: 'desc' }).limit(6),
+                ExamenResuelto.countDocuments({ uidAlumno: uidAlumno }).sort({ fechaComienzo: 'desc' }).limit(6)
+            ]);
+        } else if (!limitado && nombreExamen) {
+            [examenesAlumno, total] = await Promise.all([
+                ExamenResuelto.find({ $and: [{ uidAlumno: uidAlumno }, { $or: [{ nombreExamen: textoBusqueda }] }] }).sort({ fechaComienzo: 'desc' }),
+                ExamenResuelto.countDocuments({ $and: [{ uidAlumno: uidAlumno }, { $or: [{ nombreExamen: textoBusqueda }] }] }).sort({ fechaComienzo: 'desc' }),
             ]);
         } else {
             [examenesAlumno, total] = await Promise.all([
-                ExamenResuelto.find({ uidAlumno: uidAlumno }).sort({ fecha: 'asc' }),
-                ExamenResuelto.countDocuments({ uidAlumno: uidAlumno }).sort({ fechaComienzo: 'asc' })
+                ExamenResuelto.find({ uidAlumno: uidAlumno }).sort({ fechaComienzo: 'desc' }),
+                ExamenResuelto.countDocuments({ uidAlumno: uidAlumno }).sort({ fechaComienzo: 'desc' })
             ]);
         }
 

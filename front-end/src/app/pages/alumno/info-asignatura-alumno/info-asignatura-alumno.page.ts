@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
 import { AlumnoService } from '../../../services/alumno.service';
@@ -37,11 +37,59 @@ export class InfoAsignaturaAlumnoPage implements OnInit {
 
   ngOnInit() { }
 
-  ionViewWillEnter(){
+  async ionViewWillEnter(){
     this.filtroAsignatura = this.route.snapshot.params['asignatura'];
     this.asignaturaMayus = this.filtroAsignatura.toUpperCase();
     this.cargarAsignaturas();
+    await this.startSlides();
   }
+
+  async startSlides(){
+    this.slideWithNav.slideTo(0);
+    this.slideWithNav2.slideTo(0);
+    this.slideWithNav.startAutoplay();
+    this.slideWithNav2.startAutoplay();
+  }
+
+  async ionViewWillLeave(){
+    await this.stopSlides();
+  }
+
+  async stopSlides(){
+    this.slideWithNav.slideTo(0);
+    this.slideWithNav2.slideTo(0);
+    this.slideWithNav.stopAutoplay();
+    this.slideWithNav2.stopAutoplay();
+  }
+
+  @ViewChild('slideWithNav', { static: false }) slideWithNav: IonSlides;
+  @ViewChild('slideWithNav2', { static: false }) slideWithNav2: IonSlides;
+
+  sliderOne: any;
+  sliderTwo: any;
+  sliderThree: any;
+
+  //Configuration for each Slider
+  slideOptsOne = {
+    initialSlide: 0,
+    slidesPerView: 2,
+    autoplay: {
+      disableOnInteraction: false,
+      loop :true,
+    },
+    centeredSlides: true,
+    spaceBetween: 100
+  };
+  slideOptsTwo = {
+    initialSlide: 0,
+    slidesPerView: 2,
+    autoplay: {
+      disableOnInteraction: false,
+      loop :true,
+    },
+    centeredSlides: true,
+    spaceBetween: 125
+  };
 
   cargarAsignaturas(){
     this.alumnoService.cargarAsignaturasAlumno(this.alumnoService.uid, this.alumnoService.uidClase, this.filtroAsignatura)
