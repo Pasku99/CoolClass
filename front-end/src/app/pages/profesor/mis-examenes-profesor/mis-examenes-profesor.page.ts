@@ -17,6 +17,7 @@ export class MisExamenesProfesorPage implements OnInit {
   public examenesClase: Examen[] = [];
   public asignatura: string = '';
   public nombreClase: string = '';
+  public nombreExamen: string = '';
   public proximosExamenes: Examen[] = [];
   public clase: Clase = new Clase('');
 
@@ -56,12 +57,28 @@ export class MisExamenesProfesorPage implements OnInit {
   ionViewWillEnter() {
     this.uidClase = this.route.snapshot.params['idClase'];
     this.asignatura = this.route.snapshot.params['asignatura'];
-    this.cargarProximosExamenes();
+    this.nombreExamen = this.route.snapshot.params['nombreExamen'];
     this.cargarClase();
+    if(this.nombreExamen){
+      this.cargarProximosExamenesFiltro(this.nombreExamen);
+    } else {
+      this.cargarProximosExamenes();
+    }
   }
 
   cargarProximosExamenes(){
     this.profesorService.cargarProximosExamenes(this.profesorService.uid, this.uidClase)
+      .subscribe(res => {
+        this.proximosExamenes = res['proximosExamenes'];
+      }, (err => {
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
+      }));
+  }
+
+  cargarProximosExamenesFiltro(filtro){
+    this.profesorService.cargarProximosExamenes(this.profesorService.uid, this.uidClase, filtro)
       .subscribe(res => {
         this.proximosExamenes = res['proximosExamenes'];
       }, (err => {

@@ -53,7 +53,7 @@
                     </ion-slide> -->
                     <ion-slide *ngFor="let examen of this.ultimosExamenes">
                         <!-- <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(1)"></ion-icon> -->
-                        <ion-card class="tarjeta1" style="background-color: #00ff7f;">
+                        <ion-card class="tarjeta1" style="background-color: #00ff7f;" [routerLink]="['/tabs-profesor/clases/examenes/', examen.uidClase, examen.uid, examen.asignatura, 'notas']">
                             <ion-card-header>
                                 <ion-card-title style="font-size: 1.2rem; text-align:center;">{{examen.nombreExamen}}</ion-card-title>
                                 <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
@@ -93,7 +93,7 @@
                     <ion-slide *ngFor="let examen of this.proximosExamenes; let i = index">
                         <!-- <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(2)"></ion-icon> -->
                         <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
-                            <ion-card class="tarjeta2" style="background-color: #00ff7f;">
+                            <ion-card class="tarjeta2" style="background-color: #00ff7f;" [routerLink]="['/tabs-profesor/clases/proximos-examenes/', examen.uidClase, examen.asignatura, examen.nombreExamen]">
                                 <ion-card-header>
                                     <ion-card-title style="font-size: 1.2rem; text-align:center;">{{examen.nombreExamen}}</ion-card-title>
                                     <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">

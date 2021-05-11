@@ -19,6 +19,12 @@
         </ion-col>
     </ion-row>
     <ion-row>
+        <ion-col size="12" align-self-center class="ion-no-padding">
+            <!-- <ion-searchbar #buscarExamen (keyup)="cargarNotasAlumnoFiltro(buscarExamen.value)" (ionClear)="cargarNotasAlumno()" placeholder="Buscar examen"></ion-searchbar> -->
+            <ion-searchbar #buscarExamen (keyup)="cargarExamenesRealizadosFiltro(buscarExamen.value)" (ionClear)="cargarExamenesRealizados()" placeholder="Buscar examen"></ion-searchbar>
+        </ion-col>
+    </ion-row>
+    <ion-row>
         <ion-col size="12">
             <ion-card (click)="expandItem(examen)" *ngFor="let examen of this.ultimosExamenes">
                 <ion-row>

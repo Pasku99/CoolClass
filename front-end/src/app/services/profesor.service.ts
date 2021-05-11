@@ -132,18 +132,24 @@ export class ProfesorService {
     return this.http.get(`${environment.base_url}/examenes/notasalumno/${uidProfesor}/${uidAlumno}/?idExamen=${uidExamenResuelto}`, this.cabeceras);
   }
 
-  cargarUltimosExamenes(uidProfesor: string, uidClase?: string){
+  cargarUltimosExamenes(uidProfesor: string, uidClase?: string, nombreExamen?: string){
     if(!uidClase){
       uidClase = '';
     }
-    return this.http.get(`${environment.base_url}/examenes/ultimosexamenes/${uidProfesor}/?idClase=${uidClase}`, this.cabeceras);
+    if(!nombreExamen){
+      nombreExamen = '';
+    }
+    return this.http.get(`${environment.base_url}/examenes/ultimosexamenes/${uidProfesor}/?idClase=${uidClase}&nombreExamen=${nombreExamen}`, this.cabeceras);
   }
 
-  cargarProximosExamenes(uidProfesor: string, uidClase?: string){
+  cargarProximosExamenes(uidProfesor: string, uidClase?: string, nombreExamen?: string){
     if(!uidClase){
       uidClase = '';
     }
-    return this.http.get(`${environment.base_url}/examenes/proximosexamenes/${uidProfesor}/?idClase=${uidClase}`, this.cabeceras);
+    if(!nombreExamen){
+      nombreExamen = '';
+    }
+    return this.http.get(`${environment.base_url}/examenes/proximosexamenes/${uidProfesor}/?idClase=${uidClase}&nombreExamen=${nombreExamen}`, this.cabeceras);
   }
 
   loginProfesor( formData: loginForm) {

@@ -71,6 +71,17 @@ export class ExamenesRealizadosPage implements OnInit {
       }));
   }
 
+  cargarExamenesRealizadosFiltro(filtro){
+    this.profesorService.cargarUltimosExamenes(this.profesorService.uid, this.uidClase, filtro)
+      .subscribe(res => {
+        this.ultimosExamenes = res['ultimosExamenes'];
+      }, (err => {
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
+      }));
+  }
+
   cargarClase(){
     this.profesorService.cargarClasesUid(this.profesorService.uidCentro, this.profesorService.uid, this.uidClase)
       .subscribe(res => {

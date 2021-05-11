@@ -58,9 +58,20 @@ export class PantallaPrincipalProfesorPage implements OnInit {
     this.cargarClases();
     this.cargarUltimosExamenes();
     this.cargarProximosExamenes();
+    // Esperamos a que se vuelva a iniciar el recorrido automático de los slides
+    await this.startSlides();
   }
 
   ngOnInit() {  }
+
+  async startSlides(){
+    this.slideWithNav.slideTo(0);
+    this.slideWithNav2.slideTo(0);
+    this.slideWithNav3.slideTo(0);
+    this.slideWithNav.startAutoplay();
+    this.slideWithNav2.startAutoplay();
+    this.slideWithNav3.startAutoplay();
+  }
 
   //  //Mover al slide siguiente
   //  slideNext(object, slideView) {
@@ -134,7 +145,7 @@ export class PantallaPrincipalProfesorPage implements OnInit {
       loop :true,
     },
     centeredSlides: true,
-    spaceBetween: 20
+    spaceBetween: 120
   };
 
   // public moveForward(index: number): void {

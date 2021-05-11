@@ -81,15 +81,24 @@ export class AlumnoService {
     return this.http.get(`${environment.base_url}/alumnos/${uidAlumno}/profesor/?id=${uidProfesor}`, this.cabeceras);
   }
 
-  cargarProximosExamenesAlumno(uidAlumno: string, uidProfesor: string, uidClase: string){
-    return this.http.get(`${environment.base_url}/examenes/examenesalumno/${uidAlumno}/${uidProfesor}/${uidClase}`, this.cabeceras);
+  cargarProximosExamenesAlumno(uidAlumno: string, uidProfesor: string, uidClase: string, limitado?: string, nombreExamen?: string){
+    if(!limitado){
+      limitado = '';
+    }
+    if(!nombreExamen){
+      nombreExamen = '';
+    }
+    return this.http.get(`${environment.base_url}/examenes/examenesalumno/${uidAlumno}/${uidProfesor}/${uidClase}/?limitado=${limitado}&nombreExamen=${nombreExamen}`, this.cabeceras);
   }
 
-  cargarNotasAsignaturaAlumno(uidProfesor:string, uidAlumno: string, filtro?: string){
+  cargarNotasAsignaturaAlumno(uidProfesor:string, uidAlumno: string, filtro?: string, nombreExamen?: string){
     if(!filtro){
       filtro = '';
     }
-    return this.http.get(`${environment.base_url}/examenes/notas/${uidProfesor}/${uidAlumno}/?limitado=${filtro}`, this.cabeceras);
+    if(!nombreExamen){
+      nombreExamen = '';
+    }
+    return this.http.get(`${environment.base_url}/examenes/notas/${uidProfesor}/${uidAlumno}/?limitado=${filtro}&nombreExamen=${nombreExamen}`, this.cabeceras);
   }
 
   cargarExamenAlumno(uidExamen: string, uidAlumno: string, uidCentro: string){

@@ -43,7 +43,14 @@ export class PantallaPrincipalAlumnoPage implements OnInit {
     this.cargarAsignaturas();
     this.cargarUltimosExamenesAlumno();
     this.cargarProximosExamenesAlumno();
+    // await this.startSlides();
   }
+
+  // async startSlides(){
+  //   this.slideWithNav.startAutoplay();
+  //   this.slideWithNav2.startAutoplay();
+  //   this.slideWithNav3.startAutoplay();
+  // }
 
   cargarAsignaturas(){
     this.alumnoService.cargarAsignaturasAlumno(this.alumnoService.uid, this.alumnoService.uidClase)

@@ -10,6 +10,11 @@ ion-content {
     --ion-background-color: white;
 }
 
+ion-searchbar {
+    --ion-background-color: white;
+    --border-radius: 2rem;
+}
+
 .anyadirClase {
     position: fixed;
     z-index: 10;

@@ -519,6 +519,11 @@ const obtenerProximosExamenesAlumno = async(req, res = response) => {
     const uidProfesor = req.params.idProfesor;
     const uidClase = req.params.idClase;
     const limitado = req.query.limitado;
+    const nombreExamen = req.query.nombreExamen;
+    let textoBusqueda = '';
+    if (nombreExamen) {
+        textoBusqueda = new RegExp(nombreExamen, 'i');
+    }
     try {
         const token = req.header('x-token');
         if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidAlumno))) {
@@ -553,18 +558,21 @@ const obtenerProximosExamenesAlumno = async(req, res = response) => {
         }
 
         let fechaInicio = new Date();
-        // fechaInicio.setHours(fechaInicio.getHours() + 2);
-
         let proximosexamenesAlumno, total;
         if (limitado) {
             [proximosexamenesAlumno, total] = await Promise.all([
-                Examen.find({ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaFinal: { $gte: fechaInicio } }).sort({ fecha: 'asc' }).limit(6),
-                Examen.countDocuments({ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaFinal: { $gte: fechaInicio } }).sort({ fecha: 'asc' }).limit(6)
+                Examen.find({ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaFinal: { $gte: fechaInicio } }).sort({ fecha: 'desc' }).limit(6),
+                Examen.countDocuments({ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaFinal: { $gte: fechaInicio } }).sort({ fecha: 'desc' }).limit(6)
+            ]);
+        } else if (nombreExamen) {
+            [proximosexamenesAlumno, total] = await Promise.all([
+                Examen.find({ $and: [{ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaFinal: { $gte: fechaInicio } }, { $or: [{ nombreExamen: textoBusqueda }] }] }).sort({ date: 'desc' }),
+                Examen.countDocuments({ $and: [{ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaFinal: { $gte: fechaInicio } }, { $or: [{ nombreExamen: textoBusqueda }] }] }).sort({ date: 'desc' }),
             ]);
         } else {
             [proximosexamenesAlumno, total] = await Promise.all([
-                Examen.find({ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaFinal: { $gte: fechaInicio } }).sort({ fecha: 'asc' }),
-                Examen.find({ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaFinal: { $gte: fechaInicio } }).sort({ fecha: 'asc' })
+                Examen.find({ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaFinal: { $gte: fechaInicio } }).sort({ fecha: 'desc' }),
+                Examen.find({ uidProfesor: uidProfesor, nombreClase: clase.nombre, fechaFinal: { $gte: fechaInicio } }).sort({ fecha: 'desc' })
             ]);
         }
 
@@ -587,6 +595,11 @@ const obtenerExamenesAsignaturaAlumno = async(req, res = response) => {
     const uidAlumno = req.params.idAlumno;
     const uidProfesor = req.params.idProfesor;
     const limitado = req.query.limitado;
+    const nombreExamen = req.query.nombreExamen;
+    let textoBusqueda = '';
+    if (nombreExamen) {
+        textoBusqueda = new RegExp(nombreExamen, 'i');
+    }
     try {
         const token = req.header('x-token');
         if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidAlumno))) {
@@ -607,8 +620,13 @@ const obtenerExamenesAsignaturaAlumno = async(req, res = response) => {
         let examenesResueltos, total;
         if (limitado) {
             [examenesResueltos, total] = await Promise.all([
-                ExamenResuelto.find({ uidProfesor: uidProfesor, uidAlumno: uidAlumno, }).limit(6),
-                ExamenResuelto.countDocuments({ uidProfesor: uidProfesor, uidAlumno: uidAlumno }).sort({ date: 'asc' }).limit(6)
+                ExamenResuelto.find({ uidProfesor: uidProfesor, uidAlumno: uidAlumno, }).sort({ date: 'desc' }).limit(6),
+                ExamenResuelto.countDocuments({ uidProfesor: uidProfesor, uidAlumno: uidAlumno }).sort({ date: 'desc' }).limit(6)
+            ]);
+        } else if (nombreExamen) {
+            [examenesResueltos, total] = await Promise.all([
+                ExamenResuelto.find({ $and: [{ uidProfesor: uidProfesor, uidAlumno: uidAlumno }, { $or: [{ nombreExamen: textoBusqueda }] }] }).sort({ date: 'desc' }),
+                ExamenResuelto.countDocuments({ $and: [{ uidProfesor: uidProfesor, uidAlumno: uidAlumno }, { $or: [{ nombreExamen: textoBusqueda }] }] }).sort({ date: 'desc' }),
             ]);
         } else {
             [examenesResueltos, total] = await Promise.all([
@@ -743,6 +761,11 @@ const obtenerExamenesResueltosAlumno = async(req, res) => {
 const obtenerUltimosExamenesProfesor = async(req, res = response) => {
     const uidProfesor = req.params.idProfesor;
     const uidClase = req.query.idClase;
+    const nombreExamen = req.query.nombreExamen;
+    let textoBusqueda = '';
+    if (nombreExamen) {
+        textoBusqueda = new RegExp(nombreExamen, 'i');
+    }
     try {
         const token = req.header('x-token');
         if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
@@ -753,17 +776,21 @@ const obtenerUltimosExamenesProfesor = async(req, res = response) => {
         }
 
         let fechaActual = new Date();
-        // fechaActual.setHours(fechaActual.getHours() + 2);
         let ultimosExamenes, total;
-        if (uidClase) {
+        if (uidClase && !nombreExamen) {
             [ultimosExamenes, total] = await Promise.all([
-                Examen.find({ uidProfesor: uidProfesor, uidClase: uidClase, fechaFinal: { $lt: fechaActual } }).sort({ fechaComienzo: 'asc' }),
-                Examen.countDocuments({ uidProfesor: uidProfesor, uidClase: uidClase, fechaFinal: { $lt: fechaActual } }).sort({ fechaComienzo: 'asc' })
+                Examen.find({ uidProfesor: uidProfesor, uidClase: uidClase, fechaFinal: { $lt: fechaActual } }).sort({ fechaComienzo: 'desc' }),
+                Examen.countDocuments({ uidProfesor: uidProfesor, uidClase: uidClase, fechaFinal: { $lt: fechaActual } }).sort({ fechaComienzo: 'desc' })
+            ]);
+        } else if (uidClase && nombreExamen) {
+            [ultimosExamenes, total] = await Promise.all([
+                Examen.find({ $and: [{ uidProfesor: uidProfesor, uidClase: uidClase, fechaFinal: { $lt: fechaActual } }, { $or: [{ nombreExamen: textoBusqueda }] }] }).sort({ fechaComienzo: 'desc' }),
+                Examen.countDocuments({ $and: [{ uidProfesor: uidProfesor, uidClase: uidClase, fechaFinal: { $lt: fechaActual } }, { $or: [{ nombreExamen: textoBusqueda }] }] }).sort({ fechaComienzo: 'desc' })
             ]);
         } else {
             [ultimosExamenes, total] = await Promise.all([
-                Examen.find({ uidProfesor: uidProfesor, fechaFinal: { $lt: fechaActual } }).sort({ fecha: 'asc' }).limit(6),
-                Examen.countDocuments({ uidProfesor: uidProfesor, fechaComienzo: { $gte: fechaActual } }).sort({ fechaComienzo: 'asc' }).limit(6)
+                Examen.find({ uidProfesor: uidProfesor, fechaFinal: { $lt: fechaActual } }).sort({ fechaComienzo: 'desc' }).limit(6),
+                Examen.countDocuments({ uidProfesor: uidProfesor, fechaComienzo: { $gte: fechaActual } }).sort({ fechaComienzo: 'desc' }).limit(6)
             ]);
         }
 
@@ -786,6 +813,11 @@ const obtenerUltimosExamenesProfesor = async(req, res = response) => {
 const obtenerProximosExamenesProfesor = async(req, res = response) => {
     const uidProfesor = req.params.idProfesor;
     const uidClase = req.query.idClase;
+    const nombreExamen = req.query.nombreExamen;
+    let textoBusqueda = '';
+    if (nombreExamen) {
+        textoBusqueda = new RegExp(nombreExamen, 'i');
+    }
     try {
         const token = req.header('x-token');
         if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
@@ -796,17 +828,21 @@ const obtenerProximosExamenesProfesor = async(req, res = response) => {
         }
 
         let fechaActual = new Date();
-        // fechaActual.setHours(fechaActual.getHours() + 2);
         let proximosExamenes, total;
-        if (uidClase) {
+        if (uidClase && !nombreExamen) {
             [proximosExamenes, total] = await Promise.all([
-                Examen.find({ uidProfesor: uidProfesor, uidClase: uidClase, fechaComienzo: { $gte: fechaActual } }).sort({ fechaComienzo: 'asc' }),
-                Examen.countDocuments({ uidProfesor: uidProfesor, uidClase: uidClase, fechaComienzo: { $gte: fechaActual } }).sort({ fechaComienzo: 'asc' })
+                Examen.find({ uidProfesor: uidProfesor, uidClase: uidClase, fechaFinal: { $gte: fechaActual } }).sort({ fechaFinal: 'desc' }),
+                Examen.countDocuments({ uidProfesor: uidProfesor, uidClase: uidClase, fechaFinal: { $gte: fechaActual } }).sort({ fechaFinal: 'desc' }),
+            ]);
+        } else if (uidClase && nombreExamen) {
+            [proximosExamenes, total] = await Promise.all([
+                Examen.find({ $and: [{ uidProfesor: uidProfesor, uidClase: uidClase, fechaFinal: { $gte: fechaActual } }, { $or: [{ nombreExamen: textoBusqueda }] }] }).sort({ fechaFinal: 'desc' }),
+                Examen.countDocuments({ $and: [{ uidProfesor: uidProfesor, uidClase: uidClase, fechaFinal: { $gte: fechaActual } }, { $or: [{ nombreExamen: textoBusqueda }] }] }).sort({ fechaFinal: 'desc' })
             ]);
         } else {
             [proximosExamenes, total] = await Promise.all([
-                Examen.find({ uidProfesor: uidProfesor, fechaComienzo: { $gte: fechaActual } }).sort({ fechaComienzo: 'asc' }).limit(6),
-                Examen.countDocuments({ uidProfesor: uidProfesor, fechaComienzo: { $gte: fechaActual } }).sort({ fechaComienzo: 'asc' }).limit(6)
+                Examen.find({ uidProfesor: uidProfesor, fechaFinal: { $gte: fechaActual } }).sort({ fechaFinal: 'desc' }).limit(6),
+                Examen.countDocuments({ uidProfesor: uidProfesor, fechaFinal: { $gte: fechaActual } }).sort({ fechaFinal: 'desc' }).limit(6)
             ]);
         }
 

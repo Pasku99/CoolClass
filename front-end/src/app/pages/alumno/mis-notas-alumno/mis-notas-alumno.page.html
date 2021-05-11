@@ -22,7 +22,7 @@
         </ion-row>
         <ion-row>
             <ion-col size="12" align-self-center class="ion-no-padding" style="margin-top: -9rem;">
-                <ion-searchbar placeholder="Buscar examen"></ion-searchbar>
+                <ion-searchbar #buscarExamen (keyup)="cargarNotasAlumnoFiltro(buscarExamen.value)" (ionClear)="cargarNotasAlumno()" placeholder="Buscar examen"></ion-searchbar>
             </ion-col>
         </ion-row>
         <ion-row>

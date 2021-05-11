@@ -12,44 +12,52 @@
 </ion-header>
 
 <ion-content>
-    <ion-row>
-        <ion-col size="12">
-            <h3 style="text-align: center;" *ngIf="this.asignatura!=''">Asignatura: {{this.asignatura}}</h3>
-            <h4 style="text-align: center;">Próximos exámenes</h4>
-        </ion-col>
-    </ion-row>
-    <ion-row>
-        <ion-col size="12">
-            <ion-card (click)="expandItem(examen)" *ngFor="let examen of this.proximosExamenes">
-                <ion-row>
-                    <ion-col size="3">
-                        <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;"></ion-icon>
-                    </ion-col>
-                    <ion-col size="4.5">
-                        <p style="color: black; font-size: 16px;"><b>Nombre</b></p>
-                    </ion-col>
-                    <ion-col size="4.5">
-                        <p style="color: black; font-size: 16px;">{{examen.nombreExamen}}</p>
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col size="12">
-                        <app-accordion-list expandHeight="150px" [expanded]="examen.expanded">
-                            <ion-row>
-                                <ion-col size="3">
+    <ion-grid>
+        <ion-row>
+            <ion-col size="12">
+                <h3 style="text-align: center;" *ngIf="this.asignatura!=''">Asignatura: {{this.asignatura}}</h3>
+                <h4 style="text-align: center;">Próximos exámenes</h4>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" align-self-center class="ion-no-padding">
+                <!-- <ion-searchbar #buscarExamen (keyup)="cargarNotasAlumnoFiltro(buscarExamen.value)" (ionClear)="cargarNotasAlumno()" placeholder="Buscar examen"></ion-searchbar> -->
+                <ion-searchbar #buscarExamen (keyup)="cargarProximosExamenesFiltro(buscarExamen.value)" (ionClear)="cargarProximosExamenes()" placeholder="Buscar examen"></ion-searchbar>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12">
+                <ion-card (click)="expandItem(examen)" *ngFor="let examen of this.proximosExamenes">
+                    <ion-row>
+                        <ion-col size="3">
+                            <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;"></ion-icon>
+                        </ion-col>
+                        <ion-col size="4.5">
+                            <p style="color: black; font-size: 16px;"><b>Nombre</b></p>
+                        </ion-col>
+                        <ion-col size="4.5">
+                            <p style="color: black; font-size: 16px;">{{examen.nombreExamen}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="12">
+                            <app-accordion-list expandHeight="150px" [expanded]="examen.expanded">
+                                <ion-row>
+                                    <ion-col size="3">
 
-                                </ion-col>
-                                <ion-col size="4.5">
-                                    <p style="color: black; font-size: 16px; font-weight: bold;">Ver notas</p>
-                                </ion-col>
-                                <ion-col size="4.5">
-                                    <ion-icon name="eye" style="width: 2rem; height: 2rem; margin-top: 0.55rem; margin-left: 0; color: #004DFF;" [routerLink]="['/tabs-profesor/clases/examenes', this.uidClase, examen.uid, 'notas']"></ion-icon>
-                                </ion-col>
-                            </ion-row>
-                        </app-accordion-list>
-                    </ion-col>
-                </ion-row>
-            </ion-card>
-        </ion-col>
-    </ion-row>
+                                    </ion-col>
+                                    <ion-col size="4.5">
+                                        <p style="color: black; font-size: 16px; font-weight: bold;">Eliminar examen</p>
+                                    </ion-col>
+                                    <ion-col size="4.5">
+                                        <ion-icon name="trash" style="width: 2rem; height: 2rem; margin-top: 1rem; margin-left: 0; color: red;" [routerLink]="['/tabs-profesor/clases/examenes', this.uidClase, examen.uid, 'notas']"></ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                            </app-accordion-list>
+                        </ion-col>
+                    </ion-row>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
