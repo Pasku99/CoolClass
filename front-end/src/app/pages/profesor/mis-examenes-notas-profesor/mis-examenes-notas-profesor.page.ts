@@ -22,6 +22,8 @@ export class MisExamenesNotasProfesorPage implements OnInit {
   public examenesAlumno: ExamenResuelto[] = [];
   public clase: Clase = new Clase('');
   public asignatura: string = '';
+  public filtro: string = '';
+  public listaDesplegable: Array<string> = new Array<string>();
 
   constructor(private profesorService: ProfesorService,
               private route: ActivatedRoute) {
@@ -70,6 +72,21 @@ export class MisExamenesNotasProfesorPage implements OnInit {
     this.profesorService.cargarNotasExamen(this.uidExamen, this.profesorService.uid)
       .subscribe(res => {
         this.examenesAlumno = res['examenesResueltos'];
+        this.listaDesplegable = [];
+        for(let i = 0; i < this.examenesAlumno.length; i++){
+          this.listaDesplegable.push(this.examenesAlumno[i].nombreAlumno);
+        }
+      }, (err => {
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
+      }))
+  }
+
+  cargarExamenesResueltosFiltro(nombreAlumno){
+    this.profesorService.cargarNotasExamen(this.uidExamen, this.profesorService.uid, nombreAlumno)
+      .subscribe(res => {
+        this.examenesAlumno = res['examenesResueltos'];
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
@@ -110,6 +127,16 @@ export class MisExamenesNotasProfesorPage implements OnInit {
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
         return;
       }));
+  }
+
+  filtrarNombre($event){
+    this.filtro = $event.target.value;
+    if(this.filtro == 'Todos'){
+      this.filtro = '';
+      this.cargarExamenesResueltos();
+    } else {
+      this.cargarExamenesResueltosFiltro(this.filtro);
+    }
   }
 
 }

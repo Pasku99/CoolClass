@@ -20,6 +20,8 @@ export class MisExamenesProfesorPage implements OnInit {
   public nombreExamen: string = '';
   public proximosExamenes: Examen[] = [];
   public clase: Clase = new Clase('');
+  public listaDesplegable: Examen[] = [];
+  public filtro: string = '';
 
   constructor(private profesorService: ProfesorService,
               private route: ActivatedRoute) {
@@ -59,6 +61,7 @@ export class MisExamenesProfesorPage implements OnInit {
     this.asignatura = this.route.snapshot.params['asignatura'];
     this.nombreExamen = this.route.snapshot.params['nombreExamen'];
     this.cargarClase();
+    this.cargarDesplegable();
     if(this.nombreExamen){
       this.cargarProximosExamenesFiltro(this.nombreExamen);
     } else {
@@ -86,6 +89,27 @@ export class MisExamenesProfesorPage implements OnInit {
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
         return;
       }));
+  }
+
+  filtrarNombre($event){
+    this.filtro = $event.target.value;
+    if(this.filtro == 'Todos'){
+      this.filtro = '';
+      this.cargarProximosExamenes();
+    } else {
+      this.cargarProximosExamenesFiltro(this.filtro);
+    }
+  }
+
+  cargarDesplegable(){
+    this.profesorService.cargarProximosExamenes(this.profesorService.uid, this.uidClase)
+      .subscribe(res =>{
+        this.listaDesplegable = res['proximosExamenes'];
+      }, (err) =>{
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
+      });
   }
 
   cargarClase(){

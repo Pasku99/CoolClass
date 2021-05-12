@@ -51,6 +51,7 @@ export class PerfilAlumnoPage implements OnInit {
           icon: 'error',
           title: 'Oops...',
           text: errtext,
+          heightAuto: false
         });
         return;
       }));

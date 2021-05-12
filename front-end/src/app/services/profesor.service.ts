@@ -108,8 +108,11 @@ export class ProfesorService {
     return this.http.get(`${environment.base_url}/examenes/examenesprofesor/${uidProfesor}/${uidClase}`, this.cabeceras);
   }
 
-  cargarNotasExamen( uidExamen: string, uidProfesor: string){
-    return this.http.get(`${environment.base_url}/examenes/notas/${uidExamen}/?idProfesor=${uidProfesor}`, this.cabeceras);
+  cargarNotasExamen( uidExamen: string, uidProfesor: string, nombreAlumno?: string){
+    if(!nombreAlumno){
+      nombreAlumno = '';
+    }
+    return this.http.get(`${environment.base_url}/examenes/notas/${uidExamen}/?idProfesor=${uidProfesor}&nombreAlumno=${nombreAlumno}`, this.cabeceras);
   }
 
   cargarClaseProfesor( uidProfesor: string, uidClase: string) {

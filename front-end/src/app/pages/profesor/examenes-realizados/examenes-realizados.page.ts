@@ -19,6 +19,8 @@ export class ExamenesRealizadosPage implements OnInit {
   public nombreClase: string = '';
   public ultimosExamenes: Examen[] = [];
   public clase: Clase = new Clase('');
+  public filtro: string = '';
+  public listaDesplegable: Examen[] = [];
 
   constructor(private profesorService: ProfesorService,
               private route: ActivatedRoute) {
@@ -56,6 +58,7 @@ export class ExamenesRealizadosPage implements OnInit {
   ionViewWillEnter() {
     this.uidClase = this.route.snapshot.params['idClase'];
     this.asignatura = this.route.snapshot.params['asignatura'];
+    this.listaDesplegable = [];
     this.cargarExamenesRealizados();
     this.cargarClase();
   }
@@ -64,6 +67,7 @@ export class ExamenesRealizadosPage implements OnInit {
     this.profesorService.cargarUltimosExamenes(this.profesorService.uid, this.uidClase)
       .subscribe(res => {
         this.ultimosExamenes = res['ultimosExamenes'];
+        this.listaDesplegable = res['ultimosExamenes'];
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
@@ -92,6 +96,16 @@ export class ExamenesRealizadosPage implements OnInit {
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
         return;
       }));
+  }
+
+  filtrarNombre($event){
+    this.filtro = $event.target.value;
+    if(this.filtro == 'Todos'){
+      this.filtro = '';
+      this.cargarExamenesRealizados();
+    } else {
+      this.cargarExamenesRealizadosFiltro(this.filtro);
+    }
   }
 
 }

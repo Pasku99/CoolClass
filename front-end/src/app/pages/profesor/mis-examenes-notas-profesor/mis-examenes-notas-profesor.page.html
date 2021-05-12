@@ -16,9 +16,9 @@
         <ion-col size="12">
             <ion-list class="ion-no-border" lines="none" style="background-color: white;">
                 <ion-item style="background-color: white;">
-                    <ion-select placeholder="Filtrar alumno">
-                        <ion-select-option value="2esoa" style="color: black;">2ESOA</ion-select-option>
-                        <ion-select-option value="2esob" style="color: black;">2ESOB</ion-select-option>
+                    <ion-select placeholder="Filtrar nombre" (ionChange)="filtrarNombre($event)">
+                        <ion-select-option value="Todos" style="color: black;">Todos</ion-select-option>
+                        <ion-select-option value="clases" style="color: black;" *ngFor="let nombre of this.listaDesplegable" [value]="nombre">{{nombre}}</ion-select-option>
                     </ion-select>
                 </ion-item>
             </ion-list>

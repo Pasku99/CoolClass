@@ -474,6 +474,7 @@ const obtenerExamenesClaseProfesor = async(req, res = response) => {
 const obtenerNotasExamen = async(req, res = response) => {
     const uidExamen = req.params.idExamen;
     const uidProfesor = req.query.idProfesor;
+    const nombreAlumno = req.query.nombreAlumno;
     try {
         const token = req.header('x-token');
         if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
@@ -490,13 +491,23 @@ const obtenerNotasExamen = async(req, res = response) => {
                 msg: 'Error al encontrar examen correspondiente'
             });
         }
-
-        const examenesResueltos = await ExamenResuelto.find({ uidExamen: uidExamen });
-        if (!examenesResueltos) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'Error al encontrar examenes resueltos correspondientes'
-            });
+        let examenesResueltos;
+        if (nombreAlumno) {
+            examenesResueltos = await ExamenResuelto.find({ uidExamen: uidExamen, nombreAlumno: nombreAlumno });
+            if (!examenesResueltos) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Error al encontrar examenes resueltos correspondientes'
+                });
+            }
+        } else {
+            examenesResueltos = await ExamenResuelto.find({ uidExamen: uidExamen });
+            if (!examenesResueltos) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Error al encontrar examenes resueltos correspondientes'
+                });
+            }
         }
 
         res.json({
