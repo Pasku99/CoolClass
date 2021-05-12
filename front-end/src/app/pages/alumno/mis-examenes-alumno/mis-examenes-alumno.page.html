@@ -22,8 +22,15 @@
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col size="12" align-self-center class="ion-no-padding" style="margin-top: -9rem;">
-                <ion-searchbar #buscarExamen (keyup)="cargarProximosExamenesAlumnoFiltro(buscarExamen.value)" (ionClear)="cargarProximosExamenesAlumno()" placeholder="Buscar examen"></ion-searchbar>
+            <ion-col size="12">
+                <ion-list class="ion-no-border" lines="none" style="background-color: white; margin-top: -9rem;">
+                    <ion-item style="background-color: white;">
+                        <ion-select placeholder="Filtrar examen" (ionChange)="filtrarNombre($event)">
+                            <ion-select-option value="Todos" style="color: black;">Todos</ion-select-option>
+                            <ion-select-option value="clases" style="color: black;" *ngFor="let examen of this.listaDesplegable" [value]="examen.nombreExamen">{{examen.nombreExamen}}</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-list>
             </ion-col>
         </ion-row>
         <ion-row>

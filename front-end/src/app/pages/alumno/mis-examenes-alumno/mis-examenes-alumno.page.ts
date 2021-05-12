@@ -19,6 +19,8 @@ export class MisExamenesAlumnoPage implements OnInit {
   public fechasComienzo: Array<string> = new Array<string>();
   public fechasFinal: Array<string> = new Array<string>();
   public nombreExamen: string = '';
+  public filtro: string = '';
+  public listaDesplegable: Examen[] = [];
 
   constructor(private alumnoService: AlumnoService,
               private route: ActivatedRoute,
@@ -57,6 +59,7 @@ export class MisExamenesAlumnoPage implements OnInit {
   ionViewWillEnter(){
     this.uidProfesor = this.route.snapshot.params['idProfesor'];
     this.nombreExamen = this.route.snapshot.params['nombreExamen'];
+    this.cargarDesplegable();
     this.cargarProfesor();
     if(this.nombreExamen){
       this.cargarProximosExamenesAlumnoFiltro(this.nombreExamen);
@@ -95,6 +98,17 @@ export class MisExamenesAlumnoPage implements OnInit {
           ("00" + dateFinal.getSeconds()).slice(-2);
           this.fechasFinal.push(fechaFinal);
         }
+      }, (err => {
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
+      }));
+  }
+
+  cargarDesplegable(){
+    this.alumnoService.cargarProximosExamenesAlumno(this.alumnoService.uid, this.uidProfesor, this.alumnoService.uidClase)
+      .subscribe(res => {
+        this.listaDesplegable = res['proximosExamenes'];
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
@@ -174,6 +188,16 @@ export class MisExamenesAlumnoPage implements OnInit {
         text: 'Todavía no puedes realizar este examen',
         heightAuto: false});
       return;
+    }
+  }
+
+  filtrarNombre($event){
+    this.filtro = $event.target.value;
+    if(this.filtro == 'Todos'){
+      this.filtro = '';
+      this.cargarProximosExamenesAlumno();
+    } else {
+      this.cargarProximosExamenesAlumnoFiltro(this.filtro);
     }
   }
 
