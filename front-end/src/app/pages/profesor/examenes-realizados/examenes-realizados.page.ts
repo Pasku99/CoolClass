@@ -108,4 +108,38 @@ export class ExamenesRealizadosPage implements OnInit {
     }
   }
 
+  eliminarExamen(uidExamen){
+    Swal.fire({
+      title: '¿Está seguro/a?',
+      text: 'Se borrarán todos los datos asociados al examen, así como las notas de los alumnos.',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: 'red',
+      confirmButtonText: 'Confirmar',
+      confirmButtonColor: '#004dff',
+      allowOutsideClick: false,
+      heightAuto: false,
+    }).then((result) => {
+      if (result.value) {
+        this.profesorService.eliminarExamen(this.profesorService.uid, uidExamen)
+          .subscribe(res => {
+            Swal.fire({
+              title: 'Examen eliminado con éxito',
+              icon: 'success',
+              showCancelButton: false,
+              confirmButtonText: 'Vale',
+              confirmButtonColor: '#004dff',
+              allowOutsideClick: false,
+              heightAuto: false,
+            });
+            this.cargarExamenesRealizados();
+          }, (err => {
+            const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+            Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+            return;
+          }))
+      }
+    });
+  }
+
 }

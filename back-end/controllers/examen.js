@@ -984,4 +984,55 @@ const obtenerTodosProximosExamenesAlumno = async(req, res = response) => {
     }
 }
 
-module.exports = { obtenerExamenes, crearExamen, obtenerExamenResueltos, crearExamenResuelto, obtenerExamenesAlumnosCentro, obtenerExamenesClaseProfesor, obtenerNotasExamen, obtenerProximosExamenesAlumno, obtenerExamenesAsignaturaAlumno, obtenerExamenAlumno, obtenerExamenesResueltosAlumno, obtenerUltimosExamenesProfesor, obtenerProximosExamenesProfesor, obtenerTodosExamenesResueltosAlumno, obtenerTodosProximosExamenesAlumno }
+const eliminarExamenProfesor = async(req, res = response) => {
+    const uidProfesor = req.params.idProfesor;
+    const uidExamen = req.params.idExamen;
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para eliminar el examen',
+            });
+        }
+
+        const profesor = await Profesor.findById(uidProfesor);
+        if (!profesor) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar profesor correspondiente'
+            });
+        }
+
+        const examenesResueltos = await ExamenResuelto.deleteMany({ uidExamen: uidExamen, uidProfesor: uidProfesor });
+        if (!examenesResueltos) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al borrar los exámenes resueltos de dicho examen'
+            });
+        }
+
+        const examenEliminado = await Examen.findOneAndRemove({ _id: uidExamen, uidProfesor: uidProfesor });
+        if (!examenEliminado) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al eliminar examen'
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'Usuario eliminado',
+            resultado: examenEliminado,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error eliminando el examen'
+        });
+    }
+}
+
+module.exports = { obtenerExamenes, crearExamen, obtenerExamenResueltos, crearExamenResuelto, obtenerExamenesAlumnosCentro, obtenerExamenesClaseProfesor, obtenerNotasExamen, obtenerProximosExamenesAlumno, obtenerExamenesAsignaturaAlumno, obtenerExamenAlumno, obtenerExamenesResueltosAlumno, obtenerUltimosExamenesProfesor, obtenerProximosExamenesProfesor, obtenerTodosExamenesResueltosAlumno, obtenerTodosProximosExamenesAlumno, eliminarExamenProfesor }

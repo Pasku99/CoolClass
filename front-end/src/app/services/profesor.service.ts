@@ -155,6 +155,10 @@ export class ProfesorService {
     return this.http.get(`${environment.base_url}/examenes/proximosexamenes/${uidProfesor}/?idClase=${uidClase}&nombreExamen=${nombreExamen}`, this.cabeceras);
   }
 
+  eliminarExamen(uidProfesor: string, uidExamen: string){
+    return this.http.delete(`${environment.base_url}/examenes/${uidProfesor}/${uidExamen}`, this.cabeceras);
+  }
+
   loginProfesor( formData: loginForm) {
     return this.http.post(`${environment.base_url}/login/profesor`, formData)
     .pipe(

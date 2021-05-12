@@ -58,6 +58,17 @@
                                     <ion-icon name="eye" style="width: 2rem; height: 2rem; margin-top: 0.55rem; margin-left: 0; color: #004DFF;" [routerLink]="['/tabs-profesor/clases/examenes', this.uidClase, examen.uid, this.asignatura,'notas']"></ion-icon>
                                 </ion-col>
                             </ion-row>
+                            <ion-row>
+                                <ion-col size="3">
+
+                                </ion-col>
+                                <ion-col size="4.5">
+                                    <p style="color: black; font-size: 16px; font-weight: bold;">Eliminar examen</p>
+                                </ion-col>
+                                <ion-col size="4.5">
+                                    <ion-icon name="trash" style="width: 2rem; height: 2rem; margin-top: 1rem; margin-left: 0; color: red;" (click)="eliminarExamen(examen.uid);"></ion-icon>
+                                </ion-col>
+                            </ion-row>
                         </app-accordion-list>
                     </ion-col>
                 </ion-row>

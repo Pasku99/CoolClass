@@ -4,7 +4,7 @@ Ruta base: /api/examenes
 
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { crearExamen, obtenerExamenes, crearExamenResuelto, obtenerExamenResueltos, obtenerExamenesAlumnosCentro, obtenerExamenesClaseProfesor, obtenerNotasExamen, obtenerProximosExamenesAlumno, obtenerExamenesAsignaturaAlumno, obtenerExamenAlumno, obtenerExamenesResueltosAlumno, obtenerUltimosExamenesProfesor, obtenerProximosExamenesProfesor, obtenerTodosExamenesResueltosAlumno, obtenerTodosProximosExamenesAlumno } = require('../controllers/examen');
+const { crearExamen, obtenerExamenes, crearExamenResuelto, obtenerExamenResueltos, obtenerExamenesAlumnosCentro, obtenerExamenesClaseProfesor, obtenerNotasExamen, obtenerProximosExamenesAlumno, obtenerExamenesAsignaturaAlumno, obtenerExamenAlumno, obtenerExamenesResueltosAlumno, obtenerUltimosExamenesProfesor, obtenerProximosExamenesProfesor, obtenerTodosExamenesResueltosAlumno, obtenerTodosProximosExamenesAlumno, eliminarExamenProfesor } = require('../controllers/examen');
 const { validarCampos } = require('../middleware/validar-campos');
 const { validarJWT } = require('../middleware/validar-jwt');
 
@@ -129,5 +129,13 @@ router.get('/proximosexamenesalumno/:idClase/:idAlumno', [
     check('idAlumno', 'El id de alumno debe ser válido').optional().isMongoId(),
     validarCampos,
 ], obtenerTodosProximosExamenesAlumno);
+
+router.delete('/:idProfesor/:idExamen', [
+    validarJWT,
+    // Campos opcionales, si vienen los validamos
+    check('idProfesor', 'El id de profesor debe ser válido').optional().isMongoId(),
+    check('idExamen', 'El id de examen debe ser válido').optional().isMongoId(),
+    validarCampos,
+], eliminarExamenProfesor);
 
 module.exports = router;
