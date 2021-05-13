@@ -49,6 +49,10 @@ export class ProfesorService {
     return this.http.post(`${environment.base_url}/profesores`, data, this.cabecerasVacia);
   }
 
+  eliminarProfesor(uidCentro: string, uidProfesor: string){
+    return this.http.delete(`${environment.base_url}/profesores/${uidCentro}/${uidProfesor}`, this.cabeceras);
+  }
+
   cargarAsignaturas(){
     return this.http.get(`${environment.base_url}/profesores/asignaturas`, this.cabecerasVacia);
   }
@@ -157,6 +161,10 @@ export class ProfesorService {
 
   eliminarExamen(uidProfesor: string, uidExamen: string){
     return this.http.delete(`${environment.base_url}/examenes/${uidProfesor}/${uidExamen}`, this.cabeceras);
+  }
+
+  comprobarPasswordProfesor(data){
+    return this.http.post(`${environment.base_url}/login/comprobarpasswordprofesor`, data, this.cabeceras);
   }
 
   loginProfesor( formData: loginForm) {

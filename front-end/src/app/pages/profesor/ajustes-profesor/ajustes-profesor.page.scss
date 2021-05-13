@@ -32,9 +32,14 @@ ion-select {
     --placeholder-opacity: 1;
 }
 
-ion-button {
+.boton0 {
     --background: #00ff7f;
     color: black;
+}
+
+.boton1 {
+    --background: red;
+    color: white;
 }
 
 .generarCodigo {

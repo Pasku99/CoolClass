@@ -4,7 +4,7 @@ Ruta base: /api/profesores
 
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { obtenerProfesores, crearProfesor, escogerClasesProfesor, obtenerClasesCentro, obtenerAsignaturas, escogerAsignaturasProfesor, eliminarClaseAsignaturaProfesor, obtenerClasesProfesor, actualizarProfesor, obtenerAlumnos, obtenerClase } = require('../controllers/profesor');
+const { obtenerProfesores, crearProfesor, escogerClasesProfesor, obtenerClasesCentro, obtenerAsignaturas, escogerAsignaturasProfesor, eliminarClaseAsignaturaProfesor, obtenerClasesProfesor, actualizarProfesor, obtenerAlumnos, obtenerClase, eliminarProfesor } = require('../controllers/profesor');
 const { validarCampos } = require('../middleware/validar-campos');
 const { validarJWT } = require('../middleware/validar-jwt');
 
@@ -26,12 +26,18 @@ router.post('/', [
     validarCampos,
 ], crearProfesor);
 
+router.delete('/:idCentro/:idProfesor', [
+    validarJWT,
+    check('idProfesor', 'El id de profesor debe ser válido').optional().isMongoId(),
+    validarCampos,
+], eliminarProfesor);
+
 router.put('/eliminarclaseprofesor', [
     validarJWT,
     check('nombreClase', 'El argumento nombreClase es obligatorio').not().isEmpty().trim(),
     check('uidCentro', 'El argumento uidCentro es obligatorio').not().isEmpty(),
     check('uidProfesor', 'El argumento uidProfesor es obligatorio').not().isEmpty(),
-    check('asignatura', 'El argumento asignatura es obligatorio').not().isEmpty(),
+    // check('asignatura', 'El argumento asignatura es obligatorio').not().isEmpty(),
     validarCampos,
 ], eliminarClaseAsignaturaProfesor);
 

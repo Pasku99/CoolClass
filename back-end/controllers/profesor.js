@@ -9,6 +9,8 @@ const { validarPassword } = require('../helpers/validarPassword');
 const { infoToken } = require('../helpers/infoToken');
 const generator = require('generate-password');
 const Clase = require('../models/clase');
+const Examen = require('../models/examen');
+const ExamenResuelto = require('../models/examen-resuelto');
 var ObjectId = require('mongodb').ObjectID;
 const Alumno = require('../models/alumno');
 
@@ -152,6 +154,96 @@ const crearProfesor = async(req, res = response) => {
             ok: true,
             msg: 'Profesor registrado con éxito',
             profesorGuardado,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error creando profesor'
+        });
+    }
+}
+
+const eliminarProfesor = async(req, res = response) => {
+    const uidProfesor = req.params.idProfesor;
+    const uidCentro = req.params.idCentro;
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidProfesor))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para obtener clases',
+            });
+        }
+
+        const examenesBorrados = await Examen.deleteMany({ uidProfesor: uidProfesor });
+        if (!examenesBorrados) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al eliminar los exámenes asociados al profesor.'
+            });
+        }
+
+        const examenesResueltosBorrados = await ExamenResuelto.deleteMany({ uidProfesor: uidProfesor });
+        if (!examenesResueltosBorrados) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al eliminar los exámenes resueltos asociados al profesor.'
+            });
+        }
+
+        const clases = await Clase.find({ uidCentro: uidCentro });
+        if (!clases) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar clases del centro.'
+            });
+        }
+
+        for (let i = 0; i < clases.length; i++) {
+            for (let j = 0; j < clases[i].arrayProfesores.length; j++) {
+                if (clases[i].arrayProfesores[j] == uidProfesor) {
+                    clases[i].arrayProfesores.splice(j, 1);
+                    let claseGuardada = await clases[i].save();
+                    if (!claseGuardada) {
+                        return res.status(400).json({
+                            ok: false,
+                            msg: 'Error al quitar profesor de la clase ' + clases[i].nombre
+                        });
+                    }
+                }
+            }
+        }
+
+        for (let i = 0; i < clases.length; i++) {
+            for (let j = 0; j < clases[i].arrayAsignaturasProfesores.length; j++) {
+                if (clases[i].arrayAsignaturasProfesores[j][1] == uidProfesor) {
+                    clases[i].arrayAsignaturasProfesores[j][1] = '';
+                    clases[i].markModified('arrayAsignaturasProfesores');
+                    let claseGuardada = await clases[i].save();
+                    if (!claseGuardada) {
+                        return res.status(400).json({
+                            ok: false,
+                            msg: 'Error al quitar profesor de la clase ' + clases[i].nombre
+                        });
+                    }
+                }
+            }
+        }
+
+        const profesorBorrado = await Profesor.findByIdAndRemove(uidProfesor);
+        if (!profesorBorrado) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al eliminar el profesor.'
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'Profesor borrado con éxito',
+            resultado: profesorBorrado
         });
 
     } catch (error) {
@@ -768,4 +860,4 @@ const obtenerClase = async(req, res = response) => {
     }
 }
 
-module.exports = { crearProfesor, obtenerProfesores, obtenerClasesCentro, escogerAsignaturasProfesor, obtenerAsignaturas, escogerClasesProfesor, eliminarClaseAsignaturaProfesor, obtenerClasesProfesor, actualizarProfesor, obtenerAlumnos, obtenerClase }
+module.exports = { crearProfesor, obtenerProfesores, eliminarProfesor, obtenerClasesCentro, escogerAsignaturasProfesor, obtenerAsignaturas, escogerClasesProfesor, eliminarClaseAsignaturaProfesor, obtenerClasesProfesor, actualizarProfesor, obtenerAlumnos, obtenerClase }
