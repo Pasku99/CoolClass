@@ -4,7 +4,7 @@ Ruta base: /api/alumnos
 
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { obtenerAlumnos, crearAlumno, escogerClase, obtenerAsignaturas, obtenerProfesor, actualizarAlumno, obtenerAlumnosClase } = require('../controllers/alumno');
+const { obtenerAlumnos, crearAlumno, escogerClase, obtenerAsignaturas, obtenerProfesor, actualizarAlumno, obtenerAlumnosClase, eliminarAlumno } = require('../controllers/alumno');
 const { validarCampos } = require('../middleware/validar-campos');
 const { validarJWT } = require('../middleware/validar-jwt');
 
@@ -32,6 +32,12 @@ router.put('/:id', [
     check('email', 'El argumento email debe ser un email').isEmail(),
     validarCampos,
 ], actualizarAlumno);
+
+router.delete('/:idAlumno', [
+    validarJWT,
+    check('idProfesor', 'El id de profesor debe ser válido').optional().isMongoId(),
+    validarCampos,
+], eliminarAlumno);
 
 router.post('/escogerclase', [
     check('uidAlumno', 'El argumento uidAlumno es obligatorio').not().isEmpty().trim(),

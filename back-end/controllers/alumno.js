@@ -4,6 +4,7 @@ const Clase = require('../models/clase');
 const Centroeducativo = require('../models/centroeducativo');
 const Profesor = require('../models/profesor');
 const Alumno = require('../models/alumno');
+const ExamenResuelto = require('../models/examen-resuelto');
 const { validarPassword } = require('../helpers/validarPassword');
 const { infoToken } = require('../helpers/infoToken');
 const { updateOne } = require('../models/clase');
@@ -269,6 +270,48 @@ const actualizarAlumno = async(req, res = response) => {
 
 }
 
+const eliminarAlumno = async(req, res = response) => {
+    const uidAlumno = req.params.idAlumno;
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidAlumno))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para eliminar al alumno',
+            });
+        }
+
+        const examenesResueltosEliminados = await ExamenResuelto.deleteMany({ uidAlumno: uidAlumno });
+        if (!examenesResueltosEliminados) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al eliminar los exámenes resueltos del alumno',
+            });
+        }
+
+        const alumnoEliminado = await Alumno.findByIdAndRemove(uidAlumno);
+        if (!alumnoEliminado) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al eliminar el alumno',
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'Alumno eliminado con éxito',
+            resultado: alumnoEliminado
+        })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error eliminando alumno'
+        });
+    }
+}
+
 const escogerClase = async(req, res = response) => {
     const { uidAlumno, uidCentro, nombreClase } = req.body;
     try {
@@ -467,4 +510,4 @@ const obtenerAlumnosClase = async(req, res = response) => {
     }
 }
 
-module.exports = { obtenerAlumnos, crearAlumno, escogerClase, obtenerAsignaturas, obtenerProfesor, actualizarAlumno, obtenerAlumnosClase }
+module.exports = { obtenerAlumnos, crearAlumno, eliminarAlumno, escogerClase, obtenerAsignaturas, obtenerProfesor, actualizarAlumno, obtenerAlumnosClase }

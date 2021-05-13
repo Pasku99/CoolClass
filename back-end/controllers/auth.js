@@ -490,4 +490,42 @@ const comprobarPasswordProfesor = async(req, res = response) => {
     }
 }
 
-module.exports = { loginCentroEducativo, tokenCentro, buscarTipoUsuario, loginProfesor, tokenProfesor, token, loginAlumno, tokenAlumno, comprobarPasswordCentro, comprobarPasswordProfesor }
+const comprobarPasswordAlumno = async(req, res = response) => {
+    const { uid, password } = req.body;
+
+    try {
+        // Comprobamos que exista el usuario
+        const alumno = await Alumno.findById(uid);
+        if (!alumno) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Usuario o contraseña incorrectos',
+                token: ''
+            });
+        }
+
+        //Comprobamos que la contraseña que le llega desde el front coincide con la que hay en la base de datos
+        const validPassword = bcrypt.compareSync(password, alumno.password);
+        if (!validPassword) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Usuario o contraseña incorrectos',
+                token: ''
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'contraseñaCorrecta',
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error comprobando contraseña',
+        });
+    }
+}
+
+module.exports = { loginCentroEducativo, tokenCentro, buscarTipoUsuario, loginProfesor, tokenProfesor, token, loginAlumno, tokenAlumno, comprobarPasswordCentro, comprobarPasswordProfesor, comprobarPasswordAlumno }

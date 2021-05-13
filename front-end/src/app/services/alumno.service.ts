@@ -57,6 +57,10 @@ export class AlumnoService {
     return this.http.put(`${environment.base_url}/alumnos/${uid}`, data, this.cabeceras);
   }
 
+  eliminarAlumno(uidAlumno: string){
+    return this.http.delete(`${environment.base_url}/alumnos/${uidAlumno}`, this.cabeceras);
+  }
+
   escogerClase (data) {
     return this.http.post(`${environment.base_url}/alumnos/escogerClase`, data, this.cabeceras);
   }
@@ -124,6 +128,10 @@ export class AlumnoService {
       filtro = '';
     }
     return this.http.get(`${environment.base_url}/examenes/proximosexamenesalumno/${uidClase}/${uidAlumno}/?limitado=${filtro}`, this.cabeceras);
+  }
+
+  comprobarPasswordAlumno(data){
+    return this.http.post(`${environment.base_url}/login/comprobarpasswordalumno`, data, this.cabeceras);
   }
 
   loginAlumno( formData: loginForm) {
