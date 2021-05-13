@@ -276,6 +276,90 @@ const actualizarCentro = async(req, res = response) => {
 
 }
 
+const eliminarCentro = async(req, res) => {
+    const uidCentro = req.params.idCentro;
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidCentro))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para eliminar la cuenta',
+            });
+        }
+
+        const clasesEncontradas = await Clase.find({ uidCentro: uidCentro });
+        if (!clasesEncontradas) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar clases asociadas al centro'
+            });
+        }
+
+        for (let i = 0; i < clasesEncontradas.length; i++) {
+            const examenesEliminados = await Examen.deleteMany({ uidClase: clasesEncontradas[i]._id });
+            if (!examenesEliminados) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Error al eliminar exámenes asociados al centro de la clase ' + clasesEncontradas[i].nombre
+                });
+            }
+
+            const examenesResueltosEliminados = await ExamenResuelto.deleteMany({ uidClase: clasesEncontradas[i]._id });
+            if (!examenesResueltosEliminados) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Error al eliminar exámenes resueltos asociados al centro de la clase ' + clasesEncontradas[i].nombre
+                });
+            }
+        }
+
+        const clasesEliminadas = await Clase.deleteMany({ uidCentro: uidCentro });
+        if (!clasesEliminadas) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al eliminar clases asociadas al centro'
+            });
+        }
+
+        const alumnosEliminados = await Alumno.deleteMany({ uidCentro: uidCentro });
+        if (!alumnosEliminados) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al eliminar alumnos asociados al centro'
+            });
+        }
+
+        const profesoresEliminados = await Profesor.deleteMany({ uidCentro: uidCentro });
+        if (!profesoresEliminados) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al eliminar profesores asociados al centro'
+            });
+        }
+
+        const eliminarCentro = await Centroeducativo.findByIdAndRemove(uidCentro);
+        if (!eliminarCentro) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al eliminar centro'
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'Centro eliminado',
+            resultado: eliminarCentro,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error eliminando centro'
+        });
+    }
+}
+
 const generarCodigoProfesor = async(req, res) => {
     const { uid, ...object } = req.body;
     try {
@@ -746,4 +830,4 @@ const eliminarClase = async(req, res = response) => {
     }
 }
 
-module.exports = { crearCentro, obtenerCentros, obtenerClases, crearClase, actualizarCentro, generarCodigoProfesor, generarCodigoAlumno, obtenerProfesores, obtenerProfesoresClase, eliminarClase }
+module.exports = { crearCentro, obtenerCentros, obtenerClases, crearClase, actualizarCentro, eliminarCentro, generarCodigoProfesor, generarCodigoAlumno, obtenerProfesores, obtenerProfesoresClase, eliminarClase }

@@ -107,6 +107,10 @@ export class CentroeducativoService {
     return this.http.put(`${environment.base_url}/centroeducativo/${uid}`, data, this.cabeceras);
   }
 
+  eliminarCentro(uidCentro: string){
+    return this.http.delete(`${environment.base_url}/centroeducativo/${uidCentro}`, this.cabeceras);
+  }
+
   establecerdatos( nombre: string, email: string ): void {
     this.centro.nombre = nombre;
     this.centro.email = email;
@@ -129,7 +133,7 @@ export class CentroeducativoService {
   }
 
   eliminarClase(uidCentro: string, uidClase: string){
-    return this.http.delete(`${environment.base_url}/centroeducativo/${uidCentro}/${uidClase}`, this.cabeceras);
+    return this.http.delete(`${environment.base_url}/centroeducativo/${uidCentro}/clase/${uidClase}`, this.cabeceras);
   }
 
   comprobarPasswordCentro(data){

@@ -4,7 +4,7 @@ Ruta base: /api/centroeducativo
 
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { crearCentro, obtenerCentros, obtenerClases, crearClase, actualizarCentro, generarCodigoProfesor, generarCodigoAlumno, obtenerProfesores, obtenerProfesoresClase, eliminarClase } = require('../controllers/centroeducativo');
+const { crearCentro, obtenerCentros, obtenerClases, crearClase, actualizarCentro, generarCodigoProfesor, generarCodigoAlumno, obtenerProfesores, obtenerProfesoresClase, eliminarClase, eliminarCentro } = require('../controllers/centroeducativo');
 const { validarCampos } = require('../middleware/validar-campos');
 const { validarJWT } = require('../middleware/validar-jwt');
 
@@ -25,6 +25,11 @@ router.post('/', [
     validarCampos,
 ], crearCentro);
 
+router.delete('/:idCentro', [
+    validarJWT,
+    check('idCentro', 'El id de centro debe ser válido').optional().isMongoId(),
+    validarCampos,
+], eliminarCentro);
 
 router.get('/profesores/:id', [
     validarJWT,
@@ -69,7 +74,7 @@ router.post('/clases', [
     validarCampos,
 ], crearClase);
 
-router.delete('/:idCentro/:idClase', [
+router.delete('/:idCentro/clase/:idClase', [
     validarJWT,
     check('idCentro', 'El id de centro debe ser válido').optional().isMongoId(),
     check('idClase', 'El id de clase debe ser válido').optional().isMongoId(),

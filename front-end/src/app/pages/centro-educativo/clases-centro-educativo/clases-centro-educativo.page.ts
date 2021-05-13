@@ -156,7 +156,7 @@ export class ClasesCentroEducativoPage implements OnInit {
           title: 'Eliminar clase ' + nombre,
           text: `Introduzca la contraseña de su cuenta para eliminar la clase`,
           input: "password",
-          confirmButtonText: 'Entrar',
+          confirmButtonText: 'Eliminar',
           showCancelButton: true,
           cancelButtonColor: '#d33',
           cancelButtonText: 'Cancelar',
@@ -180,7 +180,7 @@ export class ClasesCentroEducativoPage implements OnInit {
               .subscribe(res => {
                 this.eliminarClase(uidClase, nombre);
               }, (err) => {
-                this.passwordIncorrectaGestionar(uidClase, nombre);
+                this.passwordIncorrectaEliminar(uidClase, nombre);
               });
           }
         });
@@ -188,13 +188,13 @@ export class ClasesCentroEducativoPage implements OnInit {
     });
   }
 
-  passwordIncorrectaGestionar(uidClase, nombre){
+  passwordIncorrectaEliminar(uidClase, nombre){
     Swal.fire({
       title: 'Eliminar clase ' + nombre,
       text: 'Contraseña incorrecta. Por favor, vuelva a intentarlo.',
       icon: 'error',
       input: "password",
-      confirmButtonText: 'Entrar',
+      confirmButtonText: 'Eliminar',
       showCancelButton: true,
       cancelButtonColor: '#d33',
       cancelButtonText: 'Cancelar',
@@ -218,7 +218,7 @@ export class ClasesCentroEducativoPage implements OnInit {
           .subscribe(res => {
             this.eliminarClase(uidClase, nombre);
           }, (err) => {
-            this.passwordIncorrectaGestionar(uidClase, nombre);
+            this.passwordIncorrectaEliminar(uidClase, nombre);
           });
       }
     });
