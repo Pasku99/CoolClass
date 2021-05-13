@@ -11,6 +11,8 @@ const generator = require('generate-password');
 const Clase = require('../models/clase');
 const Profesor = require('../models/profesor');
 const Alumno = require('../models/alumno');
+const Examen = require('../models/examen');
+const ExamenResuelto = require('../models/examen-resuelto');
 var ObjectId = require('mongodb').ObjectID;
 
 const sleep = (ms) => {
@@ -665,4 +667,83 @@ const obtenerProfesoresClase = async(req, res = response) => {
     }
 }
 
-module.exports = { crearCentro, obtenerCentros, obtenerClases, crearClase, actualizarCentro, generarCodigoProfesor, generarCodigoAlumno, obtenerProfesores, obtenerProfesoresClase }
+const eliminarClase = async(req, res = response) => {
+    const uidCentro = req.params.idCentro;
+    const uidClase = req.params.idClase;
+    try {
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidCentro))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para listar profesores',
+            });
+        }
+
+        const clase = await Clase.findById(uidClase);
+        if (!clase) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar la clase',
+            });
+        }
+
+        const examenesResueltosBorrados = await ExamenResuelto.deleteMany({ uidClase: uidClase });
+        if (!examenesResueltosBorrados) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al borrar exámenes resueltos de la clase',
+            });
+        }
+
+        const examenesBorrados = await Examen.deleteMany({ uidClase: uidClase });
+        if (!examenesBorrados) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al borrar exámenes de la clase',
+            });
+        }
+
+        const alumnosBorrarClase = await Alumno.find({ uidClase: uidClase });
+        if (!alumnosBorrarClase) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al buscar alumnos',
+            });
+        }
+
+        for (let i = 0; i < alumnosBorrarClase.length; i++) {
+            alumnosBorrarClase[i].uidClase = undefined;
+            alumnosBorrarClase[i].nombreClase = undefined;
+            const borrarClases = await alumnosBorrarClase[i].save();
+            if (!borrarClases) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Error al borrar clases del alumno ' + alumnosBorrarClase[i].nombre,
+                });
+            }
+        }
+
+        const claseBorrada = await Clase.findByIdAndRemove(uidClase);
+        if (!claseBorrada) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al borrar la clase',
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'Clase borrada con éxito',
+            claseBorrada
+        })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error borrando la clase'
+        });
+    }
+}
+
+module.exports = { crearCentro, obtenerCentros, obtenerClases, crearClase, actualizarCentro, generarCodigoProfesor, generarCodigoAlumno, obtenerProfesores, obtenerProfesoresClase, eliminarClase }

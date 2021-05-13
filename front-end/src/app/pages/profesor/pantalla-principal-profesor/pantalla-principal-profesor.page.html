@@ -25,6 +25,11 @@
                         <ion-button class="clases" size="large" [routerLink]="['/tabs-profesor/clases', clase.nombre]">{{clase.nombre}}</ion-button>
                         <!-- <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="slideNext(this.listaClasesProfesorObjeto,slideWithNav)"></ion-icon> -->
                     </ion-slide>
+                    <ion-slide *ngIf="this.listaClasesProfesorObjeto.length == 0">
+                        <!-- <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="slidePrev(this.listaClasesProfesorObjeto,slideWithNav)"></ion-icon> -->
+                        <ion-button class="clasesNo" size="large">Sin clases registradas</ion-button>
+                        <!-- <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="slideNext(this.listaClasesProfesorObjeto,slideWithNav)"></ion-icon> -->
+                    </ion-slide>
                 </ion-slides>
             </ion-col>
         </ion-row>

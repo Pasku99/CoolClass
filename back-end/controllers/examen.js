@@ -171,8 +171,6 @@ const crearExamen = async(req, res = response) => {
         const {...object } = req.body;
         const examen = new Examen(object);
         examen.nombreClase = clase.nombre;
-        examen.fechaComienzo.setHours(examen.fechaComienzo.getHours() + 2);
-        examen.fechaFinal.setHours(examen.fechaFinal.getHours() + 2);
 
         const examenGuardado = await examen.save();
         if (!examenGuardado) {

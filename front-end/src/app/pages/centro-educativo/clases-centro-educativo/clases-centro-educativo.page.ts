@@ -92,6 +92,7 @@ export class ClasesCentroEducativoPage implements OnInit {
               icon: 'success',
               heightAuto: false
             });
+            this.filtro = '';
             this.cargarClases(this.centroeducativoService.uid, this.filtro);
           }, (err) => {
             const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
@@ -136,6 +137,112 @@ export class ClasesCentroEducativoPage implements OnInit {
     } else {
       this.cargarClasesFiltro(this.centroeducativoService.uid, this.filtro);
     }
+  }
+
+  eliminarClaseModal(uidClase, nombre){
+    Swal.fire({
+      title: '¿Está seguro/a?',
+      text: 'Se borrarán todos los datos asociados a la clase ' + nombre + ', incluyendo exámenes y notas.',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: 'red',
+      confirmButtonText: 'Confirmar',
+      confirmButtonColor: '#004dff',
+      allowOutsideClick: false,
+      heightAuto: false,
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire({
+          title: 'Eliminar clase ' + nombre,
+          text: `Introduzca la contraseña de su cuenta para eliminar la clase`,
+          input: "password",
+          confirmButtonText: 'Entrar',
+          showCancelButton: true,
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Cancelar',
+          heightAuto: false,
+          inputValidator: password => {
+            // Si el valor es válido, debes regresar undefined. Si no, una cadena
+            if (!password) {
+                return "Por favor, escriba la contraseña";
+            } else {
+                return undefined;
+            }
+          }
+        }).then((result) => {
+          if(result.value){
+            var password = result.value;
+            const data = {
+              uid: this.centroeducativoService.uid,
+              password: password
+            }
+            this.centroeducativoService.comprobarPasswordCentro(data)
+              .subscribe(res => {
+                this.eliminarClase(uidClase, nombre);
+              }, (err) => {
+                this.passwordIncorrectaGestionar(uidClase, nombre);
+              });
+          }
+        });
+      }
+    });
+  }
+
+  passwordIncorrectaGestionar(uidClase, nombre){
+    Swal.fire({
+      title: 'Eliminar clase ' + nombre,
+      text: 'Contraseña incorrecta. Por favor, vuelva a intentarlo.',
+      icon: 'error',
+      input: "password",
+      confirmButtonText: 'Entrar',
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      heightAuto: false,
+      inputValidator: password => {
+        // Si el valor es válido, debes regresar undefined. Si no, una cadena
+        if (!password) {
+            return "Por favor, escriba la contraseña.";
+        } else {
+            return undefined;
+        }
+      }
+    }).then((result) => {
+      if(result.value){
+        var password = result.value;
+        const data = {
+          uid: this.centroeducativoService.uid,
+          password: password
+        }
+        this.centroeducativoService.comprobarPasswordCentro(data)
+          .subscribe(res => {
+            this.eliminarClase(uidClase, nombre);
+          }, (err) => {
+            this.passwordIncorrectaGestionar(uidClase, nombre);
+          });
+      }
+    });
+  }
+
+  eliminarClase(uidClase, nombre){
+    this.centroeducativoService.eliminarClase(this.centroeducativoService.uid, uidClase)
+      .subscribe(res => {
+        Swal.fire({
+          title: 'Clase ' + nombre + ' eliminada con éxito',
+          icon: 'success',
+          showCancelButton: false,
+          confirmButtonText: 'Vale',
+          confirmButtonColor: '#004dff',
+          allowOutsideClick: false,
+          heightAuto: false,
+        });
+        this.filtro = '';
+        this.cargarClases(this.centroeducativoService.uid, this.filtro);
+      }, (err => {
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
+      }))
   }
 
 }

@@ -107,18 +107,22 @@ export class PantallaPrincipalAlumnoPage implements OnInit {
   };
 
   cargarAsignaturas(){
-    this.alumnoService.cargarAsignaturasAlumno(this.alumnoService.uid, this.alumnoService.uidClase)
-      .subscribe(res => {
-        this.listaAsignaturas = res['asignaturas'];
-        this.listaAsignaturasMayus = [];
-        for(let i = 0; i < this.listaAsignaturas.length; i++){
-          this.listaAsignaturasMayus.push(this.listaAsignaturas[i].toUpperCase());
-        }
-      }, (err => {
-        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
-        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
-        return;
-      }));
+    if(this.alumnoService.uidClase){
+      this.alumnoService.cargarAsignaturasAlumno(this.alumnoService.uid, this.alumnoService.uidClase)
+        .subscribe(res => {
+          this.listaAsignaturas = res['asignaturas'];
+          this.listaAsignaturasMayus = [];
+          for(let i = 0; i < this.listaAsignaturas.length; i++){
+            this.listaAsignaturasMayus.push(this.listaAsignaturas[i].toUpperCase());
+          }
+        }, (err => {
+          const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+          Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+          return;
+        }));
+    } else {
+      this.listaAsignaturasMayus = [];
+    }
   }
 
   cargarUltimosExamenesAlumno(){
@@ -133,26 +137,30 @@ export class PantallaPrincipalAlumnoPage implements OnInit {
   }
 
   cargarProximosExamenesAlumno(){
-    this.alumnoService.cargarTodosProximosExamenesAlumno(this.alumnoService.uid, this.alumnoService.uidClase, 'limitado')
-      .subscribe(res => {
-        this.proximosExamenes = res['proximosExamenesAlumno'];
-        this.fechas = [];
-        for(let i = 0; i < this.proximosExamenes.length; i++){
-          let date = new Date(this.proximosExamenes[i].fechaComienzo);
-          let fecha = '';
-          fecha = ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
-          ("00" + date.getDate()).slice(-2) + "/" +
-          date.getFullYear() + " " +
-          ("00" + date.getHours()).slice(-2) + ":" +
-          ("00" + date.getMinutes()).slice(-2) + ":" +
-          ("00" + date.getSeconds()).slice(-2);
-          this.fechas.push(fecha);
-        }
-      }, (err => {
-        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
-        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
-        return;
-      }))
+    if(this.alumnoService.uidClase){
+      this.alumnoService.cargarTodosProximosExamenesAlumno(this.alumnoService.uid, this.alumnoService.uidClase, 'limitado')
+        .subscribe(res => {
+          this.proximosExamenes = res['proximosExamenesAlumno'];
+          this.fechas = [];
+          for(let i = 0; i < this.proximosExamenes.length; i++){
+            let date = new Date(this.proximosExamenes[i].fechaComienzo);
+            let fecha = '';
+            fecha = ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
+            ("00" + date.getDate()).slice(-2) + "/" +
+            date.getFullYear() + " " +
+            ("00" + date.getHours()).slice(-2) + ":" +
+            ("00" + date.getMinutes()).slice(-2) + ":" +
+            ("00" + date.getSeconds()).slice(-2);
+            this.fechas.push(fecha);
+          }
+        }, (err => {
+          const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+          Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+          return;
+        }))
+    } else {
+      this.proximosExamenes = [];
+    }
   }
 
 }

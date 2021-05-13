@@ -19,6 +19,10 @@ import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { CentroeducativoService } from './services/centroeducativo.service';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
 
 export function jwtOptionsFactory(storage) {
   return {
@@ -32,7 +36,7 @@ export function jwtOptionsFactory(storage) {
 @NgModule({
   declarations: [AppComponent, BlankLayoutComponent, TabsCentroEducativoComponent, TabsProfesorComponent, TabsAlumnoComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, MainModule, RouterModule, IonicModule, PagesModule, HttpClientModule,
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, MainModule, RouterModule, IonicModule, PagesModule, HttpClientModule, FontAwesomeModule,
     IonicStorageModule.forRoot(),
     JwtModule.forRoot({
       jwtOptionsProvider: {
@@ -47,4 +51,8 @@ export function jwtOptionsFactory(storage) {
     CUSTOM_ELEMENTS_SCHEMA
   ]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas, fab, far);
+  }
+}

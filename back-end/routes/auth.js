@@ -4,8 +4,9 @@ Ruta base: /api/login
 
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { loginCentroEducativo, buscarTipoUsuario, tokenCentro, loginProfesor, tokenProfesor, token, loginAlumno, tokenAlumno } = require('../controllers/auth');
+const { loginCentroEducativo, buscarTipoUsuario, tokenCentro, loginProfesor, tokenProfesor, token, loginAlumno, tokenAlumno, comprobarPasswordCentro } = require('../controllers/auth');
 const { validarCampos } = require('../middleware/validar-campos');
+const { validarJWT } = require('../middleware/validar-jwt');
 
 const router = Router();
 
@@ -51,5 +52,12 @@ router.post('/buscartipo', [
     check('email', 'El argumento email es obligatorio').not().isEmpty(),
     validarCampos,
 ], buscarTipoUsuario);
+
+router.post('/comprobarpasswordcentro', [
+    validarJWT,
+    check('uid', 'El argumento uid es obligatorio').not().isEmpty(),
+    check('password', 'El argumento password es obligatorio').not().isEmpty(),
+    validarCampos,
+], comprobarPasswordCentro);
 
 module.exports = router;

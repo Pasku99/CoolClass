@@ -77,8 +77,4 @@ router.get('/:idProfesor/clase/:idClase', [
     validarJWT
 ], obtenerClase);
 
-// router.post('/escogerclase', [
-//     validarCampos,
-// ], escogerClases);
-
 module.exports = router;

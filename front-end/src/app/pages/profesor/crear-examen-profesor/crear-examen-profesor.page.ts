@@ -143,7 +143,11 @@ export class CrearExamenProfesorPage implements OnInit {
     // console.log(this.fechaComienzo)
     // let comienzo = new Date(this.fechaComienzo.getTime() - this.fechaComienzo.getTimezoneOffset()*60000).toISOString();
     // let final = new Date(this.fechaFinal.getTime() - this.fechaFinal.getTimezoneOffset()*60000).toISOString();
-
+    // let comienzo = new Date(this.fechaComienzo);
+    // comienzo.setHours(comienzo.getHours() - 2);
+    // let final = new Date(this.fechaFinal);
+    // final.setHours(final.getHours() - 2);
+    // console.log(comienzo);
     const data = {
       uidProfesor : this.profesorService.uid,
       uidClase : this.uidClase,

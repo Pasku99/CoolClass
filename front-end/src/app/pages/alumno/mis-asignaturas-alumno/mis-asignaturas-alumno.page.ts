@@ -23,18 +23,22 @@ export class MisAsignaturasAlumnoPage implements OnInit {
   }
 
   cargarAsignaturas(){
-    this.alumnoService.cargarAsignaturasAlumno(this.alumnoService.uid, this.alumnoService.uidClase)
-      .subscribe(res => {
-        this.listaAsignaturas = res['asignaturas'];
-        this.listaAsignaturasMayus = [];
-        for(let i = 0; i < this.listaAsignaturas.length; i++){
-          this.listaAsignaturasMayus.push(this.listaAsignaturas[i].toUpperCase());
-        }
-      }, (err => {
-        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
-        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
-        return;
-      }));
+    if(this.alumnoService.uidClase){
+      this.alumnoService.cargarAsignaturasAlumno(this.alumnoService.uid, this.alumnoService.uidClase)
+        .subscribe(res => {
+          this.listaAsignaturas = res['asignaturas'];
+          this.listaAsignaturasMayus = [];
+          for(let i = 0; i < this.listaAsignaturas.length; i++){
+            this.listaAsignaturasMayus.push(this.listaAsignaturas[i].toUpperCase());
+          }
+        }, (err => {
+          const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+          Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+          return;
+        }));
+    } else {
+      this.listaAsignaturasMayus = [];
+    }
   }
 
 }

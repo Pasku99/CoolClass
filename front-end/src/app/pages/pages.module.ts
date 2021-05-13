@@ -46,6 +46,7 @@ import { EditarPerfilAlumnoPage } from './alumno/editar-perfil-alumno/editar-per
 import { AjustesAlumnoPage } from './alumno/ajustes-alumno/ajustes-alumno.page';
 import { MisExamenesNotasProfesorPage } from './profesor/mis-examenes-notas-profesor/mis-examenes-notas-profesor.page';
 import { ExamenesRealizadosPage } from './profesor/examenes-realizados/examenes-realizados.page';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 @NgModule({
   declarations: [
@@ -89,7 +90,7 @@ import { ExamenesRealizadosPage } from './profesor/examenes-realizados/examenes-
     EditarPerfilAlumnoPage,
     AjustesAlumnoPage,
     MisExamenesNotasProfesorPage,
-    ExamenesRealizadosPage
+    ExamenesRealizadosPage,
   ],
   exports: [
     RegistroCentroEducativoPage,
@@ -132,7 +133,7 @@ import { ExamenesRealizadosPage } from './profesor/examenes-realizados/examenes-
     EditarPerfilAlumnoPage,
     AjustesAlumnoPage,
     MisExamenesNotasProfesorPage,
-    ExamenesRealizadosPage
+    ExamenesRealizadosPage,
   ],
   imports: [
     IonicModule,
@@ -140,7 +141,8 @@ import { ExamenesRealizadosPage } from './profesor/examenes-realizados/examenes-
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ]
 })
 

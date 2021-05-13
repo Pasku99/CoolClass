@@ -128,6 +128,14 @@ export class CentroeducativoService {
     this.centro.codigoAlumno = codigoAlumno;
   }
 
+  eliminarClase(uidCentro: string, uidClase: string){
+    return this.http.delete(`${environment.base_url}/centroeducativo/${uidCentro}/${uidClase}`, this.cabeceras);
+  }
+
+  comprobarPasswordCentro(data){
+    return this.http.post(`${environment.base_url}/login/comprobarpasswordcentro`, data, this.cabeceras);
+  }
+
   loginCentroEducativo( formData: loginForm) {
     return this.http.post(`${environment.base_url}/login/centroeducativo`, formData)
     .pipe(
