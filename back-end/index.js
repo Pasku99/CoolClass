@@ -20,6 +20,9 @@ app.use('/api/profesores', require('./routes/profesor'));
 app.use('/api/alumnos', require('./routes/alumno'));
 app.use('/api/examenes', require('./routes/examen'));
 
-app.listen(process.env.PORT, () => {
-    console.log('Servidor corriendo en el puerto ' + process.env.PORT);
+const host = process.env.HOST || '0.0.0.0';
+const port = process.env.PORT || 3000;
+
+app.listen(port, host, () => {
+    console.log('Servidor corriendo en el puerto ' + port);
 });
