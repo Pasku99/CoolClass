@@ -29,14 +29,11 @@
             <ion-card (click)="expandItem(profesor)" *ngFor="let profesor of this.profesores; let i = index">
                 <ion-row>
                     <ion-col size="3">
-                        <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;"></ion-icon>
+                        <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;" *ngIf="!profesor.expanded"></ion-icon>
+                        <ion-icon name="chevron-up-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;" *ngIf="profesor.expanded"></ion-icon>
                     </ion-col>
                     <ion-col size="4.5">
-                        <!-- <ion-card-header>
-                      <ion-card-title style="color: black; font-size: 16px;"><b>Profesor</b></ion-card-title>
-                  </ion-card-header> -->
                         <p style="color: black; font-size: 16px;"><b>Profesor</b></p>
-
                     </ion-col>
                     <ion-col size="4.5">
                         <p style="color: black; font-size: 16px;">{{profesor[1]}}</p>
@@ -44,7 +41,7 @@
                 </ion-row>
                 <ion-row>
                     <ion-col size="12">
-                        <app-accordion-list expandHeight="100px" [expanded]="profesor.expanded">
+                        <app-accordion-list expandHeight="4rem" [expanded]="profesor.expanded">
                             <ion-row>
                                 <ion-col size="3">
 

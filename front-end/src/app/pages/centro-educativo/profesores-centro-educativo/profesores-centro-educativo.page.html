@@ -28,7 +28,8 @@
             <ion-card (click)="expandItem(profesor)" *ngFor="let profesor of this.listaProfesores">
                 <ion-row>
                     <ion-col size="3">
-                        <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;" (click)="this.cargarClasesProfesor(this.centroeducativoService.uid, profesor.uid)"></ion-icon>
+                        <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;" *ngIf="!profesor.expanded" (click)="this.cargarClasesProfesor(this.centroeducativoService.uid, profesor.uid)"></ion-icon>
+                        <ion-icon name="chevron-up-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;" *ngIf="profesor.expanded"></ion-icon>
                     </ion-col>
                     <ion-col size="4">
                         <p style="color: black; font-size: 16px;"><b>Profesor</b></p>
@@ -39,7 +40,7 @@
                 </ion-row>
                 <ion-row>
                     <ion-col size="12">
-                        <app-accordion-list expandHeight="100px" [expanded]="profesor.expanded">
+                        <app-accordion-list expandHeight="5rem" [expanded]="profesor.expanded">
                             <ion-row>
                                 <ion-col size="3">
 
@@ -48,7 +49,7 @@
                                     <b style="color: black; font-size: 16px; ">Clases</b>
                                 </ion-col>
                                 <ion-col size="5">
-                                    <p style="color: black; font-size: 16px; margin-top: 0rem; display: inline;" *ngFor="let clases of this.listaClasesProfesor">{{clases.nombre}}, </p>
+                                    <p style="color: black; font-size: 16px; margin-top: 0rem; display: inline;" *ngIf="this.clasesProfesor != ''">{{this.clasesProfesor}}</p>
                                 </ion-col>
                             </ion-row>
                         </app-accordion-list>

@@ -18,6 +18,7 @@ export class ProfesoresCentroEducativoPage implements OnInit {
   public listaDesplegable: Profesor[] = [];
   public listaClasesProfesor: MisClases[] = [];
   public listaAsignaturasEnUso: Array<String> = new Array<String>();
+  public clasesProfesor: string = '';
 
   constructor(public centroeducativoService: CentroeducativoService,
               public profesorService: ProfesorService) {
@@ -91,12 +92,18 @@ export class ProfesoresCentroEducativoPage implements OnInit {
       .subscribe( res => {
         this.listaClasesProfesor = [];
         this.listaAsignaturasEnUso = res['infoClases'];
-        // for(let i = 0; i <  this.listaAsignaturasEnUso.length; i = i + 2){
-        //   this.listaClasesProfesor.push(this.listaAsignaturasEnUso[i]);
-        // }
+        this.clasesProfesor = '';
         for(let i = 0; i < this.listaAsignaturasEnUso.length; i++){
           let clases = {nombre: this.listaAsignaturasEnUso[i][0], asignatura: this.listaAsignaturasEnUso[i][1], uidClase: this.listaAsignaturasEnUso[i][2]};
           this.listaClasesProfesor.push(clases);
+        }
+        for(let i = 0; i < this.listaClasesProfesor.length; i++){
+          if(i == this.listaClasesProfesor.length-1){
+            this.clasesProfesor += this.listaClasesProfesor[i].nombre;
+          } else {
+            this.clasesProfesor += this.listaClasesProfesor[i].nombre;
+            this.clasesProfesor += ', ';
+          }
         }
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
