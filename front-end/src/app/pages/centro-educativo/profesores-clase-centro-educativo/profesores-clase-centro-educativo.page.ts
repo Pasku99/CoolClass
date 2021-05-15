@@ -19,7 +19,8 @@ export class ProfesoresClaseCentroEducativoPage implements OnInit {
   public profesores: ProfesorClase[] = [];
   public listaDesplegable: Profesor[] = [];
   public filtro: string = '';
-  public clase: Clase;
+  public clase: Clase = new Clase('');
+  public nombreClase: string = '';
 
   constructor(private centroeducativoService: CentroeducativoService,
               private route: ActivatedRoute) {
@@ -97,6 +98,7 @@ export class ProfesoresClaseCentroEducativoPage implements OnInit {
     this.centroeducativoService.cargarClasesUid(this.centroeducativoService.uid, this.uidClase)
       .subscribe(res => {
         this.clase = res['arrayClases'];
+        this.nombreClase = this.clase[0].nombre;
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});

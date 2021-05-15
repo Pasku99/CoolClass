@@ -29,7 +29,7 @@ export function jwtOptionsFactory(storage) {
     tokenGetter: () => {
       return storage.get('access_token');
     },
-    whitelistedDomains: ['http://192.168.0.203:8100', 'http://localhost:3000']
+    whitelistedDomains: ['http://192.168.0.203:8100', 'http://localhost:3000', 'https://serene-retreat-07227.herokuapp.com']
   }
 }
 
