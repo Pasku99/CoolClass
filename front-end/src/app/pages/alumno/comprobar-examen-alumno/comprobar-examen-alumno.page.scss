@@ -14,24 +14,31 @@ ion-grid {
     height: 100%;
 }
 
-.fila0 {
-    height: 15%;
-}
-
-.fila1 {
-    height: 15%;
-}
-
-.fila2 {
-    height: 30%;
-}
-
-.fila3 {
-    height: 30%;
-}
-
-.fila4 {
-    height: 10%;
+// .fila0 {
+//     height: 15%;
+// }
+// .fila1 {
+//     height: 15%;
+// }
+// .fila2 {
+//     height: 30%;
+// }
+// .fila3 {
+//     height: 30%;
+// }
+// .fila4 {
+//     height: 10%;
+// }
+ion-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    --background: #73C2FB;
+    color: black;
+    --border-radius: 1rem;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
 @media (min-height: 700px) {
@@ -39,28 +46,41 @@ ion-grid {
         height: 80%;
         width: 80%;
     }
+    ion-card-header {
+        top: 20%;
+    }
     ion-card-content {
-        font-size: 1.5rem;
+        margin-top: 15%;
+        font-size: 1.1rem;
     }
     .respuesta {
         margin-right: 2rem;
         margin-left: 2rem;
     }
+    .respondida {
+        margin-bottom: 5%;
+    }
 }
 
 @media (max-height: 700px) {
     ion-card {
-        height: 8rem;
-        width: 8rem;
+        height: 80%;
+        width: 80%;
+    }
+    ion-card-header {
+        top: 15%;
     }
     ion-card-content {
-        font-size: 1.3rem;
-        margin-top: -0.6rem;
+        margin-top: 15%;
+        font-size: 1.1rem;
     }
     .respuesta {
         margin-top: -0.2rem;
         margin-right: 1rem;
         margin-left: 1rem;
+    }
+    .respondida {
+        margin-bottom: 5%;
     }
 }
 

@@ -106,7 +106,7 @@ const routes: Routes = [
       { path: 'asignaturas/info-asignatura/examenes/hacer-examen/:idProfesor/:idExamen', component: HacerExamenAlumnoPage, canActivate: [ AuthcentroGuard ]},
       { path: 'asignaturas/info-asignatura/examenes/:idProfesor/notas/:asignatura', component: MisNotasAlumnoPage, canActivate: [ AuthcentroGuard ]},
       { path: 'asignaturas/info-asignatura/examenes/:idProfesor/notas/:nombreExamen/:asignatura', component: MisNotasAlumnoPage, canActivate: [ AuthcentroGuard ]},
-      { path: 'asignaturas/info-asignatura/examenes/notas/comprobar-examen', component: ComprobarExamenAlumnoPage, canActivate: [ AuthcentroGuard ]},
+      { path: 'asignaturas/info-asignatura/examenes/notas/comprobar-examen/:idAlumno/:idExamenResuelto', component: ComprobarExamenAlumnoPage, canActivate: [ AuthcentroGuard ]},
       { path: 'perfil', component: PerfilAlumnoPage, canActivate: [ AuthcentroGuard ]},
       { path: 'perfil/editar-perfil', component: EditarPerfilAlumnoPage, canActivate: [ AuthcentroGuard ]},
       { path: 'perfil/ajustes', component: AjustesAlumnoPage, canActivate: [ AuthcentroGuard ]},

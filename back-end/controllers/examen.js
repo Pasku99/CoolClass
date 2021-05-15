@@ -767,6 +767,42 @@ const obtenerExamenesResueltosAlumno = async(req, res) => {
     }
 }
 
+const obtenerExamenResueltoAlumno = async(req, res) => {
+    const uidAlumno = req.params.idAlumno;
+    const uidExamen = req.query.idExamen;
+    try {
+        // Se comprueba que sea rol admin para poder listar
+        const token = req.header('x-token');
+        if (!((infoToken(token).rol === 'ROL_ADMIN') || (infoToken(token).uid === uidAlumno))) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tiene permisos para listar exámenes',
+            });
+        }
+
+        const examenResuelto = await ExamenResuelto.findById(uidExamen);
+        if (!examenResuelto) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error al encontrar el examen resuelto',
+            });
+        }
+
+        res.json({
+            ok: true,
+            msg: 'getExamenResueltoAlumno',
+            examenResuelto,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error obteniendo examen resuelto'
+        });
+    }
+}
+
 const obtenerUltimosExamenesProfesor = async(req, res = response) => {
     const uidProfesor = req.params.idProfesor;
     const uidClase = req.query.idClase;
@@ -1033,4 +1069,4 @@ const eliminarExamenProfesor = async(req, res = response) => {
     }
 }
 
-module.exports = { obtenerExamenes, crearExamen, obtenerExamenResueltos, crearExamenResuelto, obtenerExamenesAlumnosCentro, obtenerExamenesClaseProfesor, obtenerNotasExamen, obtenerProximosExamenesAlumno, obtenerExamenesAsignaturaAlumno, obtenerExamenAlumno, obtenerExamenesResueltosAlumno, obtenerUltimosExamenesProfesor, obtenerProximosExamenesProfesor, obtenerTodosExamenesResueltosAlumno, obtenerTodosProximosExamenesAlumno, eliminarExamenProfesor }
+module.exports = { obtenerExamenes, crearExamen, obtenerExamenResueltos, crearExamenResuelto, obtenerExamenesAlumnosCentro, obtenerExamenesClaseProfesor, obtenerNotasExamen, obtenerProximosExamenesAlumno, obtenerExamenesAsignaturaAlumno, obtenerExamenAlumno, obtenerExamenesResueltosAlumno, obtenerUltimosExamenesProfesor, obtenerProximosExamenesProfesor, obtenerTodosExamenesResueltosAlumno, obtenerTodosProximosExamenesAlumno, eliminarExamenProfesor, obtenerExamenResueltoAlumno }

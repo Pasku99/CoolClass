@@ -130,6 +130,10 @@ export class AlumnoService {
     return this.http.get(`${environment.base_url}/examenes/proximosexamenesalumno/${uidClase}/${uidAlumno}/?limitado=${filtro}`, this.cabeceras);
   }
 
+  cargarExamenResueltoAlumno(uidAlumno:string, uidExamenResuelto: string){
+    return this.http.get(`${environment.base_url}/examenes/notaalumno/${uidAlumno}/?idExamen=${uidExamenResuelto}`, this.cabeceras);
+  }
+
   comprobarPasswordAlumno(data){
     return this.http.post(`${environment.base_url}/login/comprobarpasswordalumno`, data, this.cabeceras);
   }

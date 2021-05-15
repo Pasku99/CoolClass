@@ -31,7 +31,7 @@
                 <ion-slides pager="true" [options]="slideOptsTwo" #slideWithNav2>
                     <ion-slide *ngFor="let examen of this.examenesResueltos">
                         <!-- <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(1)"></ion-icon> -->
-                        <ion-card class="tarjeta1" style="background-color: #00ff7f;" [routerLink]="['/tabs-alumno/asignaturas/info-asignatura/examenes', examen.uidProfesor, 'notas', examen.nombreExamen]">
+                        <ion-card class="tarjeta1" style="background-color: #00ff7f;" [routerLink]="['/tabs-alumno/asignaturas/info-asignatura/examenes', examen.uidProfesor, 'notas', examen.nombreExamen, examen.asignatura]">
                             <ion-card-header>
                                 <ion-card-title style="font-size: 1.2rem; text-align:center;">{{examen.nombreExamen}}</ion-card-title>
                                 <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
