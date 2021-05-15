@@ -21,6 +21,8 @@ export class MisExamenesAlumnoPage implements OnInit {
   public nombreExamen: string = '';
   public filtro: string = '';
   public listaDesplegable: Examen[] = [];
+  public asignatura: string = '';
+  public asignaturaMayus: string = '';
 
   constructor(private alumnoService: AlumnoService,
               private route: ActivatedRoute,
@@ -59,6 +61,8 @@ export class MisExamenesAlumnoPage implements OnInit {
   ionViewWillEnter(){
     this.uidProfesor = this.route.snapshot.params['idProfesor'];
     this.nombreExamen = this.route.snapshot.params['nombreExamen'];
+    this.asignatura = this.route.snapshot.params['asignatura'];
+    this.asignaturaMayus = this.asignatura.toUpperCase();
     this.cargarDesplegable();
     this.cargarProfesor();
     if(this.nombreExamen){

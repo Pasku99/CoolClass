@@ -100,19 +100,4 @@ ion-card {
     .contenido {
         padding-bottom: 38rem;
     }
-    .fotoPerfil {
-        position: fixed;
-        z-index: 10;
-        right: 0rem;
-        top: 4rem;
-    }
-}
-
-@media (max-height: 1300px) {
-    .fotoPerfil {
-        position: fixed;
-        z-index: 10;
-        right: 0rem;
-        top: 4rem;
-    }
 }

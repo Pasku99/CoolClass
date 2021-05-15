@@ -1,18 +1,19 @@
 <ion-header class="ion-no-border" lines="none" style="background-color: #004dff; padding-bottom: 0rem;">
     <ion-col size="12" style="text-align: center;">
-        <h1>MATEMÁTICAS</h1>
+        <h1 *ngIf="this.asignaturaMayus != ''">{{this.asignaturaMayus}}</h1>
     </ion-col>
+    <ion-img class="back" src="../../../../assets/ionicons/arrow-back-outline.svg" style="width: 2.5rem; height: 2.5rem; margin-left: 1.5rem; margin-top: 0.5rem;" *ngIf="this.asignatura != ''" [routerLink]="['/tabs-alumno/asignaturas/info-asignatura', this.asignatura]"></ion-img>
 </ion-header>
 <ion-content class="ion-no-border" lines="none">
     <ion-grid>
         <ion-row>
-            <ion-col size="12">
-                <ion-icon class="fotoPerfil" text-center name="person-circle" style="width: 7rem; height: 7rem; text-align: center; width:100%; display:flex; align-items:center; justify-content:center;"></ion-icon>
+            <ion-col size="12" align-self-center>
+                <fa-icon icon="chalkboard-teacher" size="5x" text-center style="text-align: center; width:100%; display:flex; align-items:center; justify-content:center; color: #004dff; padding: 0; margin-top: 1rem;"></fa-icon>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col size="12" align-self-center class="ion-no-padding">
-                <h2 style="text-align: center; margin-top: 4rem;" *ngIf="this.nombreProfesor != ''">Profesor: {{this.nombreProfesor}}</h2>
+                <h2 style="text-align: center;" *ngIf="this.nombreProfesor != ''">Profesor: {{this.nombreProfesor}}</h2>
             </ion-col>
         </ion-row>
         <ion-row class="ion-no-padding">
@@ -37,14 +38,11 @@
                 <ion-card (click)="expandItem(examen)" *ngFor="let examen of this.examenesResueltos">
                     <ion-row>
                         <ion-col size="3">
-                            <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;"></ion-icon>
+                            <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;" *ngIf="!examen.expanded"></ion-icon>
+                            <ion-icon name="chevron-up-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;" *ngIf="examen.expanded"></ion-icon>
                         </ion-col>
                         <ion-col size="4.5">
-                            <!-- <ion-card-header>
-                          <ion-card-title style="color: black; font-size: 16px;"><b>Profesor</b></ion-card-title>
-                      </ion-card-header> -->
                             <p style="color: black; font-size: 16px;"><b>Nombre</b></p>
-
                         </ion-col>
                         <ion-col size="4.5">
                             <p style="color: black; font-size: 16px;">{{examen.nombreExamen}}</p>
