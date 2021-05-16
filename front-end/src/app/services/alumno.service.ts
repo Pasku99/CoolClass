@@ -62,6 +62,7 @@ export class AlumnoService {
   }
 
   escogerClase (data) {
+    console.log(data);
     return this.http.post(`${environment.base_url}/alumnos/escogerClase`, data, this.cabeceras);
   }
 
@@ -131,7 +132,7 @@ export class AlumnoService {
   }
 
   cargarExamenResueltoAlumno(uidAlumno:string, uidExamenResuelto: string){
-    return this.http.get(`${environment.base_url}/examenes/notaalumno/${uidAlumno}/?idExamen=${uidExamenResuelto}`, this.cabeceras);
+    return this.http.get(`${environment.base_url}/examenes/notaalumno/${uidAlumno}/${uidExamenResuelto}`, this.cabeceras);
   }
 
   comprobarPasswordAlumno(data){

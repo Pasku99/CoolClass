@@ -101,7 +101,7 @@ router.get('/notasalumno/:idProfesor/:idAlumno', [
     validarCampos,
 ], obtenerExamenesResueltosAlumno);
 
-router.get('/notaalumno/:idAlumno', [
+router.get('/notaalumno/:idAlumno/:idExamen', [
     validarJWT,
     // Campos opcionales, si vienen los validamos
     check('idAlumno', 'El id de alumno debe ser válido').optional().isMongoId(),

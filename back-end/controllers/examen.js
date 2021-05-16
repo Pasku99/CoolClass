@@ -769,7 +769,7 @@ const obtenerExamenesResueltosAlumno = async(req, res) => {
 
 const obtenerExamenResueltoAlumno = async(req, res) => {
     const uidAlumno = req.params.idAlumno;
-    const uidExamen = req.query.idExamen;
+    const uidExamen = req.params.idExamen;
     try {
         // Se comprueba que sea rol admin para poder listar
         const token = req.header('x-token');
