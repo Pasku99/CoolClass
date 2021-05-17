@@ -22,6 +22,8 @@ export class MisExamenesProfesorPage implements OnInit {
   public clase: Clase = new Clase('');
   public listaDesplegable: Examen[] = [];
   public filtro: string = '';
+  public fechas: Array<string> = new Array<string>();
+  public horas: Array<string> = new Array<string>();
 
   constructor(private profesorService: ProfesorService,
               private route: ActivatedRoute) {
@@ -73,6 +75,22 @@ export class MisExamenesProfesorPage implements OnInit {
     this.profesorService.cargarProximosExamenes(this.profesorService.uid, this.uidClase)
       .subscribe(res => {
         this.proximosExamenes = res['proximosExamenes'];
+        this.fechas = [];
+        this.horas = [];
+        for(let i = 0; i < this.proximosExamenes.length; i++){
+          let date = new Date(this.proximosExamenes[i].fechaComienzo);
+            let fecha = '';
+            let hora = '';
+            // Ponemos fecha
+            fecha = (("00" +  date.getDate()).slice(-2) + "/" +
+            ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
+            date.getFullYear());
+            this.fechas.push(fecha);
+            // Ponemos hora
+            hora = ("00" + date.getHours()).slice(-2) + ":" +
+            ("00" + date.getMinutes()).slice(-2);
+            this.horas.push(hora);
+        }
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
@@ -84,6 +102,22 @@ export class MisExamenesProfesorPage implements OnInit {
     this.profesorService.cargarProximosExamenes(this.profesorService.uid, this.uidClase, filtro)
       .subscribe(res => {
         this.proximosExamenes = res['proximosExamenes'];
+        this.fechas = [];
+        this.horas = [];
+        for(let i = 0; i < this.proximosExamenes.length; i++){
+          let date = new Date(this.proximosExamenes[i].fechaComienzo);
+            let fecha = '';
+            let hora = '';
+            // Ponemos fecha
+            fecha = (("00" +  date.getDate()).slice(-2) + "/" +
+            ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
+            date.getFullYear());
+            this.fechas.push(fecha);
+            // Ponemos hora
+            hora = ("00" + date.getHours()).slice(-2) + ":" +
+            ("00" + date.getMinutes()).slice(-2);
+            this.horas.push(hora);
+        }
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});

@@ -64,3 +64,15 @@ ion-card {
     box-shadow: none !important;
     border-bottom: 0.1rem solid #004dff;
 }
+
+@media (max-width: 361px) {
+    .eliminar {
+        margin-top: 0.25rem;
+    }
+}
+
+@media (min-width: 361px) {
+    .eliminar {
+        margin-top: -0.35rem;
+    }
+}

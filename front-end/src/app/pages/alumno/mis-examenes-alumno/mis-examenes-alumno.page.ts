@@ -79,7 +79,6 @@ export class MisExamenesAlumnoPage implements OnInit {
         this.fechasComienzo = [];
         this.fechasFinal = [];
         for(let i = 0; i < this.examenes.length; i++){
-
           // Fecha comienzo
           let dateComienzo = new Date(this.examenes[i].fechaComienzo);
           let fechaComienzo = '';

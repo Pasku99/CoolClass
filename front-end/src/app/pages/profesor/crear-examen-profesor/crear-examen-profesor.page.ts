@@ -158,24 +158,26 @@ export class CrearExamenProfesorPage implements OnInit {
       fechaComienzo: this.fechaComienzo,
       fechaFinal: this.fechaFinal
     };
+    console.log(this.fechaComienzo);
+    console.log(this.fechaFinal)
 
-    this.profesorService.crearExamen(data)
-      .subscribe(res => {
-        console.log('Examen registrado con éxito');
-        Swal.fire({
-          icon: 'success',
-          title: 'Examen registrado con éxito',
-          heightAuto: false
-        }).then((result) => {
-          if (result.value) {
-            this.router.navigateByUrl('/tabs-profesor/clases');
-          }
-        });;
-      }, (err => {
-        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
-        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
-        return;
-      }));
+    // this.profesorService.crearExamen(data)
+    //   .subscribe(res => {
+    //     console.log('Examen registrado con éxito');
+    //     Swal.fire({
+    //       icon: 'success',
+    //       title: 'Examen registrado con éxito',
+    //       heightAuto: false
+    //     }).then((result) => {
+    //       if (result.value) {
+    //         this.router.navigateByUrl('/tabs-profesor/clases');
+    //       }
+    //     });;
+    //   }, (err => {
+    //     const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+    //     Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+    //     return;
+    //   }));
   }
 
 }

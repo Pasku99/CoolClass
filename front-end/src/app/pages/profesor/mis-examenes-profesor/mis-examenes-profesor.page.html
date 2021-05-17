@@ -39,7 +39,7 @@
         </ion-row>
         <ion-row>
             <ion-col size="12">
-                <ion-card (click)="expandItem(examen)" *ngFor="let examen of this.proximosExamenes">
+                <ion-card (click)="expandItem(examen)" *ngFor="let examen of this.proximosExamenes; let i = index;">
                     <ion-row>
                         <ion-col size="3">
                             <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;" *ngIf="!examen.expanded"></ion-icon>
@@ -54,7 +54,18 @@
                     </ion-row>
                     <ion-row>
                         <ion-col size="12">
-                            <app-accordion-list expandHeight="7rem" [expanded]="examen.expanded">
+                            <app-accordion-list expandHeight="15rem" [expanded]="examen.expanded">
+                                <ion-row>
+                                    <ion-col size="3">
+
+                                    </ion-col>
+                                    <ion-col size="4.5">
+                                        <p style="color: black; font-size: 16px; font-weight: bold;">Fecha comienzo</p>
+                                    </ion-col>
+                                    <ion-col size="4.5">
+                                        <p style="color: black; font-size: 16px;">{{this.fechas[i]}}<br>{{this.horas[i]}}</p>
+                                    </ion-col>
+                                </ion-row>
                                 <ion-row>
                                     <ion-col size="3">
 
