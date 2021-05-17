@@ -23,6 +23,7 @@ export class InfoAsignaturaAlumnoPage implements OnInit {
   public examenesResueltos: ExamenResuelto[] = [];
   public examenes: Examen[] = [];
   public fechas: Array<string> = new Array<string>();
+  public horas: Array<string> = new Array<string>();
 
   constructor(private route: ActivatedRoute,
               private alumnoService: AlumnoService,
@@ -139,14 +140,17 @@ export class InfoAsignaturaAlumnoPage implements OnInit {
         this.fechas = [];
         for(let i = 0; i < this.examenes.length; i++){
           let date = new Date(this.examenes[i].fechaComienzo);
-          let fecha = '';
-          fecha = ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
-          ("00" + date.getDate()).slice(-2) + "/" +
-          date.getFullYear() + " " +
-          ("00" + date.getHours()).slice(-2) + ":" +
-          ("00" + date.getMinutes()).slice(-2) + ":" +
-          ("00" + date.getSeconds()).slice(-2);
-          this.fechas.push(fecha);
+            let fecha = '';
+            let hora = '';
+            // Ponemos fecha
+            fecha = (("00" +  date.getDate()).slice(-2) + "/" +
+            ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
+            date.getFullYear());
+            this.fechas.push(fecha);
+            // Ponemos hora
+            hora = ("00" + date.getHours()).slice(-2) + ":" +
+            ("00" + date.getMinutes()).slice(-2);
+            this.horas.push(hora);
         }
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
