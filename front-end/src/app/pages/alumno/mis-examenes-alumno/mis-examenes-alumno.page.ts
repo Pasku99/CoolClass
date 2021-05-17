@@ -87,8 +87,7 @@ export class MisExamenesAlumnoPage implements OnInit {
           ("00" + (dateComienzo.getMonth() + 1)).slice(-2) + "/" +
           dateComienzo.getFullYear() + " " +
           ("00" + dateComienzo.getHours()).slice(-2) + ":" +
-          ("00" + dateComienzo.getMinutes()).slice(-2) + ":" +
-          ("00" + dateComienzo.getSeconds()).slice(-2);
+          ("00" + dateComienzo.getMinutes()).slice(-2);
           this.fechasComienzo.push(fechaComienzo);
 
           // Fecha finalizacion
@@ -98,8 +97,7 @@ export class MisExamenesAlumnoPage implements OnInit {
           ("00" + (dateFinal.getMonth() + 1)).slice(-2) + "/" +
           dateFinal.getFullYear() + " " +
           ("00" + dateFinal.getHours()).slice(-2) + ":" +
-          ("00" + dateFinal.getMinutes()).slice(-2) + ":" +
-          ("00" + dateFinal.getSeconds()).slice(-2);
+          ("00" + dateFinal.getMinutes()).slice(-2);
           this.fechasFinal.push(fechaFinal);
         }
       }, (err => {
@@ -135,8 +133,7 @@ export class MisExamenesAlumnoPage implements OnInit {
           ("00" + (dateComienzo.getMonth() + 1)).slice(-2) + "/" +
           dateComienzo.getFullYear() + " " +
           ("00" + dateComienzo.getHours()).slice(-2) + ":" +
-          ("00" + dateComienzo.getMinutes()).slice(-2) + ":" +
-          ("00" + dateComienzo.getSeconds()).slice(-2);
+          ("00" + dateComienzo.getMinutes()).slice(-2);
           this.fechasComienzo.push(fechaComienzo);
 
           // Fecha finalizacion
@@ -146,8 +143,7 @@ export class MisExamenesAlumnoPage implements OnInit {
           ("00" + (dateFinal.getMonth() + 1)).slice(-2) + "/" +
           dateFinal.getFullYear() + " " +
           ("00" + dateFinal.getHours()).slice(-2) + ":" +
-          ("00" + dateFinal.getMinutes()).slice(-2) + ":" +
-          ("00" + dateFinal.getSeconds()).slice(-2);
+          ("00" + dateFinal.getMinutes()).slice(-2);
           this.fechasFinal.push(fechaFinal);
         }
       }, (err => {

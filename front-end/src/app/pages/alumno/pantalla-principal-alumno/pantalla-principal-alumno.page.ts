@@ -1,5 +1,5 @@
 import { Component, OnInit, QueryList, ViewChildren, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, LoadingController } from '@ionic/angular';
 import { AuthService } from '../../../services/auth.service';
 import { AlumnoService } from '../../../services/alumno.service';
 import Swal from 'sweetalert2';
@@ -19,9 +19,12 @@ export class PantallaPrincipalAlumnoPage implements OnInit {
   public examenesResueltos: ExamenResuelto[] = [];
   public proximosExamenes: Examen[] = [];
   public fechas: Array<string> = new Array<string>();
+  public horas: Array<string> = new Array<string>();
+  public cargado: boolean = false;
 
   constructor(private authService: AuthService,
-              private alumnoService: AlumnoService) { }
+              private alumnoService: AlumnoService,
+              private loadingController: LoadingController) { }
 
   public moveForward(index: number): void {
     this.slides.toArray()[index].slideNext(500);
@@ -39,12 +42,35 @@ export class PantallaPrincipalAlumnoPage implements OnInit {
 
   async ionViewWillEnter(){
     await this.authService.cogerToken();
-    await this.sleep(250);
+    await this.sleep(500);
     this.cargarAsignaturas();
     this.cargarUltimosExamenesAlumno();
     this.cargarProximosExamenesAlumno();
     await this.startSlides();
   }
+
+  // async cargada(){
+  //   await this.storage.get('app_charged').then((result) =>
+  //   {
+  //     if(result){
+  //       this.cargado = true;
+  //     }
+  //     else {
+  //       this.cargado = false;
+  //     }
+  //   });
+  // }
+
+  // async presentLoading() {
+  //   const loading = await this.loadingController.create({
+  //     cssClass: 'my-custom-class',
+  //     message: 'Por favor, espere...',
+  //     duration: 1500,
+  //   });
+  //   await loading.present();
+
+  //   const { role, data } = await loading.onDidDismiss();
+  // }
 
   async startSlides(){
     this.slideWithNav.slideTo(0);
@@ -145,13 +171,16 @@ export class PantallaPrincipalAlumnoPage implements OnInit {
           for(let i = 0; i < this.proximosExamenes.length; i++){
             let date = new Date(this.proximosExamenes[i].fechaComienzo);
             let fecha = '';
-            fecha = ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
-            ("00" + date.getDate()).slice(-2) + "/" +
-            date.getFullYear() + " " +
-            ("00" + date.getHours()).slice(-2) + ":" +
-            ("00" + date.getMinutes()).slice(-2) + ":" +
-            ("00" + date.getSeconds()).slice(-2);
+            let hora = '';
+            // Ponemos fecha
+            fecha = (("00" +  date.getDate()).slice(-2) + "/" +
+            ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
+            date.getFullYear());
             this.fechas.push(fecha);
+            // Ponemos hora
+            hora = ("00" + date.getHours()).slice(-2) + ":" +
+            ("00" + date.getMinutes()).slice(-2);
+            this.horas.push(hora);
           }
         }, (err => {
           const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';

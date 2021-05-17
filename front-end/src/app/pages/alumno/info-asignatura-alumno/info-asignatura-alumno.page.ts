@@ -1,6 +1,6 @@
 import { Component, OnInit, QueryList, ViewChildren, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, LoadingController } from '@ionic/angular';
 import { AlumnoService } from '../../../services/alumno.service';
 import Swal from 'sweetalert2';
 import { ExamenResuelto } from '../../../models/examenresuelto.model';
@@ -25,7 +25,8 @@ export class InfoAsignaturaAlumnoPage implements OnInit {
   public fechas: Array<string> = new Array<string>();
 
   constructor(private route: ActivatedRoute,
-              private alumnoService: AlumnoService) {}
+              private alumnoService: AlumnoService,
+              private loadingController: LoadingController) {}
 
   public moveForward(index: number): void {
     this.slides.toArray()[index].slideNext(500);
@@ -38,10 +39,22 @@ export class InfoAsignaturaAlumnoPage implements OnInit {
   ngOnInit() { }
 
   async ionViewWillEnter(){
+    this.presentLoading();
     this.filtroAsignatura = this.route.snapshot.params['asignatura'];
     this.asignaturaMayus = this.filtroAsignatura.toUpperCase();
     this.cargarAsignaturas();
     await this.startSlides();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Por favor, espere...',
+      duration: 1000,
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
   }
 
   async startSlides(){

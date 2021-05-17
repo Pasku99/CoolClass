@@ -21,32 +21,10 @@ export class PantallaPrincipalProfesorPage implements OnInit {
   public ultimosExamenes: Examen[] = [];
   public proximosExamenes: Examen[] = [];
   public fechas: Array<string> = new Array<string>();
+  public horas: Array<string> = new Array<string>();
 
   constructor(private authService: AuthService,
-              private profesorService: ProfesorService) {
-    // this.sliderOne =
-    // {
-    //   isBeginningSlide: true,
-    //   isEndSlide: false,
-    //   slidesItems: [
-    //     {
-    //       id: 995
-    //     },
-    //     {
-    //       id: 925
-    //     },
-    //     {
-    //       id: 940
-    //     },
-    //     {
-    //       id: 943
-    //     },
-    //     {
-    //       id: 944
-    //     }
-    //   ]
-    // };
-  }
+              private profesorService: ProfesorService) { }
 
   sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -86,41 +64,6 @@ export class PantallaPrincipalProfesorPage implements OnInit {
     this.slideWithNav3.stopAutoplay();
   }
 
-  //  //Mover al slide siguiente
-  //  slideNext(object, slideView) {
-  //   slideView.slideNext(500).then(() => {
-  //     this.checkIfNavDisabled(object, slideView);
-  //   });
-  // }
-
-  // //Mover al slide anterior
-  // slidePrev(object, slideView) {
-  //   slideView.slidePrev(500).then(() => {
-  //     this.checkIfNavDisabled(object, slideView);
-  //   });;
-  // }
-
-  // SlideDidChange(object, slideView) {
-  //   // this.checkIfNavDisabled(object, slideView);
-  // }
-
-  // checkIfNavDisabled(object, slideView) {
-  //   this.checkisBeginning(object, slideView);
-  //   this.checkisEnd(object, slideView);
-  // }
-
-  // checkisBeginning(object, slideView) {
-  //   slideView.isBeginning().then((istrue) => {
-  //     object.isBeginningSlide = istrue;
-  //   });
-  // }
-
-  // checkisEnd(object, slideView) {
-  //   slideView.isEnd().then((istrue) => {
-  //     object.isEndSlide = istrue;
-  //   });
-  // }
-
   @ViewChild('slideWithNav', { static: false }) slideWithNav: IonSlides;
   @ViewChild('slideWithNav2', { static: false }) slideWithNav2: IonSlides;
   @ViewChild('slideWithNav3', { static: false }) slideWithNav3: IonSlides;
@@ -129,7 +72,7 @@ export class PantallaPrincipalProfesorPage implements OnInit {
   sliderTwo: any;
   sliderThree: any;
 
-  //Configuration for each Slider
+  //Configuracion de los sliders
   slideOptsOne = {
     initialSlide: 0,
     slidesPerView: 2,
@@ -160,27 +103,6 @@ export class PantallaPrincipalProfesorPage implements OnInit {
     centeredSlides: true,
     spaceBetween: 120
   };
-
-  // public moveForward(index: number): void {
-  //   this.slides.toArray()[index].slideNext(500);
-  //   console.log(this.slides.toArray()[index].isEnd())
-  // }
-
-  // public moveBehind(index: number): void {
-  //   this.slides.toArray()[index].slidePrev(500);
-  // }
-
-  // sleep(ms) {
-  //   return new Promise(resolve => setTimeout(resolve, ms));
-  // }
-
-  // async ionViewWillEnter(){
-  //   await this.authService.cogerToken();
-  //   await this.sleep(15);
-  //   this.cargarClases();
-  //   this.cargarUltimosExamenes();
-  //   this.cargarProximosExamenes();
-  // }
 
   cargarClases(){
     this.profesorService.cargarClasesProfesor(this.profesorService.uidCentro, this.profesorService.uid, this.filtro)
@@ -216,14 +138,17 @@ export class PantallaPrincipalProfesorPage implements OnInit {
         this.fechas = [];
         for(let i = 0; i < this.proximosExamenes.length; i++){
           let date = new Date(this.proximosExamenes[i].fechaComienzo);
-          let fecha = '';
-          fecha = ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
-          ("00" + date.getDate()).slice(-2) + "/" +
-          date.getFullYear() + " " +
-          ("00" + date.getHours()).slice(-2) + ":" +
-          ("00" + date.getMinutes()).slice(-2) + ":" +
-          ("00" + date.getSeconds()).slice(-2);
-          this.fechas.push(fecha);
+            let fecha = '';
+            let hora = '';
+            // Ponemos fecha
+            fecha = (("00" +  date.getDate()).slice(-2) + "/" +
+            ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
+            date.getFullYear());
+            this.fechas.push(fecha);
+            // Ponemos hora
+            hora = ("00" + date.getHours()).slice(-2) + ":" +
+            ("00" + date.getMinutes()).slice(-2);
+            this.horas.push(hora);
         }
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';

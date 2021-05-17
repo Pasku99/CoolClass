@@ -2,6 +2,12 @@ ion-content {
     --ion-background-color: white;
 }
 
+.my-custom-class {
+    --background: #222;
+    --spinner-color: #fff;
+    color: #fff;
+}
+
 .clases {
     --background: #004dff;
     font-size: 2rem;

@@ -7,18 +7,19 @@
     <div class="contenido" style="background-color: white; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
         <ion-grid>
             <ion-row>
-                <ion-col size="12">
-                    <ion-icon text-center name="person-circle" style="width: 7rem; height: 7rem; text-align: center; width:100%; display:flex; align-items:center; justify-content:center;"></ion-icon>
+                <ion-col size="12" align-self-center>
+                    <fa-icon icon="chalkboard-teacher" size="5x" text-center style="text-align: center; width:100%; display:flex; align-items:center; justify-content:center; color: #004dff; padding: 0; margin-top: 1rem;"></fa-icon>
                 </ion-col>
             </ion-row>
             <ion-row>
                 <ion-col size="12" align-self-center>
-                    <h2 style="text-align: center; margin-top: -0.5rem;" *ngIf="this.nombreProfesor != ''">Profesor: {{this.nombreProfesor}}</h2>
+                    <h2 style="text-align: center;" *ngIf="this.nombreProfesor != ''">Profesor: {{this.nombreProfesor}}</h2>
                 </ion-col>
             </ion-row>
             <ion-row>
-                <ion-col size="12" align-self-center *ngIf="this.filtroAsignatura != '' && this.uidProfesor != ''" [routerLink]="['/tabs-alumno/asignaturas/info-asignatura', this.uidProfesor, this.filtroAsignatura, 'examenes']">
-                    <h2 style="text-align: center; color: #004dff; font-weight: bold;">Próximos exámenes</h2>
+                <ion-col size="12" align-self-center *ngIf="this.filtroAsignatura != '' && this.uidProfesor != ''">
+                    <h2 style="text-align: center;"><a style="background-color: #004dff; padding: 0.75rem; color: white; font-weight: bold; text-decoration: none; border-radius: 1rem;" [routerLink]="['/tabs-alumno/asignaturas/info-asignatura', this.uidProfesor, this.filtroAsignatura, 'examenes']">Próximos exámenes</a></h2>
+                    <!-- <ion-button size="small" style="color: #004dff">Próximos exámenes</ion-button> -->
                 </ion-col>
             </ion-row>
             <ion-row>
@@ -58,8 +59,8 @@
                 </ion-col>
             </ion-row>
             <ion-row>
-                <ion-col size="12" align-self-center *ngIf="this.uidProfesor != ''" [routerLink]="['/tabs-alumno/asignaturas/info-asignatura/examenes', this.uidProfesor, 'notas', this.filtroAsignatura]">
-                    <h2 style="text-align: center; color: #004dff; font-weight: bold;">Mis notas</h2>
+                <ion-col size="12" align-self-center *ngIf="this.uidProfesor != ''">
+                    <h2 style="text-align: center;"><a style="background-color: #004dff; padding: 0.75rem; color: white; font-weight: bold; text-decoration: none; border-radius: 1rem;" [routerLink]="['/tabs-alumno/asignaturas/info-asignatura/examenes', this.uidProfesor, 'notas', this.filtroAsignatura]">Mis notas</a></h2>
                 </ion-col>
             </ion-row>
             <ion-row>
