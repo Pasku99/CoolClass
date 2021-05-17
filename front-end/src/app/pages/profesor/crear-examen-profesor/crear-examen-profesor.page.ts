@@ -90,7 +90,7 @@ export class CrearExamenProfesorPage implements OnInit {
 
   verPregunta(i){
     Swal.fire({
-      title: 'AÑADIR PREGUNTA',
+      title: 'EDITAR PREGUNTA',
       html: `<ion-row>
       <ion-input type="text" id="pregunta" class="swal2-input" placeholder="Pregunta" value="${this.arrayPreguntas[i]}" style="background-color: #73c2fb;"></ion-input>
       </ion-row>
@@ -139,15 +139,8 @@ export class CrearExamenProfesorPage implements OnInit {
     })
   }
 
-  enviarPregunta(){
-    // console.log(this.fechaComienzo)
-    // let comienzo = new Date(this.fechaComienzo.getTime() - this.fechaComienzo.getTimezoneOffset()*60000).toISOString();
-    // let final = new Date(this.fechaFinal.getTime() - this.fechaFinal.getTimezoneOffset()*60000).toISOString();
-    // let comienzo = new Date(this.fechaComienzo);
-    // comienzo.setHours(comienzo.getHours() - 2);
-    // let final = new Date(this.fechaFinal);
-    // final.setHours(final.getHours() - 2);
-    // console.log(comienzo);
+  enviarExamen(){
+
     const data = {
       uidProfesor : this.profesorService.uid,
       uidClase : this.uidClase,
@@ -158,26 +151,24 @@ export class CrearExamenProfesorPage implements OnInit {
       fechaComienzo: this.fechaComienzo,
       fechaFinal: this.fechaFinal
     };
-    console.log(this.fechaComienzo);
-    console.log(this.fechaFinal)
 
-    // this.profesorService.crearExamen(data)
-    //   .subscribe(res => {
-    //     console.log('Examen registrado con éxito');
-    //     Swal.fire({
-    //       icon: 'success',
-    //       title: 'Examen registrado con éxito',
-    //       heightAuto: false
-    //     }).then((result) => {
-    //       if (result.value) {
-    //         this.router.navigateByUrl('/tabs-profesor/clases');
-    //       }
-    //     });;
-    //   }, (err => {
-    //     const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
-    //     Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
-    //     return;
-    //   }));
+    this.profesorService.crearExamen(data)
+      .subscribe(res => {
+        console.log('Examen registrado con éxito');
+        Swal.fire({
+          icon: 'success',
+          title: 'Examen registrado con éxito',
+          heightAuto: false
+        }).then((result) => {
+          if (result.value) {
+            this.router.navigateByUrl('/tabs-profesor/clases');
+          }
+        });;
+      }, (err => {
+        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+        return;
+      }));
   }
 
 }

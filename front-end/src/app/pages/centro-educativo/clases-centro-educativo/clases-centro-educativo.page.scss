@@ -71,7 +71,13 @@ ion-card {
     }
 }
 
-@media (min-width: 361px) {
+@media (min-width: 361px) and (max-width: 500px) {
+    .eliminar {
+        margin-top: -0.35rem;
+    }
+}
+
+@media (min-width: 500px) {
     .eliminar {
         margin-top: -0.35rem;
     }

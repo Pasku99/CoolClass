@@ -10,7 +10,7 @@
                 <ion-button size="large" color="white" style="background-color: red; display:flex; align-items:center; justify-content:center; border-radius: 1rem;  box-shadow: none;" routerLink="/tabs-profesor/clases">CANCELAR</ion-button>
             </ion-col>
             <ion-col size="6">
-                <ion-button size="large" color="white" style="background-color: #004dff; text-align: center; display:flex; align-items:center; justify-content:center; border-radius: 1rem;  box-shadow: none;" (click)="enviarPregunta();">GUARDAR</ion-button>
+                <ion-button size="large" color="white" style="background-color: #004dff; text-align: center; display:flex; align-items:center; justify-content:center; border-radius: 1rem;  box-shadow: none;" (click)="enviarExamen();">GUARDAR</ion-button>
             </ion-col>
         </ion-row>
         <ion-row style="margin-top: 2rem;">
@@ -40,10 +40,10 @@
         <div style="background-color: #004dff; padding-top: 1rem; padding-bottom: 2rem; border-radius: 1rem; margin-top: 1rem;">
             <ion-row style="background-color: white; margin-left: 2rem; margin-right: 2rem; margin-top: 1rem; border-radius: 1rem;" *ngFor="let preguntas of this.arrayPreguntas; let i = index;">
                 <ion-col size="10" (click)="verPregunta(i)">
-                    <p style="margin-bottom: 0.5rem; margin-left: 1rem;">{{preguntas}}</p>
+                    <p style="margin-bottom: 1rem; margin-left: 1rem;">{{preguntas}}</p>
                 </ion-col>
                 <ion-col size="2">
-                    <ion-icon name="close-outline" style="width: 2rem; height: 2rem; color: red; margin-top: 0.5rem;" (click)="eliminarpregunta(i)"></ion-icon>
+                    <ion-icon name="close-outline" style="width: 2rem; height: 2rem; color: red; vertical-align: middle; height: 100%;" (click)="eliminarpregunta(i)"></ion-icon>
                 </ion-col>
             </ion-row>
         </div>

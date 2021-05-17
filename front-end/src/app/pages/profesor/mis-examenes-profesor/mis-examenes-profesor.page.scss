@@ -41,21 +41,6 @@ ion-select {
     --placeholder-opacity: 1;
 }
 
-// ion-select::part(placeholder),
-// ion-select::part(text) {
-//     flex: 0 0 auto;
-// }
-// ion-select::part(placeholder) {
-//     color: black;
-//     opacity: 1;
-// }
-// ion-select::part(text) {
-//     color: black;
-// }
-// ion-select::part(icon) {
-//     color: black;
-//     opacity: 1;
-// }
 div {
     background-color: white;
 }
@@ -71,4 +56,22 @@ ion-card {
     z-index: 10;
     left: -1rem;
     top: 0.05rem;
+}
+
+@media (max-width: 361px) {
+    .eliminar {
+        margin-top: 1.15rem;
+    }
+}
+
+@media (min-width: 361px) and (max-width: 500px) {
+    .eliminar {
+        margin-top: 1.15rem;
+    }
+}
+
+@media (min-width: 500px) {
+    .eliminar {
+        margin-top: 0.55rem;
+    }
 }
