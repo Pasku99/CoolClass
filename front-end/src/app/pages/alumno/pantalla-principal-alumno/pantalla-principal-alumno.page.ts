@@ -168,6 +168,7 @@ export class PantallaPrincipalAlumnoPage implements OnInit {
         .subscribe(res => {
           this.proximosExamenes = res['proximosExamenesAlumno'];
           this.fechas = [];
+          this.horas = [];
           for(let i = 0; i < this.proximosExamenes.length; i++){
             let date = new Date(this.proximosExamenes[i].fechaComienzo);
             let fecha = '';

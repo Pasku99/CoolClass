@@ -138,6 +138,7 @@ export class InfoAsignaturaAlumnoPage implements OnInit {
       .subscribe(res => {
         this.examenes = res['proximosExamenes'];
         this.fechas = [];
+        this.horas = [];
         for(let i = 0; i < this.examenes.length; i++){
           let date = new Date(this.examenes[i].fechaComienzo);
             let fecha = '';
