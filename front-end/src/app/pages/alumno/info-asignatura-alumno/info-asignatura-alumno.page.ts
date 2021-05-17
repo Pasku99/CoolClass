@@ -39,23 +39,23 @@ export class InfoAsignaturaAlumnoPage implements OnInit {
   ngOnInit() { }
 
   async ionViewWillEnter(){
-    this.presentLoading();
+    // this.presentLoading();
     this.filtroAsignatura = this.route.snapshot.params['asignatura'];
     this.asignaturaMayus = this.filtroAsignatura.toUpperCase();
     this.cargarAsignaturas();
     await this.startSlides();
   }
 
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Por favor, espere...',
-      duration: 1000,
-    });
-    await loading.present();
+  // async presentLoading() {
+  //   const loading = await this.loadingController.create({
+  //     cssClass: 'my-custom-class',
+  //     message: 'Por favor, espere...',
+  //     duration: 1000,
+  //   });
+  //   await loading.present();
 
-    const { role, data } = await loading.onDidDismiss();
-  }
+  //   const { role, data } = await loading.onDidDismiss();
+  // }
 
   async startSlides(){
     this.slideWithNav.slideTo(0);
