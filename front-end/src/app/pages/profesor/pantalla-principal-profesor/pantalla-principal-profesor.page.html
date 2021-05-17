@@ -35,6 +35,47 @@
         </ion-row>
         <ion-row>
             <ion-col size="12" align-self-center>
+                <h2 style="text-align: center; color: #004dff; font-weight: bold;">Próximos exámenes</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" align-self-center>
+                <ion-slides pager="true" [options]="slideOptsThree" #slideWithNav3>
+                    <ion-slide *ngFor="let examen of this.proximosExamenes; let i = index">
+                        <!-- <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(2)"></ion-icon> -->
+                        <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <ion-card class="tarjeta2" style="background-color: #00ff7f;" [routerLink]="['/tabs-profesor/clases/proximos-examenes/', examen.uidClase, examen.asignatura, examen.nombreExamen]">
+                                <ion-card-header>
+                                    <ion-card-title style="font-size: 1.2rem; text-align:center;">{{examen.nombreExamen}}</ion-card-title>
+                                    <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
+                                        <ion-icon name="book" no-margin></ion-icon>
+                                    </ion-card-subtitle>
+                                </ion-card-header>
+                                <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: -0.5rem;">
+                                    Clase: {{examen.nombreClase}}<br>Fecha: {{this.fechas[i]}} <br> {{this.horas[i]}}
+                                </ion-card-content>
+                            </ion-card>
+                        </div>
+                        <!-- <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(2)"></ion-icon> -->
+                    </ion-slide>
+                    <ion-slide *ngIf="this.proximosExamenes.length == 0">
+                        <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <ion-card class="tarjetano2" style="background-color: #00ff7f;">
+                                <ion-card-header>
+                                    <ion-card-title style="font-size: 1.2rem; text-align:center;">No hay próximos exámenes</ion-card-title>
+                                    <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
+                                    </ion-card-subtitle>
+                                </ion-card-header>
+                                <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: -0.5rem;">
+                                </ion-card-content>
+                            </ion-card>
+                        </div>
+                    </ion-slide>
+                </ion-slides>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" align-self-center>
                 <h2 style="text-align: center; color: #004dff; font-weight: bold;">Últimos exámenes</h2>
             </ion-col>
         </ion-row>
@@ -76,47 +117,6 @@
                             <ion-card class="tarjetano1" style="background-color: #00ff7f;">
                                 <ion-card-header>
                                     <ion-card-title style="font-size: 1.2rem; text-align:center;">No tienes exámenes recientes.</ion-card-title>
-                                    <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
-                                    </ion-card-subtitle>
-                                </ion-card-header>
-                                <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: -0.5rem;">
-                                </ion-card-content>
-                            </ion-card>
-                        </div>
-                    </ion-slide>
-                </ion-slides>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col size="12" align-self-center>
-                <h2 style="text-align: center; color: #004dff; font-weight: bold;">Próximos exámenes</h2>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col size="12" align-self-center>
-                <ion-slides pager="true" [options]="slideOptsThree" #slideWithNav3>
-                    <ion-slide *ngFor="let examen of this.proximosExamenes; let i = index">
-                        <!-- <ion-icon name="chevron-back-outline" style="margin-right: 2rem;" (click)="moveBehind(2)"></ion-icon> -->
-                        <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
-                            <ion-card class="tarjeta2" style="background-color: #00ff7f;" [routerLink]="['/tabs-profesor/clases/proximos-examenes/', examen.uidClase, examen.asignatura, examen.nombreExamen]">
-                                <ion-card-header>
-                                    <ion-card-title style="font-size: 1.2rem; text-align:center;">{{examen.nombreExamen}}</ion-card-title>
-                                    <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
-                                        <ion-icon name="book" no-margin></ion-icon>
-                                    </ion-card-subtitle>
-                                </ion-card-header>
-                                <ion-card-content style="font-size: 1.2rem; color: black; display: flex; align-items: center; justify-content: center; margin-top: -0.5rem;">
-                                    Clase: {{examen.nombreClase}}<br>Fecha: {{this.fechas[i]}} <br> {{this.horas[i]}}
-                                </ion-card-content>
-                            </ion-card>
-                        </div>
-                        <!-- <ion-icon name="chevron-forward-outline" style="margin-left: 2rem;" (click)="moveForward(2)"></ion-icon> -->
-                    </ion-slide>
-                    <ion-slide *ngIf="this.proximosExamenes.length == 0">
-                        <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
-                            <ion-card class="tarjetano2" style="background-color: #00ff7f;">
-                                <ion-card-header>
-                                    <ion-card-title style="font-size: 1.2rem; text-align:center;">No hay próximos exámenes</ion-card-title>
                                     <ion-card-subtitle style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
                                     </ion-card-subtitle>
                                 </ion-card-header>
