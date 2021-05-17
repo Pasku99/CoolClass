@@ -24,6 +24,8 @@ export class MisExamenesNotasProfesorPage implements OnInit {
   public asignatura: string = '';
   public filtro: string = '';
   public listaDesplegable: Array<string> = new Array<string>();
+  public fecha: string = '';
+  public hora: string = '';
 
   constructor(private profesorService: ProfesorService,
               private route: ActivatedRoute) {
@@ -106,10 +108,20 @@ export class MisExamenesNotasProfesorPage implements OnInit {
   }
 
   cargarExamen(){
+    this.fecha = '';
+    this.hora = '';
     this.profesorService.cargarExamen(this.uidExamen, this.profesorService.uid)
       .subscribe(res => {
         this.examen = res['examenes'];
         this.nombreExamen = this.examen.nombreExamen;
+        let date = new Date(this.examen.fechaComienzo);
+        // Ponemos fecha
+        this.fecha = (("00" +  date.getDate()).slice(-2) + "/" +
+        ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
+        date.getFullYear());
+        // Ponemos hora
+        this.hora = ("00" + date.getHours()).slice(-2) + ":" +
+        ("00" + date.getMinutes()).slice(-2);
       }, (err => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});

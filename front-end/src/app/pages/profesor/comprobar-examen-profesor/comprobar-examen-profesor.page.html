@@ -8,6 +8,7 @@
             </ion-col>
         </ion-row>
     </ion-toolbar>
+    <ion-img class="back" src="../../../../assets/ionicons/arrow-back-outline.svg" style="width: 2.5rem; height: 2.5rem; margin-left: 1.5rem; margin-top: 0.15rem;" *ngIf="this.uidClase != '' && this.uidAlumno != ''" [routerLink]="['/tabs-profesor/clases/alumnos', this.uidClase, this.uidAlumno, 'notas']"></ion-img>
 </ion-header>
 
 <ion-content>
@@ -32,54 +33,6 @@
                 <p style="color: black; font-size: 1.1rem; text-align: center;">{{this.pregunta}} <b *ngIf="this.respuestaMarcadaNoResponder">(no respondida)</b></p>
             </ion-col>
         </ion-row>
-        <!-- <ion-row class="fila2">
-            <ion-col size="6">
-                <ion-card style="background-color: #00ff7f;" (click)="respuesta(this.respuesta1)">
-                    <ion-card-header style="text-align: center;">
-                        <ion-card-title style="font-size: 1.1rem;">
-                            <ion-icon name="checkmark-sharp" style="width: 2rem; height: 2rem; display: inline-block; vertical-align: middle;"></ion-icon>
-                            <span style="display: inline-block; vertical-align: middle;">{{this.respuesta1}}</span>
-                        </ion-card-title>
-                    </ion-card-header>
-                    <ion-card-content style="text-align: center; color: black; font-weight: bold;" *ngIf="this.respuestaMarcada1">Respondida</ion-card-content>
-                </ion-card>
-            </ion-col>
-            <ion-col size="6">
-                <ion-card style="background-color: #73C2FB;" (click)="respuesta(this.respuesta2)">
-                    <ion-card-header style="text-align: center;">
-                        <ion-card-title style="font-size: 1.1rem;">
-                            <ion-icon name="close-sharp" style="width: 2rem; height: 2rem; color: red; display: inline-block; vertical-align: middle;"></ion-icon>
-                            <span style="display: inline-block; vertical-align: middle;">{{this.respuesta2}}</span>
-                        </ion-card-title>
-                    </ion-card-header>
-                    <ion-card-content style="text-align: center; color: black; font-weight: bold;" *ngIf="this.respuestaMarcada2">Respondida</ion-card-content>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-        <ion-row class="fila3">
-            <ion-col size="6">
-                <ion-card style="background-color: #73C2FB;" (click)="respuesta(this.respuesta3)">
-                    <ion-card-header style="text-align: center;">
-                        <ion-card-title style="font-size: 1.1rem;">
-                            <ion-icon name="close-sharp" style="width: 2rem; height: 2rem; color: red; display: inline-block; vertical-align: middle;"></ion-icon>
-                            <span style="display: inline-block; vertical-align: middle;">{{this.respuesta3}}</span>
-                        </ion-card-title>
-                    </ion-card-header>
-                    <ion-card-content style="text-align: center; color: black; font-weight: bold;" *ngIf="this.respuestaMarcada3">Respondida</ion-card-content>
-                </ion-card>
-            </ion-col>
-            <ion-col size="6">
-                <ion-card style="background-color: #00ff7f;" (click)="respuesta(this.respuesta4)">
-                    <ion-card-header style="text-align: center;">
-                        <ion-card-title style="font-size: 1.1rem;">
-                            <ion-icon name="close-sharp" style="width: 2rem; height: 2rem; color: red; display: inline-block; vertical-align: middle;"></ion-icon>
-                            <span style="display: inline-block; vertical-align: middle;">{{this.respuesta4}}</span>
-                        </ion-card-title>
-                    </ion-card-header>
-                    <ion-card-content style="text-align: center; color: black; font-weight: bold;" *ngIf="this.respuestaMarcada4">Respondida</ion-card-content>
-                </ion-card>
-            </ion-col>
-        </ion-row> -->
         <ion-row>
             <ion-col size="12" style="display: flex; justify-content: center">
                 <ion-card style="background-color: #00ff7f;">

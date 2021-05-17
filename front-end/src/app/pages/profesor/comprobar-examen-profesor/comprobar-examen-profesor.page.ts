@@ -33,6 +33,7 @@ export class ComprobarExamenProfesorPage implements OnInit {
   public respuestaMarcada4: boolean = false;
   public respuestaMarcadaNoResponder: boolean = false;
   public examenesResueltos: ExamenResuelto[] = [];
+  public uidClase: string = '';
 
 
   constructor(private alumnoService: AlumnoService,
@@ -70,6 +71,7 @@ export class ComprobarExamenProfesorPage implements OnInit {
       .subscribe(res => {
         this.arrayRespuestasAlumno = res['examenesResueltos'].respuestasCorrectas;
         this.nombreExamen = res['examenesResueltos'].nombreExamen;
+        this.uidClase = res['examenesResueltos'].uidClase;
         this.arrayPreguntas = res['examenesResueltos'].preguntas;
         this.arrayRespuestas = res['examenesResueltos'].respuestas;
         this.pregunta=this.arrayPreguntas[0];
@@ -126,16 +128,16 @@ export class ComprobarExamenProfesorPage implements OnInit {
     this.previous();
   }
 
-  cargarExamenesResueltosAlumno(){
-    this.profesorService.cargarExamenesResueltosAlumno(this.profesorService.uid, this.uidAlumno)
-      .subscribe(res => {
-        this.examenesResueltos = res['examenesResueltos'];
-      }, (err => {
-        const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
-        Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
-        return;
-      }))
-  }
+  // cargarExamenesResueltosAlumno(){
+  //   this.profesorService.cargarExamenesResueltosAlumno(this.profesorService.uid, this.uidAlumno)
+  //     .subscribe(res => {
+  //       this.examenesResueltos = res['examenesResueltos'];
+  //     }, (err => {
+  //       const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
+  //       Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
+  //       return;
+  //     }))
+  // }
 
   comprobarRespuestas(i){
     if(this.respuesta1 === this.arrayRespuestasAlumno[i]){

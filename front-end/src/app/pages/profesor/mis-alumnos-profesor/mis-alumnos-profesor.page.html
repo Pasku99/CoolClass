@@ -12,51 +12,53 @@
 </ion-header>
 
 <ion-content>
-    <ion-row>
-        <ion-col size="12">
-            <ion-list class="ion-no-border" lines="none" style="background-color: white;">
-                <ion-item style="background-color: white;">
-                    <ion-select placeholder="Filtrar alumno" (ionChange)="filtrarNombre($event)">
-                        <ion-select-option value="todos" style="color: black;" value="Todos">Todos</ion-select-option>
-                        <ion-select-option value="alumno" style="color: black;" *ngFor="let alumno of this.listaDesplegable" [value]="alumno.nombre">{{alumno.nombre}}</ion-select-option>
-                    </ion-select>
-                </ion-item>
-            </ion-list>
-        </ion-col>
-    </ion-row>
-    <ion-row>
-        <ion-col size="12">
-            <ion-card (click)="expandItem(alumno)" *ngFor="let alumno of this.alumnos; let i = index">
-                <ion-row>
-                    <ion-col size="3">
-                        <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;" *ngIf="!alumno.expanded"></ion-icon>
-                        <ion-icon name="chevron-up-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;" *ngIf="alumno.expanded"></ion-icon>
-                    </ion-col>
-                    <ion-col size="4.5">
-                        <p style="color: black; font-size: 16px;"><b>Nombre</b></p>
-                    </ion-col>
-                    <ion-col size="4.5">
-                        <p style="color: black; font-size: 16px;">{{alumno.nombre}}</p>
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col size="12">
-                        <app-accordion-list expandHeight="5rem" [expanded]="alumno.expanded">
-                            <ion-row>
-                                <ion-col size="3">
+    <ion-grid>
+        <ion-row>
+            <ion-col size="12">
+                <ion-list class="ion-no-border" lines="none" style="background-color: white;">
+                    <ion-item style="background-color: white;">
+                        <ion-select placeholder="Filtrar alumno" (ionChange)="filtrarNombre($event)">
+                            <ion-select-option value="todos" style="color: black;" value="Todos">Todos</ion-select-option>
+                            <ion-select-option value="alumno" style="color: black;" *ngFor="let alumno of this.listaDesplegable" [value]="alumno.nombre">{{alumno.nombre}}</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12">
+                <ion-card (click)="expandItem(alumno)" *ngFor="let alumno of this.alumnos; let i = index">
+                    <ion-row>
+                        <ion-col size="3">
+                            <ion-icon name="chevron-down-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;" *ngIf="!alumno.expanded"></ion-icon>
+                            <ion-icon name="chevron-up-circle-outline" style="width: 3rem; height: 3rem; margin-top: 0.2rem; margin-left: 1rem; color: #004DFF;" *ngIf="alumno.expanded"></ion-icon>
+                        </ion-col>
+                        <ion-col size="4.5">
+                            <p style="color: black; font-size: 16px;"><b>Nombre</b></p>
+                        </ion-col>
+                        <ion-col size="4.5">
+                            <p style="color: black; font-size: 16px;">{{alumno.nombre}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="12">
+                            <app-accordion-list expandHeight="7rem" [expanded]="alumno.expanded">
+                                <ion-row>
+                                    <ion-col size="3">
 
-                                </ion-col>
-                                <ion-col size="4.5">
-                                    <b style="color: black; font-size: 16px; ">Notas</b>
-                                </ion-col>
-                                <ion-col size="4.5">
-                                    <ion-icon name="bookmark" style="width: 2rem; height: 2rem; color: #004DFF;" [routerLink]="['/tabs-profesor/clases/alumnos', this.uidClase, alumno.uid, 'notas']"></ion-icon>
-                                </ion-col>
-                            </ion-row>
-                        </app-accordion-list>
-                    </ion-col>
-                </ion-row>
-            </ion-card>
-        </ion-col>
-    </ion-row>
+                                    </ion-col>
+                                    <ion-col size="4.5">
+                                        <p style="color: black; font-size: 16px; font-weight: bold;">Ver notas</p>
+                                    </ion-col>
+                                    <ion-col size="4.5">
+                                        <ion-icon name="eye" style="width: 2rem; height: 2rem; margin-top: 0.55rem; margin-left: 0; color: #004DFF;" [routerLink]="['/tabs-profesor/clases/alumnos', this.uidClase, alumno.uid, 'notas']"></ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                            </app-accordion-list>
+                        </ion-col>
+                    </ion-row>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
