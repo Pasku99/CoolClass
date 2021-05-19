@@ -33,6 +33,8 @@ export class ComprobarExamenAlumnoPage implements OnInit {
   public respuestaMarcada4: boolean = false;
   public respuestaMarcadaNoResponder: boolean = false;
   public examenesResueltos: ExamenResuelto[] = [];
+  public uidProfesor: string = '';
+  public asignatura: string = '';
 
   constructor(private route: ActivatedRoute,
               private alumnoService: AlumnoService) { }
@@ -70,7 +72,9 @@ export class ComprobarExamenAlumnoPage implements OnInit {
         this.nombreExamen = res['examenResuelto'].nombreExamen;
         this.arrayPreguntas = res['examenResuelto'].preguntas;
         this.arrayRespuestas = res['examenResuelto'].respuestas;
-        this.pregunta=this.arrayPreguntas[0];
+        this.uidProfesor = res['examenResuelto'].uidProfesor;
+        this.asignatura = res['examenResuelto'].asignatura;
+        this.pregunta = this.arrayPreguntas[0];
         this.respuesta1 = this.arrayRespuestas[0][0];
         this.respuesta2 = this.arrayRespuestas[0][1];
         this.respuesta3 = this.arrayRespuestas[0][2];

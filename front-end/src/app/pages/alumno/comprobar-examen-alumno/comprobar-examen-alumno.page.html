@@ -8,6 +8,7 @@
             </ion-col>
         </ion-row>
     </ion-toolbar>
+    <ion-img class="back" src="../../../../assets/ionicons/arrow-back-outline.svg" style="width: 2.5rem; height: 2.5rem; margin-left: 1.5rem; margin-top: 0.10rem;" *ngIf="this.uidProfesor != '' && this.asignatura != ''" [routerLink]="['/tabs-alumno/asignaturas/info-asignatura/examenes', this.uidProfesor, 'notas', this.asignatura]"></ion-img>
 </ion-header>
 
 <ion-content>

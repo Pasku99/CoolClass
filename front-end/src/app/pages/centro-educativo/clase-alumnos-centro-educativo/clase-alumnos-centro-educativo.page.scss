@@ -67,3 +67,21 @@ ion-card {
     left: -1rem;
     top: 0.05rem;
 }
+
+@media (max-width: 361px) {
+    .anyadir {
+        margin-top: -0.10rem;
+    }
+}
+
+@media (min-width: 361px) and (max-width: 500px) {
+    .anyadir {
+        margin-top: -0.35rem;
+    }
+}
+
+@media (min-width: 500px) {
+    .anyadir {
+        margin-top: -0.35rem;
+    }
+}
