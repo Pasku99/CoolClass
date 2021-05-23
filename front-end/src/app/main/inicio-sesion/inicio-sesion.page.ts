@@ -21,7 +21,6 @@ export class InicioSesionPage implements OnInit {
   public loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email] ],
     password: ['', Validators.required ],
-    // remember: [ false || localStorage.getItem('email') ]
   });
 
   constructor(private fb: FormBuilder,

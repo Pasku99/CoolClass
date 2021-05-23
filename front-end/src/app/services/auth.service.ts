@@ -130,6 +130,10 @@ export class AuthService {
     return this.http.post(`${environment.base_url}/login/buscartipo`, data);
   }
 
+  recoverPassword(data){
+    return this.http.post(`${environment.base_url}/login/recovery`, data, this.cabecerasVacia);
+  }
+
   establecercodigoProfesor( codigoProfesor: string ): void {
     this.centro.codigoProfesor = codigoProfesor;
   }

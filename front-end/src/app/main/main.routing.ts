@@ -4,6 +4,7 @@ import { InicioComponent } from './inicio/inicio.component';
 import { BlankLayoutComponent } from '../layouts/blank-layout/blank-layout.component';
 import { InicioSesionPage } from './inicio-sesion/inicio-sesion.page';
 import { RegistroPage } from './registro/registro.page';
+import { RecuperarPasswordPage } from './recuperar-password/recuperar-password.page';
 
 const routes: Routes = [
   { path: 'inicio', component: BlankLayoutComponent,
@@ -19,6 +20,11 @@ const routes: Routes = [
   { path: 'escoger-registro', component: BlankLayoutComponent,
     children: [
       { path: '', component: RegistroPage},
+    ]
+  },
+  { path: 'recuperar-password', component: BlankLayoutComponent,
+    children: [
+      { path: '', component: RecuperarPasswordPage},
     ]
   }
 ];

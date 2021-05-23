@@ -10,17 +10,20 @@ import { BlankLayoutComponent } from '../layouts/blank-layout/blank-layout.compo
 import { InicioSesionPage } from './inicio-sesion/inicio-sesion.page';
 import { RegistroPage } from './registro/registro.page';
 import { CentroeducativoService } from '../services/centroeducativo.service';
+import { RecuperarPasswordPage } from './recuperar-password/recuperar-password.page';
 
 @NgModule({
   declarations: [
     InicioComponent,
     InicioSesionPage,
-    RegistroPage
+    RegistroPage,
+    RecuperarPasswordPage
   ],
   exports: [
     InicioComponent,
     InicioSesionPage,
-    RegistroPage
+    RegistroPage,
+    RecuperarPasswordPage
   ],
   imports: [
     IonicModule,
