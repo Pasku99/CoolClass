@@ -14,6 +14,8 @@ export class RecuperarPasswordPage implements OnInit {
     email: ['', [Validators.required, Validators.email] ],
   });
 
+  public waiting: boolean = false;
+
   constructor(private fb: FormBuilder,
               private authService: AuthService) { }
 
@@ -21,11 +23,13 @@ export class RecuperarPasswordPage implements OnInit {
   }
 
   recover(){
+    this.waiting = true;
     const data = {
       email : this.recoverForm.get('email').value,
     };
     this.authService.recoverPassword(data)
       .subscribe(res => {
+        this.waiting = false;
         Swal.fire({
           icon: 'success',
           title: 'Correo de recuperación enviado a ' + data['email'] + '. Revise la bandeja de SPAM en caso de que no le haya llegado.',
@@ -41,6 +45,7 @@ export class RecuperarPasswordPage implements OnInit {
           allowOutsideClick: false,
           heightAuto: false
         });
+        this.waiting = false;
       }))
   }
 

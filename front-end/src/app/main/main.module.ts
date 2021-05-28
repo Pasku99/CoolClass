@@ -11,6 +11,7 @@ import { InicioSesionPage } from './inicio-sesion/inicio-sesion.page';
 import { RegistroPage } from './registro/registro.page';
 import { CentroeducativoService } from '../services/centroeducativo.service';
 import { RecuperarPasswordPage } from './recuperar-password/recuperar-password.page';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { RecuperarPasswordPage } from './recuperar-password/recuperar-password.p
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ]
 })
 

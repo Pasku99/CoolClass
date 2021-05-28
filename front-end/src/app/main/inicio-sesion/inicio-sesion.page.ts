@@ -23,6 +23,8 @@ export class InicioSesionPage implements OnInit {
     password: ['', Validators.required ],
   });
 
+  public waiting: boolean = false;
+
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               public centroeducativoService: CentroeducativoService,
@@ -34,6 +36,7 @@ export class InicioSesionPage implements OnInit {
   }
 
   login() {
+    this.waiting = true;
     const data = {
       email : this.loginForm.get('email').value,
     };
@@ -43,11 +46,7 @@ export class InicioSesionPage implements OnInit {
           this.authService.loginCentroEducativo(this.loginForm.value)
             .subscribe( res => {
               this.router.navigateByUrl('/tabs-centro-educativo/principal');
-              // window.location.reload();
-              // this.router.navigate(['/tabs-centro-educativo/principal'])
-              //   .then(() => {
-              //     window.location.reload();
-              //   });
+              this.waiting = false;
             }, (err) =>{
               Swal.fire({
                 title: '¡Error!',
@@ -57,11 +56,13 @@ export class InicioSesionPage implements OnInit {
                 allowOutsideClick: false,
                 heightAuto: false
               });
+              this.waiting = false;
             });
         } else if(res['resultado'][0].rol == 'ROL_PROFESOR'){
           this.authService.loginProfesor(this.loginForm.value)
           .subscribe( res => {
             this.router.navigateByUrl('/tabs-profesor/principal');
+            this.waiting = false;
           }, (err) =>{
             Swal.fire({
               title: '¡Error!',
@@ -71,11 +72,13 @@ export class InicioSesionPage implements OnInit {
               allowOutsideClick: false,
               heightAuto: false
             });
+            this.waiting = false;
           });
         } else if(res['resultado'][0].rol == 'ROL_ALUMNO'){
           this.authService.loginAlumno(this.loginForm.value)
           .subscribe( res => {
             this.router.navigateByUrl('/tabs-alumno/principal');
+            this.waiting = false;
           }, (err) =>{
             Swal.fire({
               title: '¡Error!',
@@ -85,6 +88,7 @@ export class InicioSesionPage implements OnInit {
               allowOutsideClick: false,
               heightAuto: false
             });
+            this.waiting = false;
           });
         }
       }, (err) => {
@@ -96,6 +100,7 @@ export class InicioSesionPage implements OnInit {
           allowOutsideClick: false,
           heightAuto: false
         });
+        this.waiting = false;
       });
   }
 

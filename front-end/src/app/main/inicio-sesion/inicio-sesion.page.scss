@@ -26,14 +26,28 @@ ion-grid {
     background-color: #00FF7F;
 }
 
-.boton1 {
-    color: black;
-    --background: #00FF7F;
-    --border-radius: 1rem;
-    border: 0.1rem solid black;
-    border-radius: 1rem;
-    margin-right: 6rem;
-    margin-left: 6rem;
+@media (min-width: 350px) {
+    .boton1 {
+        color: black;
+        --background: #00FF7F;
+        --border-radius: 1rem;
+        border: 0.1rem solid black;
+        border-radius: 1rem;
+        margin: auto;
+        width: 60%;
+    }
+}
+
+@media (max-width: 350px) {
+    .boton1 {
+        color: black;
+        --background: #00FF7F;
+        --border-radius: 1rem;
+        border: 0.1rem solid black;
+        border-radius: 1rem;
+        margin: auto;
+        width: 70%;
+    }
 }
 
 .input1 {

@@ -61,6 +61,7 @@ export class MisClasesProfesorPage implements OnInit {
       this.cargarDesplegable(this.profesorService.uidCentro, this.profesorService.uid, this.filtro);
       this.cargarClasesFiltro(this.profesorService.uidCentro, this.profesorService.uid, this.nombreClase);
     } else {
+      this.cargarDesplegable(this.profesorService.uidCentro, this.profesorService.uid, this.filtro);
       this.cargarClases(this.profesorService.uidCentro, this.profesorService.uid, this.filtro);
     }
   }
@@ -70,17 +71,17 @@ export class MisClasesProfesorPage implements OnInit {
       .subscribe(res =>{
         this.listaClasesProfesor = res['infoClases'];
         this.listaClasesProfesorObjeto = [];
-        this.listaDesplegable = [];
+        // this.listaDesplegable = [];
 
         for(let i = 0; i < this.listaClasesProfesor.length; i++){
           let clases = {nombre: this.listaClasesProfesor[i][0], asignatura: this.listaClasesProfesor[i][1], uidClase: this.listaClasesProfesor[i][2], expanded: false};
           this.listaClasesProfesorObjeto.push(clases);
         }
 
-        for(let i = 0; i < this.listaClasesProfesor.length; i++){
-          let clases = {nombre: this.listaClasesProfesor[i][0], asignatura: this.listaClasesProfesor[i][1], uidClase: this.listaClasesProfesor[i][2], expanded: false};
-          this.listaDesplegable.push(clases);
-        }
+        // for(let i = 0; i < this.listaClasesProfesor.length; i++){
+        //   let clases = {nombre: this.listaClasesProfesor[i][0], asignatura: this.listaClasesProfesor[i][1], uidClase: this.listaClasesProfesor[i][2], expanded: false};
+        //   this.listaDesplegable.push(clases);
+        // }
       }, (err) =>{
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({icon: 'error', title: 'Oops...', text: errtext, heightAuto: false});
@@ -106,6 +107,7 @@ export class MisClasesProfesorPage implements OnInit {
   }
 
   cargarDesplegable(uidCentro, uidProfesor, filtro){
+    filtro = '';
     this.profesorService.cargarClasesProfesor(uidCentro, uidProfesor, filtro)
       .subscribe(res =>{
         this.listaClasesProfesor = res['infoClases'];

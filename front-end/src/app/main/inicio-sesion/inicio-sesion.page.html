@@ -18,7 +18,10 @@
                     <ion-item class="input2">
                         <ion-input type="password" placeholder="Contraseña" formControlName="password" lines="none" required></ion-input>
                     </ion-item>
-                    <ion-button class="boton1" type="submit" size="large" expand="block">Iniciar sesión</ion-button>
+                    <!-- <fa-icon icon="chalkboard-teacher" size="5x" text-center style="text-align: center; width:100%; display:flex; align-items:center; justify-content:center; color: #004dff; padding: 0; margin-top: 1rem;"></fa-icon> -->
+                    <ion-button class="boton1" type="submit" size="large" expand="block">Iniciar sesión
+                        <ion-spinner name="bubbles" style="margin-left: 0.5rem; color: #004dff;" *ngIf="waiting"></ion-spinner>
+                    </ion-button>
                 </form>
             </ion-col>
         </ion-row>
