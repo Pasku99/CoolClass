@@ -19,6 +19,8 @@ export class RegistroProfesorPage implements OnInit {
     codigoProfesor: ['', Validators.required]
   });
 
+  public waiting: boolean = false;
+
   constructor(private fb: FormBuilder,
     private profesorService: ProfesorService,
     private route: ActivatedRoute,
@@ -28,6 +30,7 @@ export class RegistroProfesorPage implements OnInit {
   }
 
   enviar(){
+    this.waiting = true;
     this.profesorService.nuevoProfesor( this.registerForm.value )
       .subscribe( res => {
         Swal.fire({
@@ -36,13 +39,16 @@ export class RegistroProfesorPage implements OnInit {
           heightAuto: false
         });
         this.router.navigateByUrl("/inicio-sesion");
+        this.waiting = false;
       }, (err) => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: errtext,
+          heightAuto: false
         });
+        this.waiting = false;
         return;
       });
   }

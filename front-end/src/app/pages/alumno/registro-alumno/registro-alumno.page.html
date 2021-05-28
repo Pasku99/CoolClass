@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border" lines="none">
-    <ion-img class="back" src="../../../../assets/ionicons/arrow-back-outline.svg" style="width: 3rem; height: 3rem; margin-left: 1.5rem; margin-top: 0.5rem;" routerLink="/escoger-registro"></ion-img>
+    <ion-img class="back" src="../../../../assets/ionicons/arrow-back-outline.svg" style="width: 3rem; height: 3rem; margin-left: 1.5rem; margin-top: 0.5rem;" routerLink="/inicio"></ion-img>
 </ion-header>
 <ion-content class="ion-no-border" lines="none">
     <ion-grid>
@@ -25,7 +25,10 @@
                     <ion-item class="input3">
                         <ion-input type="text" placeholder="Código de alumno/a" formControlName="codigoAlumno" lines="none" required></ion-input>
                     </ion-item>
-                    <ion-button class="boton1" type="submit" size="large" expand="block">Registrarse</ion-button>
+                    <ion-button class="boton1" type="submit" size="large" expand="block">
+                        Registrarse
+                        <ion-spinner name="bubbles" style="margin-left: 0.5rem; color: #004dff;" *ngIf="waiting"></ion-spinner>
+                    </ion-button>
                 </form>
             </ion-col>
         </ion-row>

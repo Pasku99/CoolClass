@@ -48,7 +48,7 @@ export class CentroeducativoService {
   }
 
   nuevoCentro ( data: CentroEducativo) {
-    return this.http.post(`${environment.base_url}/centroeducativo`, data, this.cabeceras);
+    return this.http.post(`${environment.base_url}/centroeducativo`, data, this.cabecerasVacia);
   }
 
   nuevaClase(data) {

@@ -23,6 +23,8 @@ export class RegistroCentroEducativoPage implements OnInit {
     rol: ['ROL_CENTRO', Validators.required ],
   });
 
+  public waiting: boolean = false;
+
   constructor(private fb: FormBuilder,
               private centroeducativoService: CentroeducativoService,
               private route: ActivatedRoute,
@@ -32,29 +34,20 @@ export class RegistroCentroEducativoPage implements OnInit {
   }
 
   enviar(){
-    // this.formSubmited = true;
-    // console.log(this.datosForm);
-    // if (this.registerForm.invalid) { return; }
-    // Diferenciar entre dar de alta uno nuevo o actualizar uno que ya existe
-    // Alta de uno nuevo
-    // this.waiting = true;
+    this.waiting = true;
     this.centroeducativoService.nuevoCentro( this.registerForm.value )
       .subscribe( res => {
-        // console.log('Entra aquí');
-        // this.waiting = false;
-        // this.registerForm.get('password').disable();
-        // this.enablepass = false;
-        // this.registerForm.markAsPristine();
-        // localStorage.setItem('email', this.registerForm.value.email);
-        this.router.navigateByUrl("/inicio-sesion")
+        this.router.navigateByUrl("/inicio-sesion");
+        this.waiting = false;
       }, (err) => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: errtext,
+          heightAuto: false
         });
-        // this.waiting = false;
+        this.waiting = false;
         return;
       });
   }
@@ -62,16 +55,5 @@ export class RegistroCentroEducativoPage implements OnInit {
   cancelar(): void {
     this.router.navigateByUrl('/inicio-sesion');
   }
-
-  // campoNoValido( campo: string) {
-  //   return this.registerForm.get(campo).invalid && this.formSubmited;
-  // }
-
-  // campoNoValidoPassword( campo: string) {
-  //   if(this.registerForm.get(campo).value == "" && this.formSubmited){
-  //     return true;
-  //   }
-  //   return false;
-  // }
 
 }

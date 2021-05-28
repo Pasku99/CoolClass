@@ -19,6 +19,8 @@ export class RegistroAlumnoPage implements OnInit {
     codigoAlumno: ['', Validators.required]
   });
 
+  public waiting: boolean = false;
+
   constructor(private fb: FormBuilder,
               private alumnoService: AlumnoService,
               private router: Router) { }
@@ -27,6 +29,7 @@ export class RegistroAlumnoPage implements OnInit {
   }
 
   enviar(){
+    this.waiting = true;
     this.alumnoService.nuevoAlumno( this.registerForm.value )
       .subscribe( res => {
         Swal.fire({
@@ -34,6 +37,7 @@ export class RegistroAlumnoPage implements OnInit {
           title: 'Registrado con éxito',
           heightAuto: false
         });
+        this.waiting = false;
         this.router.navigateByUrl("/inicio-sesion");
       }, (err) => {
         const errtext = err.error.msg || 'No se pudo completar la acción, vuelva a intentarlo.';
@@ -41,7 +45,9 @@ export class RegistroAlumnoPage implements OnInit {
           icon: 'error',
           title: 'Oops...',
           text: errtext,
+          heightAuto: false
         });
+        this.waiting = false;
         return;
       });
   }
