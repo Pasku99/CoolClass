@@ -120,13 +120,14 @@ const loginProfesor = async(req, res = response) => {
             });
         }
 
-        const { _id, rol } = profesor;
+        const { _id, rol, uidCentro } = profesor;
         const token = await generarJWT(profesor._id, profesor.rol);
 
         res.json({
             ok: true,
             msg: 'login',
             uid: _id,
+            uidCentro,
             token,
             rol
         });
@@ -203,13 +204,14 @@ const loginAlumno = async(req, res = response) => {
             });
         }
 
-        const { _id, rol } = alumno;
+        const { _id, rol, uidClase } = alumno;
         const token = await generarJWT(alumno._id, alumno.rol);
 
         res.json({
             ok: true,
             msg: 'login',
             uid: _id,
+            uidClase,
             token,
             rol
         });

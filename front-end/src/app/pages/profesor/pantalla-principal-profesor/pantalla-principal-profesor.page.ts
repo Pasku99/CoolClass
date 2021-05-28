@@ -22,6 +22,7 @@ export class PantallaPrincipalProfesorPage implements OnInit {
   public proximosExamenes: Examen[] = [];
   public fechas: Array<string> = new Array<string>();
   public horas: Array<string> = new Array<string>();
+  public cargado: boolean = false;
 
   constructor(private authService: AuthService,
               private profesorService: ProfesorService) { }
@@ -34,7 +35,6 @@ export class PantallaPrincipalProfesorPage implements OnInit {
 
   async ionViewWillEnter(){
     await this.authService.cogerToken();
-    await this.sleep(250);
     this.cargarClases();
     this.cargarUltimosExamenes();
     this.cargarProximosExamenes();
@@ -105,7 +105,7 @@ export class PantallaPrincipalProfesorPage implements OnInit {
   };
 
   cargarClases(){
-    this.profesorService.cargarClasesProfesor(this.profesorService.uidCentro, this.profesorService.uid, this.filtro)
+    this.profesorService.cargarClasesProfesor(this.authService.profesor.uidCentro, this.authService.profesor.uid, this.filtro)
       .subscribe(res =>{
         this.listaClasesProfesor = res['infoClases'];
         this.listaClasesProfesorObjeto = [];
@@ -121,7 +121,7 @@ export class PantallaPrincipalProfesorPage implements OnInit {
   }
 
   cargarUltimosExamenes(){
-    this.profesorService.cargarUltimosExamenes(this.profesorService.uid)
+    this.profesorService.cargarUltimosExamenes(this.authService.profesor.uid)
       .subscribe(res => {
         this.ultimosExamenes = res['ultimosExamenes'];
       }, (err => {
@@ -132,7 +132,7 @@ export class PantallaPrincipalProfesorPage implements OnInit {
   }
 
   cargarProximosExamenes(){
-    this.profesorService.cargarProximosExamenes(this.profesorService.uid)
+    this.profesorService.cargarProximosExamenes(this.authService.profesor.uid)
       .subscribe(res => {
         this.proximosExamenes = res['proximosExamenes'];
         this.fechas = [];

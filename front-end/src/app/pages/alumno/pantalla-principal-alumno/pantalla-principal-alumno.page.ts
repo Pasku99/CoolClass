@@ -42,35 +42,11 @@ export class PantallaPrincipalAlumnoPage implements OnInit {
 
   async ionViewWillEnter(){
     await this.authService.cogerToken();
-    await this.sleep(500);
     this.cargarAsignaturas();
     this.cargarUltimosExamenesAlumno();
     this.cargarProximosExamenesAlumno();
     await this.startSlides();
   }
-
-  // async cargada(){
-  //   await this.storage.get('app_charged').then((result) =>
-  //   {
-  //     if(result){
-  //       this.cargado = true;
-  //     }
-  //     else {
-  //       this.cargado = false;
-  //     }
-  //   });
-  // }
-
-  // async presentLoading() {
-  //   const loading = await this.loadingController.create({
-  //     cssClass: 'my-custom-class',
-  //     message: 'Por favor, espere...',
-  //     duration: 1500,
-  //   });
-  //   await loading.present();
-
-  //   const { role, data } = await loading.onDidDismiss();
-  // }
 
   async startSlides(){
     this.slideWithNav.slideTo(0);
@@ -100,7 +76,7 @@ export class PantallaPrincipalAlumnoPage implements OnInit {
   sliderTwo: any;
   sliderThree: any;
 
-  //Configuration for each Slider
+  //Configuracion para cada slider
   slideOptsOne = {
     initialSlide: 0,
     slidesPerView: 2,

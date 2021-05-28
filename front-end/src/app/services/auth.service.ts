@@ -147,6 +147,18 @@ export class AuthService {
     this.centro.email = email;
   }
 
+  establecerdatosPantallaPrincipalProf( uid: string, uidCentro: string, token: string ): void {
+    this.profesor.uid = uid;
+    this.profesor.uidCentro = uidCentro;
+    this.profesor.token = token;
+  }
+
+  establecerdatosPantallaPrincipalAlumno( uid: string, uidClase: string, token: string ): void {
+    this.alumno.uid = uid;
+    this.alumno.uidClase = uidClase;
+    this.alumno.token = token;
+  }
+
   establecerdatosProfesor( nombre: string, email: string ): void {
     this.profesor.nombre = nombre;
     this.profesor.email = email;

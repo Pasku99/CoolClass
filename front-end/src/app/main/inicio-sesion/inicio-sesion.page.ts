@@ -61,6 +61,7 @@ export class InicioSesionPage implements OnInit {
         } else if(res['resultado'][0].rol == 'ROL_PROFESOR'){
           this.authService.loginProfesor(this.loginForm.value)
           .subscribe( res => {
+            this.authService.establecerdatosPantallaPrincipalProf(res['uid'], res['uidCentro'], res['token'])
             this.router.navigateByUrl('/tabs-profesor/principal');
             this.waiting = false;
           }, (err) =>{
@@ -77,6 +78,7 @@ export class InicioSesionPage implements OnInit {
         } else if(res['resultado'][0].rol == 'ROL_ALUMNO'){
           this.authService.loginAlumno(this.loginForm.value)
           .subscribe( res => {
+            this.authService.establecerdatosPantallaPrincipalAlumno(res['uid'], res['uidClase'], res['token'])
             this.router.navigateByUrl('/tabs-alumno/principal');
             this.waiting = false;
           }, (err) =>{
